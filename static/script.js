@@ -1,14 +1,12 @@
 const poncon = new Poncon()
-console.log(poncon)
 
-poncon.setPageList(['loginpage', 'registrationpage'])
+poncon.setPageList(['login', 'registration'])
 
-let currentpage = 'loginbuyer'
+let currentpage = 'buyer'
 
 $('#loginbutton').click(function () {
     $(this).addClass('chooseactive')
     $('#registrationbutton').removeClass('chooseactive')
-    console.log(66);
 })
 
 $('#registrationbutton').click(function () {
