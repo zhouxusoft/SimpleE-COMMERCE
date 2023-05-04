@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </head>
@@ -47,29 +48,93 @@
         <div class="centerbox">
             <div class="centertopbuttonborder">
                 <div class="centertopbutton">
-                    <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
-                        id="Loginbutton">Login</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
-                        id="Registrationbutton">Registration</button>
+                    <a href="#/loginpage" type="button" class="btn btn-outline-secondary secondbtn mx-3 chooseactive"
+                        id="loginbutton">Login</a>
+                    <a href="#/registrationpage" type="button" class="btn btn-outline-secondary secondbtn mx-3"
+                        id="registrationbutton">Registration</a>
                 </div>
             </div>
-            <div class=""></div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="option" id="option1" value="option1" checked>
-                <label class="form-check-label" for="option1">
-                  选项1
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="option" id="option2" value="option2">
-                <label class="form-check-label" for="option2">
-                  选项2
-                </label>
-              </div>
-              
+            <div class="idselectborder">
+                <div class="idselect">
+                    <div class="form-check mx-4">
+                        <input class="form-check-input" type="radio" name="option" id="option1" value="option1" checked>
+                        <label class="form-check-label" for="option1">
+                            Buyer
+                        </label>
+                    </div>
+                    <div class="form-check mx-4">
+                        <input class="form-check-input" type="radio" name="option" id="option2" value="option2">
+                        <label class="form-check-label" for="option2">
+                            Vendor
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="poncon-loginpage poncon-page" style="display: none;">
+                <div class="loginbuyer idselectitem">
+                    <div class="input-group mt-5 mb-5">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Username</span>
+                        </div>
+                        <input type="text" class="form-control input-username" placeholder="Please enter your name">
+                    </div>
+                    <div class="input-group mb-5">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="text" class="form-control input-name" placeholder="Please enter your password">
+                    </div>
+                    <div class="loginenterbuttonborder">
+                        <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
+                            id="buyerenterbutton">Enter</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="poncon-registrationpage poncon-page" style="display: none;">
+                <div class="idselectitem">
+                    <div class="input-group mt-3 mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Username</span>
+                        </div>
+                        <input type="text" class="form-control input-username" placeholder="Please enter your name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="text" class="form-control input-name" placeholder="Please enter your password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Address</span>
+                        </div>
+                        <input type="password" autocomplete="new-password" class="form-control input-password"
+                            placeholder="Please enter your address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">E-mail</span>
+                        </div>
+                        <input type="password" autocomplete="new-password" class="form-control input-password-repeat"
+                            placeholder="Please enter your e-mail">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Phone number</span>
+                        </div>
+                        <input type="password" autocomplete="new-password" class="form-control input-password-repeat"
+                            placeholder="Please enter your phone">
+                    </div>
+                    <div class="loginenterbuttonborder">
+                        <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
+                            id="registrationcreatebutton">Create</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
+    <script src="../static/poncon.js"></script>
     <script src="../static/script.js"></script>
 </body>
 

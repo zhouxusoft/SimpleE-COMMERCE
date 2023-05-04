@@ -33,15 +33,44 @@ body {
 .centerbox {
     margin: 20px auto;
     width: 90%;
-    height: 600px;
+    height: 500px;
     border: 1px solid #000000;
 }
 
 .centertopbuttonborder {
-    padding: 10px;
+    padding: 20px;
 }
 
 .centertopbutton {
+    width: fit-content;
+    margin: auto;
+}
+
+.idselect {
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.chooseactive {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    box-shadow: none !important;
+    color: #fff !important;
+}
+
+.idselectitem {
+    width: 80%;
+    margin: auto;
+    max-width: 500px;
+}
+
+/* .idselectitem:first-child {
+    margin-top: 20px;
+} */
+
+.loginenterbuttonborder {
     width: fit-content;
     margin: auto;
 }
