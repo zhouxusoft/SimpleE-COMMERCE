@@ -21,5 +21,10 @@ def login():
     else:
         return jsonify({'success': False})
 
+@app.route('/registration', methods=['POST'])
+def registration():
+    data = request.get_json()
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
