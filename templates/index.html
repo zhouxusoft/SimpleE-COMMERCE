@@ -1,12 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>电商平台</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <h1>Hello World!</h1>
+    <!-- Top navbar -->
+    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+        <div class="toplogo">&#xf753</div>
+
+        <ul class="navbar-nav">
+            <li class="nav-item navbaritem">
+                <a class="nav-link">User konws</a>
+            </li>
+            <li class="nav-item navbaritem">
+                <a class="nav-link">Privacy</a>
+            </li>
+            <li class="nav-item navbaritem">
+                <a class="nav-link">help</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbardrop" data-bs-toggle="dropdown">
+                    Language
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item">Chinese</a>
+                    <a class="dropdown-item">English</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Center Borderbox -->
+    <div class="centerboxborder">
+        <div class="centerbox">
+            <div class="centertopbuttonborder">
+                <div class="centertopbutton">
+                    <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
+                        id="Loginbutton">Login</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn mx-3"
+                        id="Registrationbutton">Registration</button>
+                </div>
+            </div>
+            <div class=""></div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="option" id="option1" value="option1" checked>
+                <label class="form-check-label" for="option1">
+                  选项1
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="option" id="option2" value="option2">
+                <label class="form-check-label" for="option2">
+                  选项2
+                </label>
+              </div>
+              
+        </div>
+    </div>
+
+    <script src="../static/script.js"></script>
 </body>
+
 </html>

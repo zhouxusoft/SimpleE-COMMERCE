@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: "微软雅黑";
+}
+
+body {
+    height: 100vh;
+}
+
+.toplogo {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0 20px;
+}
+
+.navbaritem {
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.centerboxborder {
+    margin: 20px auto;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}   
+
+.centerbox {
+    margin: 20px auto;
+    width: 90%;
+    height: 600px;
+    border: 1px solid #000000;
+}
+
+.centertopbuttonborder {
+    padding: 10px;
+}
+
+.centertopbutton {
+    width: fit-content;
+    margin: auto;
+}
+
