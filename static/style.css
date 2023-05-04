@@ -33,6 +33,7 @@ body {
 .centerbox {
     margin: 20px auto;
     width: 90%;
+    max-width: 1200px;
     height: 500px;
     border: 1px solid #000000;
 }
@@ -65,10 +66,6 @@ body {
     margin: auto;
     max-width: 500px;
 }
-
-/* .idselectitem:first-child {
-    margin-top: 20px;
-} */
 
 .loginenterbuttonborder {
     width: fit-content;
