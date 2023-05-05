@@ -151,3 +151,64 @@ body {
     border: 1px solid #6c757d;
     border-radius: 4px;
 }
+
+.shopdata:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.shopinfos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.shopimgborder {
+    padding: 10px;
+}
+
+.shopinfoborder {
+    width: 140px;
+    padding: 10px;
+}
+
+.shopimg {
+    border: 1px solid #6c757d;
+    width: 100px;
+    height: 100px;
+}
+
+.productname {
+    margin: auto;
+    height: 60px;
+    overflow: hidden;
+}
+
+.productprice {
+    margin: 10px auto 0px;
+    height: 30px;
+}
+
+.shoplikes {
+    height: 30px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shoplike {
+    width: 80px;
+    cursor: pointer;
+}
+
+.shopdislike {
+    width: 80px;
+    cursor: pointer;
+}
+.shopcomment {
+    width: 80px;
+    cursor: pointer;
+}
+
+.shopfont {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 300;
+}
