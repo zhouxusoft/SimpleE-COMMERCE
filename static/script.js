@@ -36,6 +36,11 @@ $('#loginenterbutton').click(function () {
         contentType: 'application/json',
         success: function(response) {
             console.log(response)
+            if (response.success == true) {
+                alert('Login successful')
+                localStorage.clear()
+                localStorage.setItem("token", JSON.stringify(response.userinfo))
+            } 
         },
         error: function(error) {
             console.log(error)

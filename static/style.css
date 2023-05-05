@@ -10,6 +10,10 @@ body {
     height: 100vh;
 }
 
+.loginpage  {
+    height: 100%;
+}
+
 .toplogo {
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
