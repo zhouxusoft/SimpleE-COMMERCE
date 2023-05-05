@@ -76,3 +76,78 @@ body {
     margin: auto;
 }
 
+.searchbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchbtn {
+    width: 80px;
+}
+
+.topcartbtn {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 600 !important;
+    font-size: 1rem;
+}
+
+.mainpagenav {
+    border-bottom: 1px solid #6c757d;
+}
+
+.mainpagemainboxborder {
+    padding: 20px;
+    height: 90vh;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.mainpagemainbox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.catagroies {
+    width: 200px;
+    border: 1px solid #6c757d;
+    margin-right: 20px;  
+    display: flex;
+    flex-direction: column;
+}
+
+.catagroiestitle {
+    border-bottom: 1px solid #6c757d;
+    font-size: 1.25rem;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.catagroiesdatas {  
+    max-height: 100%;
+    flex-grow: 1;
+    overflow: auto;
+    cursor: pointer;
+}
+
+.shopdatasborder {
+    width: 100%;
+    border: 1px solid #6c757d;
+    padding: 20px;
+    overflow: auto;
+}
+
+.shopdatas {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.shopdata {
+    margin: auto;
+    width: 260px;
+    height: 150px;
+    border: 1px solid #6c757d;
+    border-radius: 4px;
+}

@@ -1,3 +1,5 @@
+let token = JSON.parse(localStorage.getItem("token"))
+
 const poncon = new Poncon()
 
 poncon.setPageList(['login', 'registration'])
@@ -35,17 +37,27 @@ $('#loginenterbutton').click(function () {
         data: JSON.stringify(toSend),
         contentType: 'application/json',
         success: function(response) {
-            console.log(response)
+            //  console.log(response)
             if (response.success == true) {
+                $('#loginpage').css('display', 'none')
+                $('#mainpage').css('display', 'block')
                 alert('Login successful')
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
-            } 
+                token = JSON.parse(localStorage.getItem("token"))
+            } else {
+                alert(response.message)
+            }
         },
         error: function(error) {
             console.log(error)
         }
     })
+})
+
+$('#gotologin').click(function () {
+    $('#mainpage').css('display', 'none')
+    $('#loginpage').css('display', 'block')
 })
 
 $('#registrationcreatebutton').click(function () {
