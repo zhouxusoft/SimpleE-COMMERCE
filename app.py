@@ -32,6 +32,12 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `vendors` (\
                     PRIMARY KEY(Vendors_id) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic")
 
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
+                    Catagories_id int NOT NULL AUTO_INCREMENT,\
+                    Catagory_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\
+                    PRIMARY KEY (Catagories_id) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
+
 
 app = Flask(__name__)
 
