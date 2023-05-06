@@ -5,7 +5,8 @@ db = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
     password="123456",
-    database="e-commerce"
+    database="e-commerce",
+    charset="utf8mb4"
 )
 
 dbcursor = db.cursor()
@@ -39,7 +40,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 
-dbcursor.execute("CREATE TABLE `e-commerce`.`Untitled`  (\
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `product`  (\
                     Product_id int NOT NULL AUTO_INCREMENT,\
                     Product_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     Photo varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
@@ -52,7 +53,7 @@ dbcursor.execute("CREATE TABLE `e-commerce`.`Untitled`  (\
                     Comment_sum int NOT NULL DEFAULT 0,\
                     Vendors_id int NULL DEFAULT NULL,\
                     Category_id int NULL DEFAULT NULL,\
-                    PRIMARY KEY (`Product_id`) USING BTREE)\
+                    PRIMARY KEY (Product_id) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 app = Flask(__name__)
