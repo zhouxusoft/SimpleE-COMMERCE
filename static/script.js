@@ -117,16 +117,25 @@ function getNewInfo () {
 }
 
 function resetCatagories () {
+    $('#addcatagroiesdatas').empty()
     for (let i = 0; i < globalcatagroies.length; i++) {
         $('#addcatagroiesdatas').html($('#addcatagroiesdatas').html() + `<tr><td class="allcatagroies" id="catagroies${globalcatagroies[i][0]}">${globalcatagroies[i][1]}</td></tr>`);
     }
 }
 
+function resetProduct () {
+    for (let i = 0; i < globalproduct.length; i++) {
+        if (globalproduct[i][11] == currentcatagroy) {
+            
+        }
+        
+    }
+}
+
 $('#addcatagroiesdatas').click(function (e) {
     catagroyid = $(e.target).attr('id')
-    currentcatagroy = catagroyid.slice(-2)
-    console.log($(`#catagroies${catagroyid}`))
-    console.log($(e.target))
+    // console.log($(`#catagroies${catagroyid}`))
+    // console.log($(e.target))
     if ($(e.target).hasClass('selected')) {
         $('.allcatagroies').removeClass('selected')
         $('.catagroiestitle').addClass('selected')
@@ -135,7 +144,9 @@ $('#addcatagroiesdatas').click(function (e) {
         $('.catagroiestitle').removeClass('selected')
         $('.allcatagroies').removeClass('selected')
         $(e.target).addClass('selected')
+        currentcatagroy = catagroyid.slice(10)
     }
+    // console.log(currentcatagroy)
 })
 
 $('.catagroiestitle').click(function () {
