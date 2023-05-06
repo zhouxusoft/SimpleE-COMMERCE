@@ -217,3 +217,100 @@ body {
 .selected {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
+
+.bigproductinfos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bigproductname {
+    margin: auto;
+    font-size: 1.25rem;
+}
+
+.bigproductdescription {
+    margin: auto;
+    height: 100px;
+    padding: 10px 0;
+}
+
+.bigproductprice {
+    margin: auto;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+.buynumborder {
+    display: flex;
+    justify-content: space-between;
+    width: 140px;
+    margin-left: auto;
+}
+
+#buynum {
+    width: 60px;
+}
+
+.changebuynum {
+    display: inline-block;
+    width: 38px;
+    cursor: pointer;
+}
+
+.bigproductimgs {
+    width: 220px;
+}
+
+.bigproductimg {
+    border: 1px solid #adc6db;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.smallproductimgs {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    width: fit-content;
+    margin: auto;
+    overflow: hidden;
+    max-width: 220px;
+}
+
+.smallproductimg {
+    border: 1px solid #adc6db;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.productbtns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bigproductinfo {
+    width: 240px;
+}
+
+.productfont {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.productlikes {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
