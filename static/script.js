@@ -127,12 +127,21 @@ $('#addcatagroiesdatas').click(function (e) {
     currentcatagroy = catagroyid.slice(-2)
     console.log($(`#catagroies${catagroyid}`))
     console.log($(e.target))
-    $('.allcatagroies').removeClass('selected')
     if ($(e.target).hasClass('selected')) {
+        $('.allcatagroies').removeClass('selected')
+        $('.catagroiestitle').addClass('selected')
         currentcatagroy = 0
+    } else {
+        $('.catagroiestitle').removeClass('selected')
+        $('.allcatagroies').removeClass('selected')
+        $(e.target).addClass('selected')
     }
-    $(e.target).addClass('selected')
-    
+})
+
+$('.catagroiestitle').click(function () {
+    $('.allcatagroies').removeClass('selected')
+    $('.catagroiestitle').addClass('selected')
+    currentcatagroy = 0
 })
 
 getNewInfo()

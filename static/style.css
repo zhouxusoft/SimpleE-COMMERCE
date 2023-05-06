@@ -215,5 +215,5 @@ body {
 }
 
 .selected {
-    background-color: rgba(0, 0, 0, 0.075) !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
