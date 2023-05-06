@@ -5,13 +5,13 @@ db = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
     password="123456",
-    database="e-commerce",
+    database="ecommerce",
     charset="utf8mb4"
 )
 
 dbcursor = db.cursor()
 
-dbcursor.execute("CREATE DATABASE IF NOT EXISTS e-commerce")
+dbcursor.execute("CREATE DATABASE IF NOT EXISTS ecommerce")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `buyers` (\
                     Buyers_id int NOT NULL AUTO_INCREMENT,\
@@ -45,7 +45,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `product`  (\
                     Product_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     Photo varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     Post_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
-                    Describe varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    Product_describe varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     Price decimal(10, 2) NULL DEFAULT NULL,\
                     Inventory int NULL DEFAULT NULL,\
                     Like_sum int NOT NULL DEFAULT 0,\
@@ -148,6 +148,20 @@ def registration():
             db.commit()
             return jsonify({'success': True, 'message': 'Registration successful'})
 
+
+@app.route('/getinfo', methods=['POST'])
+def getinfo ():
+    sql = "SELECT * FROM product"
+    dbcursor.execute(sql)
+    productresult = dbcursor.fetchall()
+    sql = "SELECT * FROM catagories"
+    dbcursor.execute(sql)
+    catagoriesresult = dbcursor.fetchall()
+    allresult = {
+        'product': productresult,
+        'catagories': catagoriesresult
+    }
+    return jsonify(allresult)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

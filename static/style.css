@@ -213,3 +213,7 @@ body {
     font-family: "Font Awesome 6 Free";
     font-weight: 300;
 }
+
+.selected {
+    background-color: rgba(0, 0, 0, 0.075) !important;
+}

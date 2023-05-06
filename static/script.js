@@ -1,10 +1,13 @@
 let token = JSON.parse(localStorage.getItem("token"))
+let globalcatagroies
+let globalproduct
 
 const poncon = new Poncon()
 
 poncon.setPageList(['login', 'registration'])
 
 let currentkind = 'buyer'
+let currentcatagroy = 0
 
 $('#loginbutton').click(function () {
     $(this).addClass('chooseactive')
@@ -72,7 +75,7 @@ $('#registrationcreatebutton').click(function () {
     } else {
         currentkind = 'vendor'
     }
-    console.log(currentkind)
+    // console.log(currentkind)
     let toSend = {
         name: registrationname,
         password: registrationpassword,
@@ -87,13 +90,52 @@ $('#registrationcreatebutton').click(function () {
         data: JSON.stringify(toSend),
         contentType: 'application/json',
         success: function(response) {
-            console.log(response)
+            alert(response.message)
         },
         error: function(error) {
             console.log(error)
         }
     });
 })
+
+function getNewInfo () {
+    $.ajax({
+        url: '/getinfo',
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            globalcatagroies = response.catagories
+            globalproduct = response.product
+            console.log(globalcatagroies)
+            console.log(globalproduct)
+            resetCatagories ()
+        },
+        error: function(error) {
+            console.log(error)
+        }
+    });
+}
+
+function resetCatagories () {
+    for (let i = 0; i < globalcatagroies.length; i++) {
+        $('#addcatagroiesdatas').html($('#addcatagroiesdatas').html() + `<tr><td class="allcatagroies" id="catagroies${globalcatagroies[i][0]}">${globalcatagroies[i][1]}</td></tr>`);
+    }
+}
+
+$('#addcatagroiesdatas').click(function (e) {
+    catagroyid = $(e.target).attr('id')
+    currentcatagroy = catagroyid.slice(-2)
+    console.log($(`#catagroies${catagroyid}`))
+    console.log($(e.target))
+    $('.allcatagroies').removeClass('selected')
+    if ($(e.target).hasClass('selected')) {
+        currentcatagroy = 0
+    }
+    $(e.target).addClass('selected')
+    
+})
+
+getNewInfo()
 
 poncon.start()
 
