@@ -170,7 +170,7 @@
         </nav>
         <div class="mainpagemainboxborder">
             <div class="mainpagemainbox poncon-home poncon-page" style="display: none;">
-                <div class="catagroies">
+                <div class="catagroies d-none d-sm-block">
                     <div class="catagroiestitle">All Catagroies</div>
                     <div class="catagroiesdatas">
                         <table class="table table-hover">
@@ -188,6 +188,33 @@
             </div>
         </div>
 
+    </div>
+
+    <button style="display: none" id="productinfobtn" data-bs-toggle="modal"
+        data-bs-target="#productinfomodal"></button>
+    <div class="modal fade" id="productinfomodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Product Details：</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="downloading">
+                        <div class="downloadingdatabox">
+                        </div>
+                        <div class="downloadbtnbox">
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="yesdownload">下载</button>
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="closedownloadfilemodal">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="../static/poncon.js"></script>

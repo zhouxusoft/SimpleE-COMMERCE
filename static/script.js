@@ -163,7 +163,7 @@ function resetProduct(productlist) {
         for (let i = 0; i < productlist.length; i++) {
             $('#allshopdatas').html($('#allshopdatas').html() + `
                 <div class="col-md-6 col-xl-4 col-xxl-3 databox mb-3">
-                    <div class="shopdata">
+                    <div class="shopdata" id="product${productlist[i][0]}">
                         <div class="shopinfos">
                             <div class="shopimgborder">
                                 <div class="shopimg">
@@ -214,6 +214,23 @@ $('.catagroiestitle').click(function () {
     $('.catagroiestitle').addClass('selected')
     currentcatagroy = 0
     resetProductList()
+})
+
+$('#allshopdatas').click(function (e) {
+    // console.log($(e.target))
+    if ($(e.target).closest('.shopdata').length) {
+        if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('shopfont')) {
+            console.log('shoplike')
+        }
+        else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('shopfont')) {
+            console.log('shopdislike')
+        }
+        else if ($(e.target).hasClass('shopcomment') || $(e.target).hasClass('shopfont')) {
+            console.log('shopcomment')
+        } else {
+            $('#productinfobtn').click()
+        }
+    }
 })
 
 $('#cartbtn').click(function () {
