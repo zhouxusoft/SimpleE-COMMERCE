@@ -10,7 +10,7 @@ db = mysql.connector.connect(
 
 dbcursor = db.cursor()
 
-dbcursor.execute("CREATE DATABASE IF NOT EXISTS mydatabase")
+dbcursor.execute("CREATE DATABASE IF NOT EXISTS e-commerce")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `buyers` (\
                     Buyers_id int NOT NULL AUTO_INCREMENT,\
@@ -38,6 +38,22 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
                     PRIMARY KEY (Catagories_id) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
+
+dbcursor.execute("CREATE TABLE `e-commerce`.`Untitled`  (\
+                    Product_id int NOT NULL AUTO_INCREMENT,\
+                    Product_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    Photo varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    Post_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    Describe varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    Price decimal(10, 2) NULL DEFAULT NULL,\
+                    Inventory int NULL DEFAULT NULL,\
+                    Like_sum int NOT NULL DEFAULT 0,\
+                    Dislike_sum int NOT NULL DEFAULT 0,\
+                    Comment_sum int NOT NULL DEFAULT 0,\
+                    Vendors_id int NULL DEFAULT NULL,\
+                    Category_id int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Product_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 app = Flask(__name__)
 
@@ -98,6 +114,7 @@ def login():
         else:
             return jsonify({'success': False, 'message': 'Username or password incorrect'})
 
+
 @app.route('/registration', methods=['POST'])
 def registration():
     data = request.get_json()
@@ -110,7 +127,8 @@ def registration():
             return jsonify({'success': False, 'message': 'That username has already been taken'})
         else:
             sql = "INSERT INTO vendors (Vendors_name, Vendors_password, Vendors_address, Vendors_email, Vendors_phone) VALUES (%s, %s, %s, %s, %s)"
-            val = (data['name'], data['password'], data['address'], data['email'], data['phone'])
+            val = (data['name'], data['password'],
+                   data['address'], data['email'], data['phone'])
             dbcursor.execute(sql, val)
             db.commit()
             return jsonify({'success': True, 'message': 'Registration successful'})
@@ -123,10 +141,12 @@ def registration():
             return jsonify({'success': False, 'message': 'That username has already been taken'})
         else:
             sql = "INSERT INTO buyers (Buyers_name, Buyers_password, Buyers_address, Buyers_email, Buyers_phone) VALUES (%s, %s, %s, %s, %s)"
-            val = (data['name'], data['password'], data['address'], data['email'], data['phone'])
+            val = (data['name'], data['password'],
+                   data['address'], data['email'], data['phone'])
             dbcursor.execute(sql, val)
             db.commit()
             return jsonify({'success': True, 'message': 'Registration successful'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
