@@ -109,13 +109,14 @@ function getNewInfo () {
             // console.log(globalcatagroies)
             // console.log(globalproduct)
             resetCatagories()
-            resetProduct(0)
+            resetProductList()
         },
         error: function(error) {
             console.log(error)
         }
-    });
+    })
 }
+getNewInfo()
 
 function resetCatagories () {
     $('#addcatagroiesdatas').empty()
@@ -131,8 +132,8 @@ function resetProductList () {
             productlist.push(globalproduct[i])
         }
     }
-    console.log(productlist)
-    resetProduct (productlist)
+    // console.log(productlist)
+    resetProduct(productlist)
 }
 
 function resetProduct (productlist) {
@@ -193,8 +194,6 @@ $('.catagroiestitle').click(function () {
     currentcatagroy = 0
     resetProductList()
 })
-
-getNewInfo()
 
 poncon.start()
 
