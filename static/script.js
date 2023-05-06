@@ -4,7 +4,7 @@ let globalproduct
 
 const poncon = new Poncon()
 
-poncon.setPageList(['login', 'registration'])
+poncon.setPageList(['home', 'login', 'registration'])
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -39,28 +39,49 @@ $('#loginenterbutton').click(function () {
         type: 'POST',
         data: JSON.stringify(toSend),
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
             //  console.log(response)
             if (response.success == true) {
+                window.location.hash = ''
                 $('#loginpage').css('display', 'none')
                 $('#mainpage').css('display', 'block')
                 alert('Login successful')
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
+                resetLoginBtn()
             } else {
                 alert(response.message)
             }
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error)
         }
     })
 })
 
+function resetLoginBtn() {
+    if (token) {
+        $('#gotologin').text('Logout')
+    } else {
+        $('#gotologin').text('Login')
+    }
+}
+
+resetLoginBtn()
+
 $('#gotologin').click(function () {
-    $('#mainpage').css('display', 'none')
-    $('#loginpage').css('display', 'block')
+    if ($('#gotologin').text() == 'Logout') {
+        if (confirm("确定退出当前账号")) {
+            localStorage.clear()
+            token = JSON.parse(localStorage.getItem("token"))
+            resetLoginBtn()
+        }
+    } else {
+        window.location.hash = '#/login'
+        $('#mainpage').css('display', 'none')
+        $('#loginpage').css('display', 'block')
+    }
 })
 
 $('#registrationcreatebutton').click(function () {
@@ -89,21 +110,21 @@ $('#registrationcreatebutton').click(function () {
         type: 'POST',
         data: JSON.stringify(toSend),
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
             alert(response.message)
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error)
         }
     });
 })
 
-function getNewInfo () {
+function getNewInfo() {
     $.ajax({
         url: '/getinfo',
         type: 'POST',
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
             globalcatagroies = response.catagories
             globalproduct = response.product
             // console.log(globalcatagroies)
@@ -111,21 +132,21 @@ function getNewInfo () {
             resetCatagories()
             resetProductList()
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error)
         }
     })
 }
 getNewInfo()
 
-function resetCatagories () {
+function resetCatagories() {
     $('#addcatagroiesdatas').empty()
     for (let i = 0; i < globalcatagroies.length; i++) {
         $('#addcatagroiesdatas').html($('#addcatagroiesdatas').html() + `<tr><td class="allcatagroies" id="catagroies${globalcatagroies[i][0]}">${globalcatagroies[i][1]}</td></tr>`);
     }
 }
 
-function resetProductList () {
+function resetProductList() {
     let productlist = []
     for (let i = 0; i < globalproduct.length; i++) {
         if (globalproduct[i][11] == currentcatagroy || currentcatagroy == 0) {
@@ -136,7 +157,7 @@ function resetProductList () {
     resetProduct(productlist)
 }
 
-function resetProduct (productlist) {
+function resetProduct(productlist) {
     $('#allshopdatas').empty()
     if (productlist.length > 0) {
         for (let i = 0; i < productlist.length; i++) {
@@ -193,6 +214,30 @@ $('.catagroiestitle').click(function () {
     $('.catagroiestitle').addClass('selected')
     currentcatagroy = 0
     resetProductList()
+})
+
+$('#cartbtn').click(function () {
+    if (token) {
+        alert('8963')
+    } else {
+        alert('Please log in first')
+    }
+})
+
+$('#likebtn').click(function () {
+    if (token) {
+        alert('4535')
+    } else {
+        alert('Please log in first')
+    }
+})
+
+$('#centerbtn').click(function () {
+    if (token) {
+        alert('4959')
+    } else {
+        alert('Please log in first')
+    }
 })
 
 poncon.start()
