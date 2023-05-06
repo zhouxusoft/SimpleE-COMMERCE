@@ -226,18 +226,22 @@ body {
 .bigproductname {
     margin: auto;
     font-size: 1.25rem;
+    user-select: text;
 }
 
 .bigproductdescription {
     margin: auto;
     height: 100px;
     padding: 10px 0;
+    user-select: text;
+    overflow: auto;
 }
 
 .bigproductprice {
     margin: auto;
     font-size: 1.25rem;
     margin-bottom: 20px;
+    user-select: text;
 }
 
 .buynumborder {
@@ -301,12 +305,25 @@ body {
     font-family: "Font Awesome 6 Free";
     font-weight: 300;
     font-size: 1.5rem;
+    color: #6c757d;
 }
 
 .productlikes {
     display: flex;
     justify-content: space-between;
     width: 200px;
+}
+
+.productlike {
+    cursor: pointer;
+}
+
+.productdislike {
+    cursor: pointer;
+}
+
+.productcomment {
+    cursor: pointer;
 }
 
 input[type=number]::-webkit-inner-spin-button,

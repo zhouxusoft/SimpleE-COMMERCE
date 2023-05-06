@@ -257,5 +257,33 @@ $('#centerbtn').click(function () {
     }
 })
 
+$('#delbuynum').click(function () {
+    let buynum = $('#buynum').val()
+    buynum = parseInt(buynum)
+    if (!isNaN(buynum)) {
+        if (buynum > 1) {
+            $('#buynum').val(buynum - 1)
+        } else {
+            $('#buynum').val(1)
+        }
+    } else {
+        $('#buynum').val(1)
+    }
+})
+
+$('#addbuynum').click(function () {
+    let buynum = $('#buynum').val()
+    buynum = parseInt(buynum)
+    if (!isNaN(buynum)) {
+        if (buynum > 0) {
+            $('#buynum').val(buynum + 1)
+        } else {
+            $('#buynum').val(1)
+        }
+    } else {
+        $('#buynum').val(1)
+    }
+})
+
 poncon.start()
 
