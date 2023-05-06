@@ -40,7 +40,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 
-dbcursor.execute("CREATE TABLE IF NOT EXISTS `product`  (\
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `products`  (\
                     Product_id int NOT NULL AUTO_INCREMENT,\
                     Product_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     Photo varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
@@ -151,7 +151,7 @@ def registration():
 
 @app.route('/getinfo', methods=['POST'])
 def getinfo ():
-    sql = "SELECT * FROM product"
+    sql = "SELECT * FROM products"
     dbcursor.execute(sql)
     productresult = dbcursor.fetchall()
     sql = "SELECT * FROM catagories"

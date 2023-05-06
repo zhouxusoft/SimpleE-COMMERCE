@@ -106,9 +106,10 @@ function getNewInfo () {
         success: function(response) {
             globalcatagroies = response.catagories
             globalproduct = response.product
-            console.log(globalcatagroies)
-            console.log(globalproduct)
-            resetCatagories ()
+            // console.log(globalcatagroies)
+            // console.log(globalproduct)
+            resetCatagories()
+            resetProduct(0)
         },
         error: function(error) {
             console.log(error)
@@ -123,12 +124,47 @@ function resetCatagories () {
     }
 }
 
-function resetProduct () {
+function resetProductList () {
+    let productlist = []
     for (let i = 0; i < globalproduct.length; i++) {
-        if (globalproduct[i][11] == currentcatagroy) {
-            
+        if (globalproduct[i][11] == currentcatagroy || currentcatagroy == 0) {
+            productlist.push(globalproduct[i])
         }
-        
+    }
+    console.log(productlist)
+    resetProduct (productlist)
+}
+
+function resetProduct (productlist) {
+    $('#allshopdatas').empty()
+    if (productlist.length > 0) {
+        for (let i = 0; i < productlist.length; i++) {
+            $('#allshopdatas').html($('#allshopdatas').html() + `
+                <div class="col-md-6 col-xl-4 col-xxl-3 databox mb-3">
+                    <div class="shopdata">
+                        <div class="shopinfos">
+                            <div class="shopimgborder">
+                                <div class="shopimg">
+                                    <img src="../static/productimg/${productlist[i][2]}" alt="" width="100px">
+                                </div>
+                            </div>
+                            <div class="shopinfoborder">
+                                <div class="shopinfo">
+                                    <div class="productname">${productlist[i][1]}</div>
+                                    <div class="productprice">$${productlist[i][5]}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shoplikes">
+                            <div class="shoplike"><span class="shopfont">&#xf164</span>${productlist[i][7]}</div>
+                            <div class="shopdislike"><span class="shopfont">&#xf165</span>${productlist[i][8]}</div>
+                            <div class="shopcomment"><span class="shopfont">&#xf4ad</span>${productlist[i][9]}</div>
+                        </div>
+                    </div>
+                </div>`)
+        }
+    } else {
+        $('#allshopdatas').html($('#allshopdatas').html() + `<div>No product</div>`)
     }
 }
 
@@ -140,11 +176,13 @@ $('#addcatagroiesdatas').click(function (e) {
         $('.allcatagroies').removeClass('selected')
         $('.catagroiestitle').addClass('selected')
         currentcatagroy = 0
+        resetProductList()
     } else {
         $('.catagroiestitle').removeClass('selected')
         $('.allcatagroies').removeClass('selected')
         $(e.target).addClass('selected')
         currentcatagroy = catagroyid.slice(10)
+        resetProductList()
     }
     // console.log(currentcatagroy)
 })
@@ -153,6 +191,7 @@ $('.catagroiestitle').click(function () {
     $('.allcatagroies').removeClass('selected')
     $('.catagroiestitle').addClass('selected')
     currentcatagroy = 0
+    resetProductList()
 })
 
 getNewInfo()
