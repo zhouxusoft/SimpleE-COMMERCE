@@ -14,46 +14,71 @@ dbcursor = db.cursor()
 dbcursor.execute("CREATE DATABASE IF NOT EXISTS ecommerce")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `buyers` (\
-                    Buyers_id int NOT NULL AUTO_INCREMENT,\
-                    Buyers_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Buyers_password varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Buyers_address varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Buyers_email varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Buyers_phone varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    PRIMARY KEY (Buyers_id) USING BTREE)\
+                    `Buyers_id` int NOT NULL AUTO_INCREMENT,\
+                    `Buyers_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Buyers_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Buyers_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Buyers_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Buyers_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Buyers_id`) USING BTREE)\
                     ENGINE=InnoDB CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=Dynamic")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `vendors` (\
-                    Vendors_id int NOT NULL AUTO_INCREMENT,\
-                    Vendors_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Vendors_password varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Vendors_address varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Vendors_email varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Vendors_phone varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    PRIMARY KEY(Vendors_id) USING BTREE)\
+                    `Vendors_id` int NOT NULL AUTO_INCREMENT,\
+                    `Vendors_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Vendors_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Vendors_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Vendors_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Vendors_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    PRIMARY KEY(`Vendors_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
-                    Catagories_id int NOT NULL AUTO_INCREMENT,\
-                    Catagory_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\
-                    PRIMARY KEY (Catagories_id) USING BTREE)\
+                    `Catagories_id` int NOT NULL AUTO_INCREMENT,\
+                    `Catagory_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\
+                    PRIMARY KEY (`Catagories_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
-
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `products`  (\
-                    Product_id int NOT NULL AUTO_INCREMENT,\
-                    Product_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Photo varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Post_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
-                    Product_describe varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
-                    Price decimal(10, 2) NULL DEFAULT NULL,\
-                    Inventory int NULL DEFAULT NULL,\
-                    Like_sum int NOT NULL DEFAULT 0,\
-                    Dislike_sum int NOT NULL DEFAULT 0,\
-                    Comment_sum int NOT NULL DEFAULT 0,\
-                    Vendors_id int NULL DEFAULT NULL,\
-                    Category_id int NULL DEFAULT NULL,\
-                    PRIMARY KEY (Product_id) USING BTREE)\
+                    `Product_id` int NOT NULL AUTO_INCREMENT,\
+                    `Product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Post_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Product_describe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Price` decimal(10, 2) NULL DEFAULT NULL,\
+                    `Inventory` int NULL DEFAULT NULL,\
+                    `Like_sum` int NOT NULL DEFAULT 0,\
+                    `Dislike_sum` int NOT NULL DEFAULT 0,\
+                    `Comment_sum` int NOT NULL DEFAULT 0,\
+                    `Vendors_id` int NULL DEFAULT NULL,\
+                    `Category_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Product_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
+
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `like`  (\
+                    `Like_id` int NOT NULL AUTO_INCREMENT,\
+                    `Like_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Product_id` int NULL DEFAULT NULL,\
+                    `Buyer_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Like_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
+
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `dislike`  (\
+                    `Dislike_id` int NOT NULL AUTO_INCREMENT,\
+                    `Dislike_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Product_id` int NULL DEFAULT NULL,\
+                    `Buyer_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Dislike_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
+
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `comment`  (\
+                    `Comment_id` int NOT NULL AUTO_INCREMENT,\
+                    `Conent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,\
+                    `Comment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Buyer_id` int NULL DEFAULT NULL,\
+                    `Vendor_id` int NULL DEFAULT NULL,\
+                    `Product_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Comment_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 app = Flask(__name__)
