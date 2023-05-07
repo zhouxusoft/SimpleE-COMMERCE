@@ -510,7 +510,6 @@ $('#gocommentbtn').click(function () {
                     success: function (response) {
                         alert(response.message)
                         getNewInfo()
-                        $('.productfont').click()
                     },
                     error: function (error) {
                         console.log(error)
