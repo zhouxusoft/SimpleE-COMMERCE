@@ -321,6 +321,26 @@ $('#allshopdatas').click(function (e) {
         if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('shopfont')) {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
             console.log(productid)
+            let likeflag = 0
+            let dislikeflag = 0
+            for (let i = 0; i < globallike.length; i++) {
+                if (globallike[i][2] == productid) {
+                    likeflag = 1
+                    break
+                }
+            }
+            for (let i = 0; i < globaldislike.length; i++) {
+                if (globaldislike[i][2] == productid) {
+                    dislikeflag = 1
+                    break
+                }
+            }
+            let toSend = {
+                productid: productid,
+                likeflag: likeflag,
+                dislikeflag: dislikeflag,
+                
+            }
         }
         else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('shopfont')) {
             console.log('shopdislike')
