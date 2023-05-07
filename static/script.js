@@ -406,6 +406,9 @@ $('#gocommentbtn').click(function () {
                         alert(response.message)
                         $('.productcomment').html(`<span class="productfont">\uf4ad</span>${parseInt($('.productcomment').text().slice(1)) + 1}`)
                         resetComment(getProductComment(currentproductid))
+                        if ($('.commentborder').html() == 'No comment') {
+                            $('.commentborder').empty()
+                        }
                         $('.commentborder').html(`
                             <div class="usercommentborder">
                                 <div class="usercomment">
