@@ -220,5 +220,47 @@ def comment():
 
     return jsonify({'success': True, 'message': 'Comment posted successfully'})
 
+@app.route('/like', methods=['POST'])
+def like():
+    data = request.get_json()
+    if data['likeflag'] == 0:
+        sql = "INSERT INTO `like` (`Product_id`, `Buyer_id`) VALUES (%s, %s)"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    if data['likeflag'] == 1:
+        sql = "DELETE FROM `like` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    if data['dislikeflag'] == 1:
+        sql = "DELETE FROM `dislike` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    
+    return jsonify({'success': True})
+
+@app.route('/dislike', methods=['POST'])
+def dislike():
+    data = request.get_json()
+    if data['dislikeflag'] == 0:
+        sql = "INSERT INTO `dislike` (`Product_id`, `Buyer_id`) VALUES (%s, %s)"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    if data['dislikeflag'] == 1:
+        sql = "DELETE FROM `dislike` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    if data['likeflag'] == 1:
+        sql = "DELETE FROM `like` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+        val = (data['Product_id'], data['userid'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    
+    return jsonify({'success': True})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

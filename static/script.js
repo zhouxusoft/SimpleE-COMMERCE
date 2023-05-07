@@ -120,7 +120,7 @@ $('#registrationcreatebutton').click(function () {
         error: function (error) {
             console.log(error)
         }
-    });
+    })
 })
 
 function getNewInfo() {
@@ -131,6 +131,8 @@ function getNewInfo() {
         success: function (response) {
             globalcatagroies = response.catagories
             globalproduct = response.product
+            globallike = []
+            globaldislike = []
             for (let i = 0; i < response.like.length; i++) {
                 if (response.like[i][3] == token.id) {
                     globallike.push(response.like[i])
@@ -181,7 +183,7 @@ function resetProduct(productlist) {
     $('#allshopdatas').empty()
     if (productlist.length > 0) {
         for (let i = 0; i < productlist.length; i++) {
-            let imglist = getImgList(globalproduct[i][2])
+            let imglist = getImgList(productlist[i][2])
             if (imglist.length > 0) {
                 $('#allshopdatas').html($('#allshopdatas').html() + `
                 <div class="col-md-6 col-xl-4 col-xxl-3 databox mb-3">
@@ -200,8 +202,8 @@ function resetProduct(productlist) {
                             </div>
                         </div>
                         <div class="shoplikes">
-                            <div class="shoplike"><span class="shopfont">&#xf164</span>${productlist[i][7]}</div>
-                            <div class="shopdislike"><span class="shopfont">&#xf165</span>${productlist[i][8]}</div>
+                            <div class="shoplike"><span class="shopfont likefont">&#xf164</span>${productlist[i][7]}</div>
+                            <div class="shopdislike"><span class="shopfont dislikefont">&#xf165</span>${productlist[i][8]}</div>
                             <div class="shopcomment"><span class="shopfont">&#xf4ad</span>${productlist[i][9]}</div>
                         </div>
                     </div>
@@ -224,22 +226,22 @@ function resetProduct(productlist) {
                             </div>
                         </div>
                         <div class="shoplikes">
-                            <div class="shoplike"><span class="shopfont">&#xf164</span>${productlist[i][7]}</div>
-                            <div class="shopdislike"><span class="shopfont">&#xf165</span>${productlist[i][8]}</div>
+                            <div class="shoplike"><span class="shopfont likefont">&#xf164</span>${productlist[i][7]}</div>
+                            <div class="shopdislike"><span class="shopfont dislikefont">&#xf165</span>${productlist[i][8]}</div>
                             <div class="shopcomment"><span class="shopfont">&#xf4ad</span>${productlist[i][9]}</div>
                         </div>
                     </div>
                 </div>`)
             }
             for (let j = 0; j < globallike.length; j++) {
-                if (globallike[j][2] == globalproduct[i][0]) {
-                    $(`#product${productlist[i][0]} .shoplikes .shoplike`).html(`<span class="shopfont"><i class="fa-solid fa-thumbs-up" style="color: #ff0000;"></i></span>${productlist[i][7]}`)
+                if (globallike[j][2] == productlist[i][0]) {
+                    $(`#product${productlist[i][0]} .shoplikes .shoplike`).html(`<span class="shopfont likefont"><i class="likefont fa-solid fa-thumbs-up" style="color: #ff0000;"></i></span>${productlist[i][7]}`)
                     break
                 }
             }
             for (let j = 0; j < globaldislike.length; j++) {
-                if (globaldislike[j][2] == globalproduct[i][0]) {
-                    $(`#product${productlist[i][0]} .shoplikes .shopdislike`).html(`<span class="shopfont"><i class="fa-solid fa-thumbs-down" style="color: #000000;"></i></span>${productlist[i][8]}`)
+                if (globaldislike[j][2] == productlist[i][0]) {
+                    $(`#product${productlist[i][0]} .shoplikes .shopdislike`).html(`<span class="shopfont dislikefont"><i class="dislikefont fa-solid fa-thumbs-down" style="color: #000000;"></i></span>${productlist[i][8]}`)
                     break
                 }
             }
@@ -318,7 +320,7 @@ function resetProductInfo(i) {
 $('#allshopdatas').click(function (e) {
     // console.log($(e.target).closest('.shopdata').attr('id'))
     if ($(e.target).closest('.shopdata').length) {
-        if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('shopfont')) {
+        if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('likefont')) {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
             console.log(productid)
             let likeflag = 0
@@ -336,14 +338,59 @@ $('#allshopdatas').click(function (e) {
                 }
             }
             let toSend = {
-                productid: productid,
+                Product_id: productid,
                 likeflag: likeflag,
                 dislikeflag: dislikeflag,
-                
+                userid: token.id
             }
+            $.ajax({
+                url: '/like',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    getNewInfo()
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         }
-        else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('shopfont')) {
-            console.log('shopdislike')
+        else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('dislikefont')) {
+            let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
+            console.log(productid)
+            let likeflag = 0
+            let dislikeflag = 0
+            for (let i = 0; i < globallike.length; i++) {
+                if (globallike[i][2] == productid) {
+                    likeflag = 1
+                    break
+                }
+            }
+            for (let i = 0; i < globaldislike.length; i++) {
+                if (globaldislike[i][2] == productid) {
+                    dislikeflag = 1
+                    break
+                }
+            }
+            let toSend = {
+                Product_id: productid,
+                likeflag: likeflag,
+                dislikeflag: dislikeflag,
+                userid: token.id
+            }
+            $.ajax({
+                url: '/dislike',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    getNewInfo()
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         } else {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
             // console.log(productid)
