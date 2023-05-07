@@ -195,5 +195,15 @@ def getinfo ():
     }
     return jsonify(allresult)
 
+@app.route('/comment', methods=['POST'])
+def comment():
+    data = request.get_json()
+    # print(data)
+    sql = "INSERT INTO comment (Conent, Buyer_id, Buyer_name, Product_id) VALUES (%s, %s, %s, %s)"
+    val = (data['Conent'], data['Buyer_id'], data['Buyer_name'], data['Product_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
+    return jsonify({'success': True, 'message': 'Comment posted successfully'})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

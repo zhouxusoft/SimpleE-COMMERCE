@@ -135,10 +135,10 @@ function getNewInfo() {
             globaldislike = response.dislike
             globalcomment = response.comment
             // console.log(globalcatagroies)
-            // console.log(globalproduct).
+            console.log(globalproduct)
             // console.log(globallike)
             // console.log(globaldislike)
-            // console.log(globalcomment)
+            console.log(globalcomment)
             
             resetCatagories()
             resetProductList()
@@ -374,15 +374,44 @@ $('#addbuynum').click(function () {
 })
 
 $('#gocommentbtn').click(function () {
-    $('.commentborder').html(`
-        <div class="mb-2">
-            <textarea id="usercommentinput" class="form-control" placeholder="What you want to say"></textarea>
-        </div>
-        <div class="addcommentbtnborder">
-            <button class="btn btn-outline-secondary" type="button" id="addcommentbtn">Add Comment</button>
-        </div>`
-    )
-    $('#usercommentinput').focus()
+    if (token) {
+        $('.commentborder').html(`
+            <div class="mb-2">
+                <textarea id="usercommentinput" class="form-control" placeholder="What you want to say"></textarea>
+            </div>
+            <div class="addcommentbtnborder">
+                <button class="btn btn-outline-secondary" type="button" id="addcommentbtn">Add Comment</button>
+            </div>`
+        )
+        $('#usercommentinput').focus()
+        $('#addcommentbtn').click(function () {
+            if ($('#usercommentinput').val() != '') {
+                let usercomment = $('#usercommentinput').val()
+                $('#usercommentinput').val('')
+                let toSend = {
+                    Conent: usercomment,
+                    Buyer_id: token.id,
+                    Buyer_name: token.name,
+                    Product_id: currentproductid
+                }
+                $.ajax({
+                    url: '/comment',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        getNewInfo()
+                        alert(response.message)
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+        })
+    } else {
+        alert('Please log in first')
+    }
 })
 
 function getTime (timestramp) {
@@ -394,7 +423,7 @@ function getTime (timestramp) {
 function getProductComment (productid) {
     let productcommentlist = []
     for (let i = 0; i < globalcomment.length; i++) {
-        if (globalcomment[i][6] == productid) {
+        if (globalcomment[i][5] == productid) {
             productcommentlist.push(globalcomment[i])
         }
     }
