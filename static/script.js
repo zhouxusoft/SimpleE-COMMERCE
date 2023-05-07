@@ -161,13 +161,15 @@ function resetProduct(productlist) {
     $('#allshopdatas').empty()
     if (productlist.length > 0) {
         for (let i = 0; i < productlist.length; i++) {
-            $('#allshopdatas').html($('#allshopdatas').html() + `
+            let imglist = getImgList(globalproduct[i][2])
+            if (imglist.length > 0) {
+                $('#allshopdatas').html($('#allshopdatas').html() + `
                 <div class="col-md-6 col-xl-4 col-xxl-3 databox mb-3">
                     <div class="shopdata" id="product${productlist[i][0]}">
                         <div class="shopinfos">
                             <div class="shopimgborder">
                                 <div class="shopimg">
-                                    <img src="../static/productimg/${productlist[i][2]}" alt="" width="100px">
+                                    <img src="../static/productimg/${imglist[0]}" alt="" width="100px">
                                 </div>
                             </div>
                             <div class="shopinfoborder">
@@ -184,10 +186,47 @@ function resetProduct(productlist) {
                         </div>
                     </div>
                 </div>`)
+            } else {
+                $('#allshopdatas').html($('#allshopdatas').html() + `
+                <div class="col-md-6 col-xl-4 col-xxl-3 databox mb-3">
+                    <div class="shopdata" id="product${productlist[i][0]}">
+                        <div class="shopinfos">
+                            <div class="shopimgborder">
+                                <div class="shopimg">
+                                    No picture
+                                </div>
+                            </div>
+                            <div class="shopinfoborder">
+                                <div class="shopinfo">
+                                    <div class="productname">${productlist[i][1]}</div>
+                                    <div class="productprice">$${productlist[i][5]}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shoplikes">
+                            <div class="shoplike"><span class="shopfont">&#xf164</span>${productlist[i][7]}</div>
+                            <div class="shopdislike"><span class="shopfont">&#xf165</span>${productlist[i][8]}</div>
+                            <div class="shopcomment"><span class="shopfont">&#xf4ad</span>${productlist[i][9]}</div>
+                        </div>
+                    </div>
+                </div>`)
+            }
+            
         }
     } else {
         $('#allshopdatas').html($('#allshopdatas').html() + `<div>No product</div>`)
     }
+}
+
+function getImgList (imgs) {
+    let imglist = imgs.split('&')
+    if (imglist[imglist.length - 1] === '') {
+        imglist.pop()
+    }
+    if (imglist.length > 5) {
+        imglist.splice(5)
+    }
+    return imglist
 }
 
 $('#addcatagroiesdatas').click(function (e) {
@@ -217,7 +256,7 @@ $('.catagroiestitle').click(function () {
 })
 
 $('#allshopdatas').click(function (e) {
-    // console.log($(e.target))
+    // console.log($(e.target).closest('.shopdata').attr('id'))
     if ($(e.target).closest('.shopdata').length) {
         if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('shopfont')) {
             console.log('shoplike')
@@ -228,7 +267,42 @@ $('#allshopdatas').click(function (e) {
         else if ($(e.target).hasClass('shopcomment') || $(e.target).hasClass('shopfont')) {
             console.log('shopcomment')
         } else {
+            let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
+            console.log(productid)
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == productid) {
+                    let imglist = getImgList(globalproduct[i][2])
+                    // console.log(imglist)
+                    if (imglist > 0) {
+                        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[0]}" alt="" width="160px">`)
+                    } else {
+                        $('.bigproductimg').text(`No picture`)
+                    }
+                    $('.smallproductimgs').empty()
+                    for (let i = 0; i < imglist.length; i++) {
+                        $('.smallproductimgs').html($('.smallproductimgs').html() + `
+                            <div class="smallproductimg" id="img${i}">
+                                <img src="../static/productimg/${imglist[i]}" alt="" width="40px">
+                            </div>
+                        `)
+                    }
+                    $('.bigproductname').text(globalproduct[i][1])
+                    $('.bigproductdescription').text(globalproduct[i][4])
+                    $('.bigproductprice').text(`$${globalproduct[i][5]}`)
+                    $('.productlike').html(`<span class="productfont">\uf164</span>${globalproduct[i][7]}`)
+                    $('.productdislike').html(`<span class="productfont">\uf165</span>${globalproduct[i][8]}`)
+                    $('.productcomment').html(`<span class="productfont">\uf4ad</span>${globalproduct[i][9]}`)
+                    $('.smallproductimg').click(function (e) {
+                        let imgid = e.currentTarget.id.slice(3)
+                        // console.log(imgid)
+                        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[imgid]}" alt="" width="160px">`)
+                    })
+                    
+                    break
+                }
+            }
             $('#productinfobtn').click()
+            
         }
     }
 })

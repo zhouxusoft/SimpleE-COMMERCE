@@ -240,7 +240,7 @@ body {
 .bigproductprice {
     margin: auto;
     font-size: 1.25rem;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     user-select: text;
 }
 
@@ -281,6 +281,7 @@ body {
     margin: auto;
     overflow: hidden;
     max-width: 220px;
+    height: 80px;
 }
 
 .smallproductimg {
