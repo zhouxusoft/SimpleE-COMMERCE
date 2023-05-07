@@ -76,6 +76,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `comment`  (\
                     `Conent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,\
                     `Comment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
                     `Buyer_id` int NULL DEFAULT NULL,\
+                    `Buyer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     `Vendor_id` int NULL DEFAULT NULL,\
                     `Product_id` int NULL DEFAULT NULL,\
                     PRIMARY KEY (`Comment_id`) USING BTREE)\
@@ -87,12 +88,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-@app.route('/main')
-def main():
-    return redirect('https://godxu.top')
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -176,15 +171,27 @@ def registration():
 
 @app.route('/getinfo', methods=['POST'])
 def getinfo ():
-    sql = "SELECT * FROM products"
+    sql = "SELECT * FROM `products`"
     dbcursor.execute(sql)
     productresult = dbcursor.fetchall()
-    sql = "SELECT * FROM catagories"
+    sql = "SELECT * FROM `catagories`"
     dbcursor.execute(sql)
     catagoriesresult = dbcursor.fetchall()
+    sql = "SELECT * FROM `like`"
+    dbcursor.execute(sql)
+    likeresult = dbcursor.fetchall()
+    sql = "SELECT * FROM `dislike`"
+    dbcursor.execute(sql)
+    dislikeresult = dbcursor.fetchall()
+    sql = "SELECT * FROM `comment`"
+    dbcursor.execute(sql)
+    commentresult = dbcursor.fetchall()
     allresult = {
         'product': productresult,
-        'catagories': catagoriesresult
+        'catagories': catagoriesresult,
+        'like': likeresult,
+        'dislike': dislikeresult,
+        'comment': commentresult
     }
     return jsonify(allresult)
 

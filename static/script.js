@@ -1,6 +1,10 @@
 let token = JSON.parse(localStorage.getItem("token"))
 let globalcatagroies
 let globalproduct
+let globalcomment
+let globallike
+let globaldislike
+let currentproductid
 
 const poncon = new Poncon()
 
@@ -127,8 +131,15 @@ function getNewInfo() {
         success: function (response) {
             globalcatagroies = response.catagories
             globalproduct = response.product
+            globallike = response.like
+            globaldislike = response.dislike
+            globalcomment = response.comment
             // console.log(globalcatagroies)
-            // console.log(globalproduct)
+            // console.log(globalproduct).
+            // console.log(globallike)
+            // console.log(globaldislike)
+            // console.log(globalcomment)
+            
             resetCatagories()
             resetProductList()
         },
@@ -137,6 +148,7 @@ function getNewInfo() {
         }
     })
 }
+
 getNewInfo()
 
 function resetCatagories() {
@@ -268,7 +280,8 @@ $('#allshopdatas').click(function (e) {
             console.log('shopcomment')
         } else {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
-            console.log(productid)
+            // console.log(productid)
+            currentproductid = productid
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == productid) {
                     let imglist = getImgList(globalproduct[i][2])
@@ -297,7 +310,8 @@ $('#allshopdatas').click(function (e) {
                         // console.log(imgid)
                         $('.bigproductimg').html(`<img src="../static/productimg/${imglist[imgid]}" alt="" width="160px">`)
                     })
-                    
+                    resetComment(getProductComment(currentproductid))
+                
                     break
                 }
             }
@@ -357,6 +371,61 @@ $('#addbuynum').click(function () {
     } else {
         $('#buynum').val(1)
     }
+})
+
+$('#gocommentbtn').click(function () {
+    $('.commentborder').html(`
+        <div class="mb-2">
+            <textarea id="usercommentinput" class="form-control" placeholder="What you want to say"></textarea>
+        </div>
+        <div class="addcommentbtnborder">
+            <button class="btn btn-outline-secondary" type="button" id="addcommentbtn">Add Comment</button>
+        </div>`
+    )
+    $('#usercommentinput').focus()
+})
+
+function getTime (timestramp) {
+    let date = new Date(Date.parse(timestramp))
+    date = date.toLocaleString()
+    return date
+}
+
+function getProductComment (productid) {
+    let productcommentlist = []
+    for (let i = 0; i < globalcomment.length; i++) {
+        if (globalcomment[i][6] == productid) {
+            productcommentlist.push(globalcomment[i])
+        }
+    }
+    return productcommentlist
+}
+
+function resetComment (productcommentlist) {
+    if (productcommentlist.length > 0) {
+        $('.commentborder').empty()
+        for (let i = 0; i < productcommentlist.length; i++) {
+            $('.commentborder').html($('.commentborder').html() + `
+                <div class="usercommentborder">
+                    <div class="usercomment">
+                        <div class="commentinfo">
+                            <div class="commentname">${productcommentlist[i][4]}</div>
+                            <div class="commenttime">${getTime(productcommentlist[i][2])}</div>
+                        </div>
+                        <div class="commenttext">
+                            ${productcommentlist[i][1]}
+                        </div>
+                    </div>
+                </div>
+            `)
+        } 
+    } else {
+        $('.commentborder').html(`No comment`)
+    }
+}
+
+$('.productcomment').click(function () {
+    resetComment(getProductComment(currentproductid))
 })
 
 poncon.start()

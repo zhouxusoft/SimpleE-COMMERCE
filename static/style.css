@@ -332,3 +332,50 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.commentborder {
+    height: 200px;
+    width: 100%;
+    border: 1px solid #6c757d;
+    padding: 10px;
+    overflow: auto;
+}
+
+.usercommentborder {
+    min-height: 50px;
+    width: 100%;
+    border: 1px solid #6c757d;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.commentinfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentname {
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.commenttime {
+    color: #6c757d;
+}
+
+.commenttext {
+    color: #4a5c6d;
+    padding-left: 5px;
+    border-left: 3px solid #4a5c6d99;
+    margin-left: 5px;
+}
+
+#usercommentinput {
+    min-height: 130px;
+}
+
+.addcommentbtnborder {
+    margin-left: auto;
+    text-align: right;
+}
