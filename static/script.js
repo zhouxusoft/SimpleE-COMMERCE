@@ -152,6 +152,13 @@ function getNewInfo() {
 
             resetCatagories()
             resetProductList()
+
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == currentproductid) {
+                    resetProductInfo(globalproduct[i])
+                    break
+                }
+            }
         },
         error: function (error) {
             console.log(error)
@@ -288,8 +295,8 @@ $('.catagroiestitle').click(function () {
     resetProductList()
 })
 
-function resetProductInfo(i) {
-    let imglist = getImgList(globalproduct[i][2])
+function resetProductInfo(product) {
+    let imglist = getImgList(product[2])
     // console.log(imglist)
     if (imglist.length > 0) {
         $('.bigproductimg').html(`<img src="../static/productimg/${imglist[0]}" alt="" width="160px">`)
@@ -304,17 +311,30 @@ function resetProductInfo(i) {
             </div>
         `)
     }
-    $('.bigproductname').text(globalproduct[i][1])
-    $('.bigproductdescription').text(globalproduct[i][4])
-    $('.bigproductprice').text(`$${globalproduct[i][5]}`)
-    $('.productlike').html(`<span class="productfont">\uf164</span>${globalproduct[i][7]}`)
-    $('.productdislike').html(`<span class="productfont">\uf165</span>${globalproduct[i][8]}`)
-    $('.productcomment').html(`<span class="productfont">\uf4ad</span>${globalproduct[i][9]}`)
+    $('.bigproductname').text(product[1])
+    $('.bigproductdescription').text(product[4])
+    $('.bigproductprice').text(`$${product[5]}`)
+    $('.productlike').html(`<span class="productfont">\uf164</span>${product[7]}`)
+    $('.productdislike').html(`<span class="productfont">\uf165</span>${product[8]}`)
+    $('.productcomment').html(`<span class="productfont">\uf4ad</span>${product[9]}`)
     $('.smallproductimg').click(function (e) {
         let imgid = e.currentTarget.id.slice(3)
         // console.log(imgid)
         $('.bigproductimg').html(`<img src="../static/productimg/${imglist[imgid]}" alt="" width="160px">`)
     })
+
+    for (let j = 0; j < globallike.length; j++) {
+        if (globallike[j][2] == product[0]) {
+            $('.productlike').html(`<span class="productfont"><i class="fa-solid fa-thumbs-up" style="color: #ff0000;"></i></span>${product[7]}`)
+            break
+        }
+    }
+    for (let j = 0; j < globaldislike.length; j++) {
+        if (globaldislike[j][2] == product[0]) {
+            $('.productdislike').html(`<span class="productfont"><i class="fa-solid fa-thumbs-down" style="color: #000000;"></i></span>${product[8]}`)
+            break
+        }
+    }
 }
 
 $('#allshopdatas').click(function (e) {
@@ -397,7 +417,7 @@ $('#allshopdatas').click(function (e) {
             currentproductid = productid
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == productid) {
-                    resetProductInfo(i)
+                    resetProductInfo(globalproduct[i])
                     resetComment(getProductComment(currentproductid))
                     break
                 }
@@ -560,6 +580,78 @@ function resetComment(productcommentlist) {
 
 $('.productcomment').click(function () {
     resetComment(getProductComment(currentproductid))
+})
+
+$('.productlike').click(function () {
+    let productid = currentproductid
+    let likeflag = 0
+    let dislikeflag = 0
+    for (let i = 0; i < globallike.length; i++) {
+        if (globallike[i][2] == productid) {
+            likeflag = 1
+            break
+        }
+    }
+    for (let i = 0; i < globaldislike.length; i++) {
+        if (globaldislike[i][2] == productid) {
+            dislikeflag = 1
+            break
+        }
+    }
+    let toSend = {
+        Product_id: productid,
+        likeflag: likeflag,
+        dislikeflag: dislikeflag,
+        userid: token.id
+    }
+    $.ajax({
+        url: '/like',
+        type: 'POST',
+        data: JSON.stringify(toSend),
+        contentType: 'application/json',
+        success: function (response) {
+            getNewInfo()
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+})
+
+$('.productdislike').click(function () {
+    let productid = currentproductid
+    let likeflag = 0
+    let dislikeflag = 0
+    for (let i = 0; i < globallike.length; i++) {
+        if (globallike[i][2] == productid) {
+            likeflag = 1
+            break
+        }
+    }
+    for (let i = 0; i < globaldislike.length; i++) {
+        if (globaldislike[i][2] == productid) {
+            dislikeflag = 1
+            break
+        }
+    }
+    let toSend = {
+        Product_id: productid,
+        likeflag: likeflag,
+        dislikeflag: dislikeflag,
+        userid: token.id
+    }
+    $.ajax({
+        url: '/dislike',
+        type: 'POST',
+        data: JSON.stringify(toSend),
+        contentType: 'application/json',
+        success: function (response) {
+            getNewInfo()
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 })
 
 poncon.start()
