@@ -136,10 +136,10 @@ function getNewInfo() {
             globalcomment = response.comment
             // console.log(globalcatagroies)
             console.log(globalproduct)
-            // console.log(globallike)
-            // console.log(globaldislike)
-            console.log(globalcomment)
-            
+            console.log(globallike)
+            console.log(globaldislike)
+            // console.log(globalcomment)
+
             resetCatagories()
             resetProductList()
         },
@@ -223,14 +223,14 @@ function resetProduct(productlist) {
                     </div>
                 </div>`)
             }
-            
+
         }
     } else {
         $('#allshopdatas').html($('#allshopdatas').html() + `<div>No product</div>`)
     }
 }
 
-function getImgList (imgs) {
+function getImgList(imgs) {
     let imglist = imgs.split('&')
     if (imglist[imglist.length - 1] === '') {
         imglist.pop()
@@ -267,6 +267,35 @@ $('.catagroiestitle').click(function () {
     resetProductList()
 })
 
+function resetProductInfo(i) {
+    let imglist = getImgList(globalproduct[i][2])
+    // console.log(imglist)
+    if (imglist.length > 0) {
+        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[0]}" alt="" width="160px">`)
+    } else {
+        $('.bigproductimg').text(`No picture`)
+    }
+    $('.smallproductimgs').empty()
+    for (let i = 0; i < imglist.length; i++) {
+        $('.smallproductimgs').html($('.smallproductimgs').html() + `
+            <div class="smallproductimg" id="img${i}">
+                <img src="../static/productimg/${imglist[i]}" alt="" width="40px">
+            </div>
+        `)
+    }
+    $('.bigproductname').text(globalproduct[i][1])
+    $('.bigproductdescription').text(globalproduct[i][4])
+    $('.bigproductprice').text(`$${globalproduct[i][5]}`)
+    $('.productlike').html(`<span class="productfont">\uf164</span>${globalproduct[i][7]}`)
+    $('.productdislike').html(`<span class="productfont">\uf165</span>${globalproduct[i][8]}`)
+    $('.productcomment').html(`<span class="productfont">\uf4ad</span>${globalproduct[i][9]}`)
+    $('.smallproductimg').click(function (e) {
+        let imgid = e.currentTarget.id.slice(3)
+        // console.log(imgid)
+        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[imgid]}" alt="" width="160px">`)
+    })
+}
+
 $('#allshopdatas').click(function (e) {
     // console.log($(e.target).closest('.shopdata').attr('id'))
     if ($(e.target).closest('.shopdata').length) {
@@ -284,39 +313,13 @@ $('#allshopdatas').click(function (e) {
             currentproductid = productid
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == productid) {
-                    let imglist = getImgList(globalproduct[i][2])
-                    // console.log(imglist)
-                    if (imglist.length > 0) {
-                        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[0]}" alt="" width="160px">`)
-                    } else {
-                        $('.bigproductimg').text(`No picture`)
-                    }
-                    $('.smallproductimgs').empty()
-                    for (let i = 0; i < imglist.length; i++) {
-                        $('.smallproductimgs').html($('.smallproductimgs').html() + `
-                            <div class="smallproductimg" id="img${i}">
-                                <img src="../static/productimg/${imglist[i]}" alt="" width="40px">
-                            </div>
-                        `)
-                    }
-                    $('.bigproductname').text(globalproduct[i][1])
-                    $('.bigproductdescription').text(globalproduct[i][4])
-                    $('.bigproductprice').text(`$${globalproduct[i][5]}`)
-                    $('.productlike').html(`<span class="productfont">\uf164</span>${globalproduct[i][7]}`)
-                    $('.productdislike').html(`<span class="productfont">\uf165</span>${globalproduct[i][8]}`)
-                    $('.productcomment').html(`<span class="productfont">\uf4ad</span>${globalproduct[i][9]}`)
-                    $('.smallproductimg').click(function (e) {
-                        let imgid = e.currentTarget.id.slice(3)
-                        // console.log(imgid)
-                        $('.bigproductimg').html(`<img src="../static/productimg/${imglist[imgid]}" alt="" width="160px">`)
-                    })
+                    resetProductInfo(i)
                     resetComment(getProductComment(currentproductid))
-                
                     break
                 }
             }
             $('#productinfobtn').click()
-            
+
         }
     }
 })
@@ -400,8 +403,23 @@ $('#gocommentbtn').click(function () {
                     data: JSON.stringify(toSend),
                     contentType: 'application/json',
                     success: function (response) {
-                        getNewInfo()
                         alert(response.message)
+                        $('.productcomment').html(`<span class="productfont">\uf4ad</span>${parseInt($('.productcomment').text().slice(1)) + 1}`)
+                        resetComment(getProductComment(currentproductid))
+                        $('.commentborder').html(`
+                            <div class="usercommentborder">
+                                <div class="usercomment">
+                                    <div class="commentinfo">
+                                        <div class="commentname">${token.name}</div>
+                                        <div class="commenttime">now</div>
+                                    </div>
+                                    <div class="commenttext">
+                                        ${usercomment}
+                                    </div>
+                                </div>
+                            </div>
+                        ` + $('.commentborder').html())
+                        getNewInfo()
                     },
                     error: function (error) {
                         console.log(error)
@@ -414,13 +432,13 @@ $('#gocommentbtn').click(function () {
     }
 })
 
-function getTime (timestramp) {
+function getTime(timestramp) {
     let date = new Date(Date.parse(timestramp))
     date = date.toLocaleString()
     return date
 }
 
-function getProductComment (productid) {
+function getProductComment(productid) {
     let productcommentlist = []
     for (let i = 0; i < globalcomment.length; i++) {
         if (globalcomment[i][5] == productid) {
@@ -430,10 +448,10 @@ function getProductComment (productid) {
     return productcommentlist
 }
 
-function resetComment (productcommentlist) {
+function resetComment(productcommentlist) {
     if (productcommentlist.length > 0) {
         $('.commentborder').empty()
-        for (let i = 0; i < productcommentlist.length; i++) {
+        for (let i = productcommentlist.length - 1; i > -1; i--) {
             $('.commentborder').html($('.commentborder').html() + `
                 <div class="usercommentborder">
                     <div class="usercomment">
@@ -447,7 +465,7 @@ function resetComment (productcommentlist) {
                     </div>
                 </div>
             `)
-        } 
+        }
     } else {
         $('.commentborder').html(`No comment`)
     }

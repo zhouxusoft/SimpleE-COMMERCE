@@ -203,6 +203,21 @@ def comment():
     val = (data['Conent'], data['Buyer_id'], data['Buyer_name'], data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
+
+    sql = "SELECT * FROM `comment`"
+    dbcursor.execute(sql)
+    commentresult = dbcursor.fetchall()
+
+    commentnum = 0
+    
+    for i in commentresult:
+        if int(i[5]) == int(data['Product_id']):
+            commentnum = commentnum + 1
+    
+    sql = "UPDATE products SET Comment_Sum = %s WHERE Product_id = %s"
+    val = (commentnum, data['Product_id'])
+    dbcursor.execute(sql, val)
+
     return jsonify({'success': True, 'message': 'Comment posted successfully'})
 
 if __name__ == '__main__':
