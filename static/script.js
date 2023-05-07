@@ -32,7 +32,7 @@ $('#loginenterbutton').click(function () {
     } else {
         currentkind = 'vendor'
     }
-    console.log(currentkind)
+    // console.log(currentkind)
     let toSend = {
         name: loginname,
         password: loginpassword,
@@ -145,9 +145,9 @@ function getNewInfo() {
             }
             globalcomment = response.comment
             // console.log(globalcatagroies)
-            console.log(globalproduct)
-            console.log(globallike)
-            console.log(globaldislike)
+            // console.log(globalproduct)
+            // console.log(globallike)
+            // console.log(globaldislike)
             // console.log(globalcomment)
 
             resetCatagories()
@@ -159,6 +159,7 @@ function getNewInfo() {
                     break
                 }
             }
+            resetComment(getProductComment(currentproductid))
         },
         error: function (error) {
             console.log(error)
@@ -508,25 +509,8 @@ $('#gocommentbtn').click(function () {
                     contentType: 'application/json',
                     success: function (response) {
                         alert(response.message)
-                        $('.productcomment').html(`<span class="productfont">\uf4ad</span>${parseInt($('.productcomment').text().slice(1)) + 1}`)
-                        resetComment(getProductComment(currentproductid))
-                        if ($('.commentborder').html() == 'No comment') {
-                            $('.commentborder').empty()
-                        }
-                        $('.commentborder').html(`
-                            <div class="usercommentborder">
-                                <div class="usercomment">
-                                    <div class="commentinfo">
-                                        <div class="commentname">${token.name}</div>
-                                        <div class="commenttime">now</div>
-                                    </div>
-                                    <div class="commenttext">
-                                        ${usercomment}
-                                    </div>
-                                </div>
-                            </div>
-                        ` + $('.commentborder').html())
                         getNewInfo()
+                        $('.productfont').click()
                     },
                     error: function (error) {
                         console.log(error)
@@ -583,75 +567,83 @@ $('.productcomment').click(function () {
 })
 
 $('.productlike').click(function () {
-    let productid = currentproductid
-    let likeflag = 0
-    let dislikeflag = 0
-    for (let i = 0; i < globallike.length; i++) {
-        if (globallike[i][2] == productid) {
-            likeflag = 1
-            break
+    if (token) {
+        let productid = currentproductid
+        let likeflag = 0
+        let dislikeflag = 0
+        for (let i = 0; i < globallike.length; i++) {
+            if (globallike[i][2] == productid) {
+                likeflag = 1
+                break
+            }
         }
-    }
-    for (let i = 0; i < globaldislike.length; i++) {
-        if (globaldislike[i][2] == productid) {
-            dislikeflag = 1
-            break
+        for (let i = 0; i < globaldislike.length; i++) {
+            if (globaldislike[i][2] == productid) {
+                dislikeflag = 1
+                break
+            }
         }
-    }
-    let toSend = {
-        Product_id: productid,
-        likeflag: likeflag,
-        dislikeflag: dislikeflag,
-        userid: token.id
-    }
-    $.ajax({
-        url: '/like',
-        type: 'POST',
-        data: JSON.stringify(toSend),
-        contentType: 'application/json',
-        success: function (response) {
-            getNewInfo()
-        },
-        error: function (error) {
-            console.log(error)
+        let toSend = {
+            Product_id: productid,
+            likeflag: likeflag,
+            dislikeflag: dislikeflag,
+            userid: token.id
         }
-    })
+        $.ajax({
+            url: '/like',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                getNewInfo()
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    } else {
+        alert('Please log in first')
+    }
 })
 
 $('.productdislike').click(function () {
-    let productid = currentproductid
-    let likeflag = 0
-    let dislikeflag = 0
-    for (let i = 0; i < globallike.length; i++) {
-        if (globallike[i][2] == productid) {
-            likeflag = 1
-            break
+    if (token) {
+        let productid = currentproductid
+        let likeflag = 0
+        let dislikeflag = 0
+        for (let i = 0; i < globallike.length; i++) {
+            if (globallike[i][2] == productid) {
+                likeflag = 1
+                break
+            }
         }
-    }
-    for (let i = 0; i < globaldislike.length; i++) {
-        if (globaldislike[i][2] == productid) {
-            dislikeflag = 1
-            break
+        for (let i = 0; i < globaldislike.length; i++) {
+            if (globaldislike[i][2] == productid) {
+                dislikeflag = 1
+                break
+            }
         }
-    }
-    let toSend = {
-        Product_id: productid,
-        likeflag: likeflag,
-        dislikeflag: dislikeflag,
-        userid: token.id
-    }
-    $.ajax({
-        url: '/dislike',
-        type: 'POST',
-        data: JSON.stringify(toSend),
-        contentType: 'application/json',
-        success: function (response) {
-            getNewInfo()
-        },
-        error: function (error) {
-            console.log(error)
+        let toSend = {
+            Product_id: productid,
+            likeflag: likeflag,
+            dislikeflag: dislikeflag,
+            userid: token.id
         }
-    })
+        $.ajax({
+            url: '/dislike',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                getNewInfo()
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    } else {
+        alert('Please log in first')
+    }
 })
 
 poncon.start()
