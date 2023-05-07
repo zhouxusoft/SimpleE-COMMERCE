@@ -273,7 +273,7 @@ $('#allshopdatas').click(function (e) {
                 if (globalproduct[i][0] == productid) {
                     let imglist = getImgList(globalproduct[i][2])
                     // console.log(imglist)
-                    if (imglist > 0) {
+                    if (imglist.length > 0) {
                         $('.bigproductimg').html(`<img src="../static/productimg/${imglist[0]}" alt="" width="160px">`)
                     } else {
                         $('.bigproductimg').text(`No picture`)
