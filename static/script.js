@@ -2,8 +2,8 @@ let token = JSON.parse(localStorage.getItem("token"))
 let globalcatagroies
 let globalproduct
 let globalcomment
-let globallike
-let globaldislike
+let globallike = []
+let globaldislike = []
 let currentproductid
 
 const poncon = new Poncon()
@@ -131,8 +131,16 @@ function getNewInfo() {
         success: function (response) {
             globalcatagroies = response.catagories
             globalproduct = response.product
-            globallike = response.like
-            globaldislike = response.dislike
+            for (let i = 0; i < response.like.length; i++) {
+                if (response.like[i][3] == token.id) {
+                    globallike.push(response.like[i])
+                }
+            }
+            for (let i = 0; i < response.dislike.length; i++) {
+                if (response.dislike[i][3] == token.id) {
+                    globaldislike.push(response.dislike[i])
+                }
+            }
             globalcomment = response.comment
             // console.log(globalcatagroies)
             console.log(globalproduct)
@@ -223,7 +231,18 @@ function resetProduct(productlist) {
                     </div>
                 </div>`)
             }
-
+            for (let j = 0; j < globallike.length; j++) {
+                if (globallike[j][2] == globalproduct[i][0]) {
+                    $(`#product${productlist[i][0]} .shoplikes .shoplike`).html(`<span class="shopfont"><i class="fa-solid fa-thumbs-up" style="color: #ff0000;"></i></span>${productlist[i][7]}`)
+                    break
+                }
+            }
+            for (let j = 0; j < globaldislike.length; j++) {
+                if (globaldislike[j][2] == globalproduct[i][0]) {
+                    $(`#product${productlist[i][0]} .shoplikes .shopdislike`).html(`<span class="shopfont"><i class="fa-solid fa-thumbs-down" style="color: #000000;"></i></span>${productlist[i][8]}`)
+                    break
+                }
+            }
         }
     } else {
         $('#allshopdatas').html($('#allshopdatas').html() + `<div>No product</div>`)
@@ -300,13 +319,11 @@ $('#allshopdatas').click(function (e) {
     // console.log($(e.target).closest('.shopdata').attr('id'))
     if ($(e.target).closest('.shopdata').length) {
         if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('shopfont')) {
-            console.log('shoplike')
+            let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
+            console.log(productid)
         }
         else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('shopfont')) {
             console.log('shopdislike')
-        }
-        else if ($(e.target).hasClass('shopcomment') || $(e.target).hasClass('shopfont')) {
-            console.log('shopcomment')
         } else {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
             // console.log(productid)
@@ -380,7 +397,7 @@ $('#gocommentbtn').click(function () {
     if (token) {
         $('.commentborder').html(`
             <div class="mb-2">
-                <textarea id="usercommentinput" class="form-control" placeholder="What you want to say"></textarea>
+                <textarea id="usercommentinput" class="form-control" placeholder="What do you want to say"></textarea>
             </div>
             <div class="addcommentbtnborder">
                 <button class="btn btn-outline-secondary" type="button" id="addcommentbtn">Add Comment</button>
