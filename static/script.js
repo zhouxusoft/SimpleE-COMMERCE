@@ -445,7 +445,6 @@ $('#allshopdatas').click(function (e) {
                 }
             }
             $('#productinfobtn').click()
-
         }
     }
 })
@@ -498,6 +497,7 @@ $('#delbuynum').click(function () {
     } else {
         $('#buynum').val(1)
     }
+    checkInput()
 })
 
 $('#addbuynum').click(function () {
@@ -512,6 +512,7 @@ $('#addbuynum').click(function () {
     } else {
         $('#buynum').val(1)
     }
+    checkInput()
 })
 
 $('#gocommentbtn').click(function () {
@@ -558,6 +559,27 @@ $('#gocommentbtn').click(function () {
         }
     }
 })
+
+function checkInput() {
+    // console.log($('#buynum').val())
+    let buynum = $('#buynum').val()
+    let allprice
+    if (isNaN(buynum)) {
+        $('#buynum').val(1)
+    } else if (buynum < 1) {
+        $('#buynum').val(1)
+    } else if (buynum > 200) {
+        $('#buynum').val(200)
+    }
+    buynum = $('#buynum').val()
+    for (let i = 0; i < globalproduct.length; i++) {
+        if (globalproduct[i][0] == currentproductid) {
+            allprice = buynum * globalproduct[i][5]
+            allprice = '$' + allprice
+        }
+    }
+    $('.allprice').text(allprice)
+}
 
 function getTime(timestramp) {
     let date = new Date(Date.parse(timestramp))
@@ -691,7 +713,91 @@ $('.productdislike').click(function () {
 })
 
 $('#addcart').click(function () {
+    if (token && token.kinds == 'buyer') {
+        let buynum = $('#buynum').val()
+        buynum = parseInt(buynum)
+        if (isNaN(buynum)) {
+            alert('Not a number!')
+            $('#buynum').val(1)
+        } else if (buynum < 1) {
+            alert('You cannot purchase less than one item.')
+        } else if (buynum > 200) {
+            alert('An order can purchase up to 200 items at most.')
+        } else {
+            alert("Add to cart")
+        }
+    } else {
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
+    }
+})
 
+$('#buynow').click(function () {
+    if (token && token.kinds == 'buyer') {
+        let buynum = $('#buynum').val()
+        buynum = parseInt(buynum)
+        if (isNaN(buynum)) {
+            alert('Not a number!')
+            $('#buynum').val(1)
+        } else if (buynum < 1) {
+            alert('You cannot purchase less than one item.')
+        } else if (buynum > 200) {
+            alert('An order can purchase up to 200 items at most.')
+        } else {
+            let allprice = 'Price Error'
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == currentproductid) {
+                    allprice = buynum * globalproduct[i][5]
+                    allprice = '$' + allprice
+                }
+            }
+            $('.commentborder').html(`
+                <div class="priceborder">
+                    <div class="mb-2 leftpriceborder">
+                        <div>
+                            <div class="mt-2 mb-4 allprice">
+                                ${allprice}
+                            </div>
+                        </div>
+                        <div class="paywaybtns">
+                            <div class="btn-group-vertical">
+                                <button type="button" class="btn btn-outline-success" id="wechatpay">WeChat Pay</button>
+                                <button type="button" class="btn btn-outline-primary" id="alipay">AliPay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addcommentbtnborder">
+                        <div class="paycode mb-2">Choose payment path</div>
+                        <button class="btn btn-success disabled" type="button" id="ipayed">I paid</button>
+                        <button class="btn btn-danger" type="button" id="inotpayed">Cancle</button>
+                    </div>
+                </div>`
+            )
+            $('#inotpayed').click(function () {
+                $('.productcomment').click()
+            })
+            $('#wechatpay').click(function () {
+                $('#ipayed').removeClass('disabled')
+                $('.paycode').html(`<img src="../static/productimg/wechatpay.png" alt="" width="130px">`)
+            })
+            $('#alipay').click(function () {
+                $('#ipayed').removeClass('disabled')
+                $('.paycode').html(`<img src="../static/productimg/alipay.png" alt="" width="130px">`)
+            })
+            $('#ipayed').click(function () {
+                alert("Purchase successful!\nPlease wait for the seller to ship.")
+            })
+        }
+    } else {
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
+    }
 })
 
 poncon.start()

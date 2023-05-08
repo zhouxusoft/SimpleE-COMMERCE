@@ -212,7 +212,7 @@
                             <div class="bigproductprice">$128.75</div>
                             <div class="buynumborder">
                                 <span class="input-group-text changebuynum" id="delbuynum">-</span>
-                                <input type="number" class="form-control" id="buynum" value="1">
+                                <input type="number" class="form-control" id="buynum" value="1" oninput="checkInput()">
                                 <span class="input-group-text changebuynum" id="addbuynum">+</span> 
                             </div>
                         </div>
@@ -225,8 +225,8 @@
                             <div class="productcomment"><span class="productfont">&#xf4ad</span>123</div>
                         </div>
                         <div class="btn-group bottombtngroup">
-                            <button type="button" class="btn btn-primary " id="addcart">Cart</button>
-                            <button type="button" class="btn btn-success " id="buynow">Buy</button>
+                            <button type="button" class="btn btn-primary" id="addcart">Cart</button>
+                            <button type="button" class="btn btn-success" id="buynow">Buy</button>
                         </div>
                     </div>
                 </div>
