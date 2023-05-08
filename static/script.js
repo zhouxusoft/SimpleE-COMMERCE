@@ -726,7 +726,25 @@ $('#addcart').click(function () {
         } else if (buynum > 200) {
             alert('An order can purchase up to 200 items at most.')
         } else {
-            alert("Add to cart")
+            let toSend = {
+                Product_id: currentproductid,
+                Quantity: buynum,
+                Buyer_id: token.id
+            }
+            $.ajax({
+                url: '/cart',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    alert("Added to cart.")
+                    $('.productcomment').click()
+                    $('#buynum').val(1)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         }
     } else {
         if (token) {

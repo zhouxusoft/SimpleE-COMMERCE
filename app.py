@@ -82,7 +82,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `comment`  (\
                     PRIMARY KEY (`Comment_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
-dbcursor.execute("CREATE TABLE IF NOT EXISTS `Order`  (\
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `order`  (\
                     `Order_id` int NOT NULL AUTO_INCREMENT,\
                     `Arrive_date` date NULL DEFAULT NULL,\
                     `Tracking` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
@@ -95,6 +95,14 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `Order`  (\
                     PRIMARY KEY (`Order_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `cart`  (\
+                    `Cart_id` int NOT NULL AUTO_INCREMENT,\
+                    `Updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Product_amount` int NULL DEFAULT NULL,\
+                    `Product_id` int NULL DEFAULT NULL,\
+                    `Buyer_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Cart_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
 app = Flask(__name__)
 
@@ -309,6 +317,26 @@ def buy():
     val = (data['Quantity'], data['Sum_price'], data['Vendor_id'], data['Product_id'], data['Buyer_id'])
     dbcursor.execute(sql, val)
     db.commit()
+
+    return jsonify({'success': True})
+
+@app.route('/cart', methods=['POST'])
+def cart():
+    data = request.get_json()
+    sql = "SELECT * FROM `cart` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+    val = (data['Product_id'], data['Buyer_id'])
+    dbcursor.execute(sql, val)
+    cartresult = dbcursor.fetchall()
+    if len(cartresult) > 0:
+        sql = "UPDATE cart SET Product_amount = %s WHERE Cart_id = %s"
+        val = (cartresult[0][2] + data['Quantity'], cartresult[0][0])
+        dbcursor.execute(sql, val)
+        db.commit()
+    else:
+        sql = "INSERT INTO `cart` (`Product_amount`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s)"
+        val = (data['Quantity'], data['Product_id'], data['Buyer_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
 
     return jsonify({'success': True})
 
