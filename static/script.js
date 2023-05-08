@@ -576,6 +576,7 @@ function checkInput() {
         if (globalproduct[i][0] == currentproductid) {
             allprice = buynum * globalproduct[i][5]
             allprice = '$' + allprice
+            break
         }
     }
     $('.allprice').text(allprice)
@@ -752,6 +753,7 @@ $('#buynow').click(function () {
                 if (globalproduct[i][0] == currentproductid) {
                     allprice = buynum * globalproduct[i][5]
                     allprice = '$' + allprice
+                    break
                 }
             }
             $('.commentborder').html(`
@@ -788,7 +790,37 @@ $('#buynow').click(function () {
                 $('.paycode').html(`<img src="../static/productimg/alipay.png" alt="" width="130px">`)
             })
             $('#ipayed').click(function () {
+                let buynum = $('#buynum').val()
+                let allprice = 0
+                let Vendors_id = 1
+                for (let i = 0; i < globalproduct.length; i++) {
+                    if (globalproduct[i][0] == currentproductid) {
+                        allprice = buynum * globalproduct[i][5]
+                        Vendors_id = globalproduct[i][10]
+                        break
+                    }
+                }
                 alert("Purchase successful!\nPlease wait for the seller to ship.")
+                let toSend = {
+                    Product_id: currentproductid,
+                    Quantity: buynum,
+                    Sum_price: allprice,
+                    Vendors_id: Vendors_id,
+                    Buyer_id: token.id
+                }
+                console.log(allprice)
+                $.ajax({
+                    url: '/buy',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert(666)
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
             })
         }
     } else {
