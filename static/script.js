@@ -571,6 +571,8 @@ function checkInput() {
         $('#buynum').val(1)
     } else if (buynum > 200) {
         $('#buynum').val(200)
+    } else if (!Number.isInteger(buynum)) {
+        $('#buynum').val(Math.floor(buynum))
     }
     buynum = $('#buynum').val()
     for (let i = 0; i < globalproduct.length; i++) {
