@@ -82,8 +82,21 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `comment`  (\
                     PRIMARY KEY (`Comment_id`) USING BTREE)\
                     ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
-app = Flask(__name__)
+dbcursor.execute("CREATE TABLE IF NOT EXISTS `Order`  (\
+                    `Order_id` int NOT NULL AUTO_INCREMENT,\
+                    `Arrive_date` date NULL DEFAULT NULL,\
+                    `Tracking` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
+                    `Order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+                    `Quantity` int NULL DEFAULT NULL,\
+                    `Sum_price` decimal(10, 2) NULL DEFAULT NULL,\
+                    `Vender_id` int NULL DEFAULT NULL,\
+                    `Product_id` int NULL DEFAULT NULL,\
+                    `Buyer_id` int NULL DEFAULT NULL,\
+                    PRIMARY KEY (`Order_id`) USING BTREE)\
+                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;")
 
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():

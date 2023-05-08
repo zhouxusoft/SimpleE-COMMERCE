@@ -53,6 +53,7 @@ $('#loginenterbutton').click(function () {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
+                getNewInfo()
                 resetLoginBtn()
             } else {
                 alert(response.message)
@@ -133,14 +134,16 @@ function getNewInfo() {
             globalproduct = response.product
             globallike = []
             globaldislike = []
-            for (let i = 0; i < response.like.length; i++) {
-                if (response.like[i][3] == token.id) {
-                    globallike.push(response.like[i])
+            if (token && token.kinds == 'buyer') {
+                for (let i = 0; i < response.like.length; i++) {
+                    if (response.like[i][3] == token.id) {
+                        globallike.push(response.like[i])
+                    }
                 }
-            }
-            for (let i = 0; i < response.dislike.length; i++) {
-                if (response.dislike[i][3] == token.id) {
-                    globaldislike.push(response.dislike[i])
+                for (let i = 0; i < response.dislike.length; i++) {
+                    if (response.dislike[i][3] == token.id) {
+                        globaldislike.push(response.dislike[i])
+                    }
                 }
             }
             globalcomment = response.comment
@@ -342,76 +345,94 @@ $('#allshopdatas').click(function (e) {
     // console.log($(e.target).closest('.shopdata').attr('id'))
     if ($(e.target).closest('.shopdata').length) {
         if ($(e.target).hasClass('shoplike') || $(e.target).hasClass('likefont')) {
-            let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
-            console.log(productid)
-            let likeflag = 0
-            let dislikeflag = 0
-            for (let i = 0; i < globallike.length; i++) {
-                if (globallike[i][2] == productid) {
-                    likeflag = 1
-                    break
+            if (token && token.kinds == 'buyer') {
+                let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
+                // console.log(productid)
+                let likeflag = 0
+                let dislikeflag = 0
+                for (let i = 0; i < globallike.length; i++) {
+                    if (globallike[i][2] == productid) {
+                        likeflag = 1
+                        break
+                    }
+                }
+                for (let i = 0; i < globaldislike.length; i++) {
+                    if (globaldislike[i][2] == productid) {
+                        dislikeflag = 1
+                        break
+                    }
+                }
+                let toSend = {
+                    Product_id: productid,
+                    likeflag: likeflag,
+                    dislikeflag: dislikeflag,
+                    userid: token.id
+                }
+                $.ajax({
+                    url: '/like',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        getNewInfo()
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            } else {
+                if (token) {
+                    alert('Vendor is unable to operate this option')
+                } else {
+                    alert('Please log in first')
                 }
             }
-            for (let i = 0; i < globaldislike.length; i++) {
-                if (globaldislike[i][2] == productid) {
-                    dislikeflag = 1
-                    break
-                }
-            }
-            let toSend = {
-                Product_id: productid,
-                likeflag: likeflag,
-                dislikeflag: dislikeflag,
-                userid: token.id
-            }
-            $.ajax({
-                url: '/like',
-                type: 'POST',
-                data: JSON.stringify(toSend),
-                contentType: 'application/json',
-                success: function (response) {
-                    getNewInfo()
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
+
         }
         else if ($(e.target).hasClass('shopdislike') || $(e.target).hasClass('dislikefont')) {
-            let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
-            console.log(productid)
-            let likeflag = 0
-            let dislikeflag = 0
-            for (let i = 0; i < globallike.length; i++) {
-                if (globallike[i][2] == productid) {
-                    likeflag = 1
-                    break
+            if (token && token.kinds == 'buyer') {
+                let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
+                // console.log(productid)
+                let likeflag = 0
+                let dislikeflag = 0
+                for (let i = 0; i < globallike.length; i++) {
+                    if (globallike[i][2] == productid) {
+                        likeflag = 1
+                        break
+                    }
+                }
+                for (let i = 0; i < globaldislike.length; i++) {
+                    if (globaldislike[i][2] == productid) {
+                        dislikeflag = 1
+                        break
+                    }
+                }
+                let toSend = {
+                    Product_id: productid,
+                    likeflag: likeflag,
+                    dislikeflag: dislikeflag,
+                    userid: token.id
+                }
+                $.ajax({
+                    url: '/dislike',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        getNewInfo()
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            } else {
+                if (token) {
+                    alert('Vendor is unable to operate this option')
+                } else {
+                    alert('Please log in first')
                 }
             }
-            for (let i = 0; i < globaldislike.length; i++) {
-                if (globaldislike[i][2] == productid) {
-                    dislikeflag = 1
-                    break
-                }
-            }
-            let toSend = {
-                Product_id: productid,
-                likeflag: likeflag,
-                dislikeflag: dislikeflag,
-                userid: token.id
-            }
-            $.ajax({
-                url: '/dislike',
-                type: 'POST',
-                data: JSON.stringify(toSend),
-                contentType: 'application/json',
-                success: function (response) {
-                    getNewInfo()
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
+
         } else {
             let productid = $(e.target).closest('.shopdata').attr('id').slice(7)
             // console.log(productid)
@@ -430,26 +451,38 @@ $('#allshopdatas').click(function (e) {
 })
 
 $('#cartbtn').click(function () {
-    if (token) {
-        alert('8963')
+    if (token && token.kinds == 'buyer') {
+        alert('4959')
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
 })
 
 $('#likebtn').click(function () {
-    if (token) {
-        alert('4535')
+    if (token && token.kinds == 'buyer') {
+        alert('4959')
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
 })
 
 $('#centerbtn').click(function () {
-    if (token) {
+    if (token && token.kinds == 'buyer') {
         alert('4959')
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
 })
 
@@ -482,7 +515,7 @@ $('#addbuynum').click(function () {
 })
 
 $('#gocommentbtn').click(function () {
-    if (token) {
+    if (token && token.kinds == 'buyer') {
         $('.commentborder').html(`
             <div class="mb-2">
                 <textarea id="usercommentinput" class="form-control" placeholder="What do you want to say"></textarea>
@@ -518,7 +551,11 @@ $('#gocommentbtn').click(function () {
             }
         })
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
 })
 
@@ -566,7 +603,7 @@ $('.productcomment').click(function () {
 })
 
 $('.productlike').click(function () {
-    if (token) {
+    if (token && token.kinds == 'buyer') {
         let productid = currentproductid
         let likeflag = 0
         let dislikeflag = 0
@@ -601,12 +638,16 @@ $('.productlike').click(function () {
             }
         })
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
 })
 
 $('.productdislike').click(function () {
-    if (token) {
+    if (token && token.kinds == 'buyer') {
         let productid = currentproductid
         let likeflag = 0
         let dislikeflag = 0
@@ -641,8 +682,16 @@ $('.productdislike').click(function () {
             }
         })
     } else {
-        alert('Please log in first')
+        if (token) {
+            alert('Vendor is unable to operate this option')
+        } else {
+            alert('Please log in first')
+        }
     }
+})
+
+$('#addcart').click(function () {
+
 })
 
 poncon.start()
