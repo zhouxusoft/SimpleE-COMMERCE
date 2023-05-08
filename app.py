@@ -217,6 +217,7 @@ def comment():
     sql = "UPDATE products SET Comment_Sum = %s WHERE Product_id = %s"
     val = (commentnum, data['Product_id'])
     dbcursor.execute(sql, val)
+    db.commit()
 
     return jsonify({'success': True, 'message': 'Comment posted successfully'})
 
@@ -238,6 +239,19 @@ def like():
         val = (data['Product_id'], data['userid'])
         dbcursor.execute(sql, val)
         db.commit()
+
+    sql = "SELECT * FROM `like` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
+    dbcursor.execute(sql, val)
+    likeresult = dbcursor.fetchall()
+    sql = "SELECT * FROM `dislike` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
+    dbcursor.execute(sql, val)
+    dislikeresult = dbcursor.fetchall()
+    sql = "UPDATE products SET Like_Sum = %s, Dislike_Sum = %s WHERE Product_id = %s"
+    val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
     
     return jsonify({'success': True})
 
@@ -259,6 +273,19 @@ def dislike():
         val = (data['Product_id'], data['userid'])
         dbcursor.execute(sql, val)
         db.commit()
+
+    sql = "SELECT * FROM `like` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
+    dbcursor.execute(sql, val)
+    likeresult = dbcursor.fetchall()
+    sql = "SELECT * FROM `dislike` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
+    dbcursor.execute(sql, val)
+    dislikeresult = dbcursor.fetchall()
+    sql = "UPDATE products SET Like_Sum = %s, Dislike_Sum = %s WHERE Product_id = %s"
+    val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
     
     return jsonify({'success': True})
 
