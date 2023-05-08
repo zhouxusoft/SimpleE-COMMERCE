@@ -89,7 +89,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `Order`  (\
                     `Order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
                     `Quantity` int NULL DEFAULT NULL,\
                     `Sum_price` decimal(10, 2) NULL DEFAULT NULL,\
-                    `Vender_id` int NULL DEFAULT NULL,\
+                    `Vendor_id` int NULL DEFAULT NULL,\
                     `Product_id` int NULL DEFAULT NULL,\
                     `Buyer_id` int NULL DEFAULT NULL,\
                     PRIMARY KEY (`Order_id`) USING BTREE)\
@@ -300,6 +300,16 @@ def dislike():
     dbcursor.execute(sql, val)
     db.commit()
     
+    return jsonify({'success': True})
+
+@app.route('/buy', methods=['POST'])
+def buy():
+    data = request.get_json()
+    sql = "INSERT INTO `order` (`Quantity`, `Sum_price`, `Vendor_id`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s, %s, %s)"
+    val = (data['Quantity'], data['Sum_price'], data['Vendor_id'], data['Product_id'], data['Buyer_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
+
     return jsonify({'success': True})
 
 if __name__ == '__main__':

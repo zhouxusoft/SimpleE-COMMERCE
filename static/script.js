@@ -441,6 +441,7 @@ $('#allshopdatas').click(function (e) {
                 if (globalproduct[i][0] == productid) {
                     resetProductInfo(globalproduct[i])
                     resetComment(getProductComment(currentproductid))
+                    $('#buynum').val(1)
                     break
                 }
             }
@@ -800,22 +801,22 @@ $('#buynow').click(function () {
                         break
                     }
                 }
-                alert("Purchase successful!\nPlease wait for the seller to ship.")
                 let toSend = {
                     Product_id: currentproductid,
                     Quantity: buynum,
                     Sum_price: allprice,
-                    Vendors_id: Vendors_id,
+                    Vendor_id: Vendors_id,
                     Buyer_id: token.id
                 }
-                console.log(allprice)
+                // console.log(toSend)
                 $.ajax({
                     url: '/buy',
                     type: 'POST',
                     data: JSON.stringify(toSend),
                     contentType: 'application/json',
                     success: function (response) {
-                        alert(666)
+                        alert("Purchase successful!\nPlease wait for the seller to ship.")
+                        $('.productcomment').click()
                     },
                     error: function (error) {
                         console.log(error)
