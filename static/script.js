@@ -836,6 +836,8 @@ $('#cartipayed').click(function () {
         contentType: 'application/json',
         success: function (response) {
             alert(response.message)
+            $(`#allcheck`).prop('checked', false)
+            checkeddatas = []
             $('#closeuploadfilemodal1').click()
             $('#cartbtn').click()
         },
