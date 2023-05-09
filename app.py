@@ -419,7 +419,7 @@ def getcart():
 @app.route('/buycart', methods=["POST"])
 def buycart():
     data = request.get_json()
-    print(data['cartlist'])
+    # print(data['cartlist'])
     for i in data['cartlist']:
         sql = "SELECT * FROM `cart` WHERE `Cart_id` = %s"
         val = (i,)
