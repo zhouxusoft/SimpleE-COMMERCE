@@ -313,12 +313,23 @@ def dislike():
 @app.route('/buy', methods=['POST'])
 def buy():
     data = request.get_json()
-    sql = "INSERT INTO `order` (`Quantity`, `Sum_price`, `Vendor_id`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s, %s, %s)"
-    val = (data['Quantity'], data['Sum_price'], data['Vendor_id'], data['Product_id'], data['Buyer_id'])
+    sql = "SELECT * FROM `products` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
     dbcursor.execute(sql, val)
-    db.commit()
-
-    return jsonify({'success': True})
+    productresult = dbcursor.fetchall()
+    if len(productresult) > 0 and productresult[0][6] >= int(data['Quantity']):
+        afternum = productresult[0][6] - int(data['Quantity'])
+        sql = "UPDATE `products` SET `Inventory` = %s WHERE `Product_id` = %s"
+        val = (afternum, data['Product_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
+        sql = "INSERT INTO `order` (`Quantity`, `Sum_price`, `Vendor_id`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s, %s, %s)"
+        val = (data['Quantity'], data['Sum_price'], data['Vendor_id'], data['Product_id'], data['Buyer_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
+    else:
+        return jsonify({'success': False, 'message': 'Purchase failed!\nQuantity exceeds stock limit.'})
+    return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
 
 @app.route('/cart', methods=['POST'])
 def cart():

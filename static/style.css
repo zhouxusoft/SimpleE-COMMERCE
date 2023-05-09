@@ -242,7 +242,6 @@ body {
 }
 
 .bigproductprice {
-    margin: auto;
     font-size: 1.25rem;
     margin-bottom: 22px;
     user-select: text;
@@ -257,6 +256,7 @@ body {
 
 #buynum {
     width: 60px;
+    background-color: white;
 }
 
 .changebuynum {
@@ -425,4 +425,18 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     text-align: center;
     border-radius: 3px;
+}
+
+.productpriceandinventory {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventory {
+    color: rgb(27, 50, 73);
+    padding-top: 4px;
+}
+
+#inventorynum {
+    font-weight: bold;
 }

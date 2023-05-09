@@ -318,9 +318,28 @@ function resetProductInfo(product) {
     $('.bigproductname').text(product[1])
     $('.bigproductdescription').text(product[4])
     $('.bigproductprice').text(`$${product[5]}`)
+    $('#inventorynum').text(`${product[6]}`)
     $('.productlike').html(`<span class="productfont">\uf164</span>${product[7]}`)
     $('.productdislike').html(`<span class="productfont">\uf165</span>${product[8]}`)
     $('.productcomment').html(`<span class="productfont">\uf4ad</span>${product[9]}`)
+
+    if (product[6] > 200) {
+        $('#inventorynum').css('color', 'blue')
+        $('#buynum').prop('readonly', false)
+    } else if (product[6] > 50) {
+        $('#inventorynum').css('color', 'green')
+        $('#buynum').prop('readonly', false)
+    } else if (product[6] > 10) {
+        $('#inventorynum').css('color', 'orange')
+        $('#buynum').prop('readonly', false)
+    } else if (product[6] > 0) {
+        $('#inventorynum').css('color', 'red')
+        $('#buynum').prop('readonly', false)
+    } else {
+        $('#buynum').prop('readonly', true)
+        $('#inventorynum').css('color', 'black')
+    }
+
     $('.smallproductimg').click(function (e) {
         let imgid = e.currentTarget.id.slice(3)
         // console.log(imgid)
@@ -441,7 +460,11 @@ $('#allshopdatas').click(function (e) {
                 if (globalproduct[i][0] == productid) {
                     resetProductInfo(globalproduct[i])
                     resetComment(getProductComment(currentproductid))
-                    $('#buynum').val(1)
+                    if (globalproduct[i][6] == 0) {
+                        $('#buynum').val(0)
+                    } else {
+                        $('#buynum').val(1)
+                    }   
                     break
                 }
             }
@@ -565,23 +588,27 @@ function checkInput() {
     // console.log($('#buynum').val())
     let buynum = $('#buynum').val()
     let allprice
+    let singleprice
+    let inventory
+    for (let i = 0; i < globalproduct.length; i++) {
+        if (globalproduct[i][0] == currentproductid) {
+            singleprice = globalproduct[i][5]
+            inventory = globalproduct[i][6]
+            break
+        }
+    }
     if (isNaN(buynum)) {
         $('#buynum').val(1)
     } else if (buynum < 1) {
         $('#buynum').val(1)
-    } else if (buynum > 200) {
-        $('#buynum').val(200)
+    } else if (buynum > inventory) {
+        $('#buynum').val(inventory)
     } else if (!Number.isInteger(buynum)) {
         $('#buynum').val(Math.floor(buynum))
     }
     buynum = $('#buynum').val()
-    for (let i = 0; i < globalproduct.length; i++) {
-        if (globalproduct[i][0] == currentproductid) {
-            allprice = buynum * globalproduct[i][5]
-            allprice = '$' + allprice
-            break
-        }
-    }
+    allprice = buynum * singleprice
+    allprice = '$' + allprice
     $('.allprice').text(allprice)
 }
 
@@ -835,8 +862,8 @@ $('#buynow').click(function () {
                     data: JSON.stringify(toSend),
                     contentType: 'application/json',
                     success: function (response) {
-                        alert("Purchase successful!\nPlease wait for the seller to ship.")
-                        $('.productcomment').click()
+                        alert(response.message)
+                        getNewInfo()
                     },
                     error: function (error) {
                         console.log(error)
