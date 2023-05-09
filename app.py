@@ -449,7 +449,8 @@ def buycart():
             dbcursor.execute(sql, val)
             db.commit()
         else:
-            return jsonify({'success': False, 'message': 'Purchase failed!\nQuantity exceeds stock limit.'})
+            message = 'Purchase failed!\nThe quantity of ' + productresult[0][1] + ' purchased exceeds the inventory limit.'
+            return jsonify({'success': False, 'message': message})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
 
 
