@@ -497,12 +497,16 @@ input[type=number]::-webkit-outer-spin-button {
     height: 50px;
     border: 1px solid orangered;
     margin: 0 10px;
+    overflow: hidden;
 }
 
 .cartdataname {
     flex: 1;
     flex-grow: 2;
     flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cartdataprice {
@@ -562,4 +566,16 @@ input[type=number]::-webkit-outer-spin-button {
 .numberselect {
     color: blue;
     font-size: 1.25rem;
+}
+
+.noitemincart {
+    width: fit-content;
+    margin: auto;
+    font-size: 1.25rem;
+    color: orangered;
+    padding: 20px 0;
+}
+
+.cartnum {
+    background-color: white !important;
 }

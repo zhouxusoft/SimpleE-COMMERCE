@@ -373,12 +373,14 @@ def getcart():
     for i in range(0, len(dataresult)):
         for j in productresult:
             if dataresult[i][3] == j[0]:
+                dataresult[i].append(j[1])
                 dataresult[i].append(j[2])
                 for x in vendorresult:
                     if j[10] == x[0]:
                         dataresult[i].append(x[0])
                         dataresult[i].append(x[1])
-    print(dataresult)
+                        dataresult[i].append(j[5])
+    # print(dataresult)
 
     return jsonify({'success': True, 'data': dataresult})
 

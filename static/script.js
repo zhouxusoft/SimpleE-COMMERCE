@@ -511,13 +511,170 @@ $('#cartbtn').click(function () {
 })
 
 function resetCartList() {
-    let vendorlist = []
-    for (let i = 0; i < globalcartlist.length; i++) {
-        if (!vendorlist.includes(globalcartlist[i][6])) {
-            vendorlist.push(globalcartlist[i][6])
+    let checkeddatas = []
+    if (globalcartlist.length > 0) {
+        let vendorlist = []
+        let vendorname = []
+        for (let i = 0; i < globalcartlist.length; i++) {
+            if (!vendorlist.includes(globalcartlist[i][7])) {
+                vendorlist.push(globalcartlist[i][7])
+                vendorname.push(globalcartlist[i][8])
+            }
         }
+        // console.log(vendorlist)
+        $('.cartcenter').empty()
+        for (let i = 0; i < vendorlist.length; i++) {
+            $('.cartcenter').html($('.cartcenter').html() + `
+                <div class="form-check cartcheck cartvendor">
+                    <input type="checkbox" class="form-check-input datascheck" id="vendor${vendorlist[i]}">
+                    <label class="form-check-label">${vendorname[i]}</label>
+                </div>
+                <div class="cartdatabox" id="vendordata${vendorlist[i]}"></div>`
+            )
+            for (let j = 0; j < globalcartlist.length; j++) {
+                let img = getImgList(globalcartlist[j][6])[0]
+                let allprice = globalcartlist[j][2] * globalcartlist[j][9]
+                if (globalcartlist[j][7] == vendorlist[i]) {
+                    $(`#vendordata${vendorlist[i]}`).html($(`#vendordata${vendorlist[i]}`).html() + `
+                        <div class="cartdata">
+                            <div class="cartdatainfo" id="cartdatainfo${globalcartlist[j][3]}">
+                                <input type="checkbox" class="form-check-input datacheck datacheck${vendorlist[i]}" id="check${globalcartlist[j][0]}" data-vid="${vendorlist[i]}">
+                                <div class="cartdataimg">
+                                    <img src="../static/productimg/${img}" alt="" width="50px">
+                                </div>
+                                <div class="cartdataname">${globalcartlist[j][5]}</div>
+                                <div class="cartdataprice">$${globalcartlist[j][9]}</div>
+                                <div class="buynumborder cartdatanum">
+                                    <span class="input-group-text changebuynum delcartnum" id="${globalcartlist[j][3]}">-</span>
+                                    <input type="number" class="form-control cartnum" id="cartnum${globalcartlist[j][3]}" value="${globalcartlist[j][2]}" readonly>
+                                    <span class="input-group-text changebuynum addcartnum" id="${globalcartlist[j][3]}">+</span>
+                                </div>  
+                                <div class="carttatleprice" id="totalprice${globalcartlist[j][3]}">$${allprice}</div>
+                            </div>
+                        </div>`
+                    )
+                }
+            }
+            if (i != vendorlist.length - 1) {
+                $('.cartcenter').html($('.cartcenter').html() + `<hr>`)
+            }
+        }
+        $('.delcartnum').click(function (e) {
+            let productid = e.target.id
+            let sid = 'cartnum' + productid
+            // console.log(productid)
+            let cartnum = $(`#${sid}`).val()
+            cartnum = parseInt(cartnum)
+            if (!isNaN(cartnum)) {
+                if (cartnum > 1) {
+                    $(`#${sid}`).val(cartnum - 1)
+                } else {
+                    $(`#${sid}`).val(1)
+                }
+            } else {
+                $(`#${sid}`).val(1)
+            }
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == productid) {
+                    let newprice = globalproduct[i][5] * $(`#${sid}`).val()
+                    $(`#totalprice${productid}`).text(`$${newprice}`)
+                }
+            }
+        })
+        $('.addcartnum').click(function (e) {
+            let productid = e.target.id
+            let sid = 'cartnum' + productid
+            let cartnum = $(`#${sid}`).val()
+            cartnum = parseInt(cartnum)
+            if (!isNaN(cartnum)) {
+                if (cartnum > 0) {
+                    $(`#${sid}`).val(cartnum + 1)
+                } else {
+                    $(`#${sid}`).val(1)
+                }
+            } else {
+                $(`#${sid}`).val(1)
+            }
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == productid) {
+                    let newprice = globalproduct[i][5] * $(`#${sid}`).val()
+                    $(`#totalprice${productid}`).text(`$${newprice}`)
+                }
+            }
+        })
+        $('#allcheck').click(function () {
+            if ($('#allcheck').prop('checked')) {
+                // console.log(5455)
+                $('.datascheck').prop('checked', true)
+                $('.datascheck').trigger('click')
+                $('.datascheck').trigger('click')
+            } else {
+                $('.datascheck').prop('checked', false)
+                $('.datascheck').trigger('click')
+                $('.datascheck').trigger('click')
+            }
+        })
+        $('.datascheck').click(function () {
+            let vid = this.id.slice(6)
+            let chooseclass = 'datacheck' + vid
+            // console.log(vid)
+            if (this.checked) {
+                $(`.${chooseclass}`).prop('checked', true)
+                $(`.${chooseclass}`).trigger('click')
+                $(`.${chooseclass}`).trigger('click')
+            } else {
+                $(`.${chooseclass}`).prop('checked', false)
+                $(`.${chooseclass}`).trigger('click')
+                $(`.${chooseclass}`).trigger('click')
+            }
+        })
+        $('.datacheck').click(function () {
+            let cartid = this.id.slice(5)
+            if (this.checked) {
+                checkeddatas.push(cartid)
+            } else {
+                checkeddatas = checkeddatas.filter(function(item) {
+                    return item !== cartid
+                })
+            }
+            let vid = $(this).attr('data-vid')
+            // console.log(vid)
+            let dataallChecked = true
+            let datasallChecked = true
+            $(`.datacheck${vid}`).each(function() {
+                // console.log(9594)
+                if (!$(this).prop('checked')) {  
+                    dataallChecked = false
+                    return false
+                }
+            })
+            $(`.datacheck`).each(function() {
+                if (!$(this).prop('checked')) {  
+                    datasallChecked = false
+                    return false
+                }
+            })
+            if (dataallChecked) {
+                $(`#vendor${vid}`).prop('checked', true)
+            } else {
+                $(`#vendor${vid}`).prop('checked', false)
+            }
+            if (datasallChecked) {
+                $(`#allcheck`).prop('checked', true)
+            } else {
+                $(`#allcheck`).prop('checked', false)
+            }
+            
+            // console.log(checkeddatas)
+        })
+
+    } else {
+        $('.cartcenter').html(`
+            <div class="noitemincart">
+                There are no items in your shopping cart
+            </div>`
+        )
     }
-    console.log(vendorlist)
 }
 
 $('#likebtn').click(function () {
