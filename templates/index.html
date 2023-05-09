@@ -337,11 +337,12 @@
                     <div class="cartbottom">
                         <div class="hr"></div>
                         <div class="cartbottomborder">
-                            <button type="button" class="btn btn-secondary" id="backtopurchase">Back to purchase</button>
+                            <button type="button" class="btn btn-secondary" id="backtopurchase">Back to
+                                purchase</button>
                             <div class="numberselectbox">
-                                You select 
+                                You select
                                 <span class="numberselect">0</span>
-                                 products
+                                products
                             </div>
                             <div class="totalpricebox">
                                 Total price:
@@ -405,6 +406,48 @@
                 <div class="modal-footer">
                     <div class="commentborder">
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button style="display: none" id="scartbuybtn" data-bs-toggle="modal" data-bs-target="#cartbuymodal"></button>
+    <div class="modal fade" id="cartbuymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Payment：</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="commentborder1">
+                        <div class="priceborder">
+                            <div class="mb-2 leftpriceborder">
+                                <div>
+                                    <div class="mt-2 mb-4 allprice1">
+
+                                    </div>
+                                </div>
+                                <div class="paywaybtns">
+                                    <div class="btn-group-vertical">
+                                        <button type="button" class="btn btn-outline-success" id="cartwechatpay">WeChat
+                                            Pay</button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            id="cartalipay">AliPay</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="addcommentbtnborder">
+                                <div class="paycode1 mb-2">Choose payment path</div>
+                                <button class="btn btn-success disabled" type="button" id="cartipayed">I paid</button>
+                                <button type="button" class="btn btn-danger secondbtn"
+                                    data-bs-dismiss="modal" id="closeuploadfilemodal1">Cancle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
                 </div>
             </div>
         </div>

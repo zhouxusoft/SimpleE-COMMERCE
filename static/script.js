@@ -6,6 +6,8 @@ let globallike = []
 let globaldislike = []
 let currentproductid
 let globalcartlist
+let selectedcart
+let checkeddatas = []
 
 const poncon = new Poncon()
 
@@ -517,7 +519,6 @@ function resetCartResult(pnum, pallprice) {
 }
 
 function resetCartList() {
-    let checkeddatas = []
     resetCartResult(0, 0)
     if (globalcartlist.length > 0) {
         let vendorlist = []
@@ -742,7 +743,7 @@ function resetCartList() {
             if (this.checked) {
                 checkeddatas.push(cartid)
             } else {
-                checkeddatas = checkeddatas.filter(function(item) {
+                checkeddatas = checkeddatas.filter(function (item) {
                     return item !== cartid
                 })
             }
@@ -750,15 +751,15 @@ function resetCartList() {
             // console.log(vid)
             let dataallChecked = true
             let datasallChecked = true
-            $(`.datacheck${vid}`).each(function() {
+            $(`.datacheck${vid}`).each(function () {
                 // console.log(9594)
-                if (!$(this).prop('checked')) {  
+                if (!$(this).prop('checked')) {
                     dataallChecked = false
                     return false
                 }
             })
-            $(`.datacheck`).each(function() {
-                if (!$(this).prop('checked')) {  
+            $(`.datacheck`).each(function () {
+                if (!$(this).prop('checked')) {
                     datasallChecked = false
                     return false
                 }
@@ -795,6 +796,54 @@ function resetCartList() {
         )
     }
 }
+
+$('#cartbuybtn').click(function () {
+    if ($('.numberselect').text() > 0) {
+        $('#scartbuybtn').click()
+        $('.allprice1').text($('.totalprice').text())
+    }
+})
+
+$('#cartwechatpay').click(function () {
+    $('#cartipayed').removeClass('disabled')
+    $('.paycode1').html(`<img src="../static/productimg/wechatpay.png" alt="" width="130px">`)
+})
+
+$('#cartalipay').click(function () {
+    $('#cartipayed').removeClass('disabled')
+    $('.paycode1').html(`<img src="../static/productimg/wechatpay.png" alt="" width="130px">`)
+})
+
+$('#cartipayed').click(function () {
+    let buynum = $('#buynum').val()
+    let allprice = 0
+    let Vendors_id = 1
+    for (let i = 0; i < globalproduct.length; i++) {
+        if (globalproduct[i][0] == currentproductid) {
+            allprice = buynum * globalproduct[i][5]
+            Vendors_id = globalproduct[i][10]
+            break
+        }
+    }
+    let toSend = {
+        cartlist: checkeddatas,
+    }
+    // console.log(toSend)
+    $.ajax({
+        url: '/buycart',
+        type: 'POST',
+        data: JSON.stringify(toSend),
+        contentType: 'application/json',
+        success: function (response) {
+            alert(response.message)
+            $('#closeuploadfilemodal1').click()
+            $('#cartbtn').click()
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+})
 
 $('#likebtn').click(function () {
     if (token && token.kinds == 'buyer') {

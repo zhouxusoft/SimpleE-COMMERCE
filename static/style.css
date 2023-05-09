@@ -346,6 +346,14 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: auto;
 }
 
+.commentborder1 {
+    height: 200px;
+    width: 100%;
+    border: 1px solid #6c757d;
+    padding: 10px;
+    overflow: auto;
+}
+
 .usercommentborder {
     min-height: 50px;
     width: 100%;
@@ -400,6 +408,16 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 60%;
 }
 
+.allprice1 {
+    border: 2px solid #5d7b94;
+    width: fit-content;
+    margin: auto;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #ff4500cc;
+    border-radius: 60%;
+}
+
 .priceborder {
     display: flex;
     justify-content: space-between;
@@ -415,6 +433,20 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .paycode {
+    width: 130px;
+    height: 130px;
+    border: 1px solid orangered;
+    margin: auto;
+    font-size: 1.25rem;
+    color: orangered;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.paycode1 {
     width: 130px;
     height: 130px;
     border: 1px solid orangered;

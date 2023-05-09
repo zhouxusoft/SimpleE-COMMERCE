@@ -416,6 +416,41 @@ def getcart():
 
     return jsonify({'success': True, 'data': dataresult})
 
+@app.route('/buycart', methods=["POST"])
+def buycart():
+    data = request.get_json()
+    for i in data['cartlist']:
+        sql = "SELECT * FROM `cart` WHERE `Cart_id` = %s"
+        val = (i,)
+        dbcursor.execute(sql, val)
+        cartresult = dbcursor.fetchall()
+        sql = "SELECT * FROM `products` WHERE `Product_id` = %s"
+        val = (cartresult[0][3],)
+        dbcursor.execute(sql, val)
+        productresult = dbcursor.fetchall()
+        Quantity = cartresult[0][2]
+        Sum_price = Quantity * productresult[0][5]
+        Vendor_id = productresult[0][10]
+        Buyer_id = cartresult[0][4]
+        Product_id = cartresult[0][3]
+        if productresult[0][6] >= Quantity:
+            afternum = productresult[0][6] - Quantity
+            sql = "UPDATE `products` SET `Inventory` = %s WHERE `Product_id` = %s"
+            val = (afternum, Product_id)
+            dbcursor.execute(sql, val)
+            db.commit()
+            sql = "INSERT INTO `order` (`Quantity`, `Sum_price`, `Vendor_id`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s, %s, %s)"
+            val = (Quantity, Sum_price, Vendor_id, Product_id, Buyer_id)
+            dbcursor.execute(sql, val)
+            db.commit()
+            sql = "DELETE FROM `cart` WHERE `Cart_id` = %s"
+            val = (i,)
+            dbcursor.execute(sql, val)
+            db.commit()
+        else:
+            return jsonify({'success': False, 'message': 'Purchase failed!\nQuantity exceeds stock limit.'})
+    return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
