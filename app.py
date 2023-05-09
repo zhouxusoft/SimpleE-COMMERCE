@@ -354,11 +354,32 @@ def cart():
 @app.route('/getcart', methods=['POST'])
 def getcart():
     data = request.get_json()
-    sql = "SELECT * FROM `cart` WHERE `Product_id` = %s AND `Buyer_id` = %s"
-    val = (data['Product_id'], data['Buyer_id'])
+    sql = "SELECT * FROM `cart` WHERE `Buyer_id` = %s"
+    val = (data['Buyer_id'],)
     dbcursor.execute(sql, val)
     cartresult = dbcursor.fetchall()
+    dataresult = []
+    for i in cartresult:
+        dataresult.append(list(i))
 
+    sql = "SELECT * FROM `products`"
+    dbcursor.execute(sql)
+    productresult = dbcursor.fetchall()
+
+    sql = "SELECT * FROM `vendors`"
+    dbcursor.execute(sql)
+    vendorresult = dbcursor.fetchall()
+
+    for i in range(0, len(dataresult)):
+        for j in productresult:
+            if dataresult[i][3] == j[0]:
+                for x in vendorresult:
+                    if j[10] == x[0]:
+                        dataresult[i].append(x[0])
+                        dataresult[i].append(x[1])
+    print(dataresult)
+
+    return jsonify({'success': True, 'data': dataresult})
 
 
 if __name__ == '__main__':

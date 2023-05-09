@@ -492,7 +492,7 @@ $('#cartbtn').click(function () {
             data: JSON.stringify(toSend),
             contentType: 'application/json',
             success: function (response) {
-                alert(response.message)
+                console.log(response.data)
             },
             error: function (error) {
                 console.log(error)
