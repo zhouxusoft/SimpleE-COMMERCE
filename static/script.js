@@ -5,6 +5,7 @@ let globalcomment
 let globallike = []
 let globaldislike = []
 let currentproductid
+let globalcartlist
 
 const poncon = new Poncon()
 
@@ -493,6 +494,8 @@ $('#cartbtn').click(function () {
             contentType: 'application/json',
             success: function (response) {
                 console.log(response.data)
+                globalcartlist = response.data
+                resetCartList()
             },
             error: function (error) {
                 console.log(error)
@@ -506,6 +509,16 @@ $('#cartbtn').click(function () {
         }
     }
 })
+
+function resetCartList() {
+    let vendorlist = []
+    for (let i = 0; i < globalcartlist.length; i++) {
+        if (!vendorlist.includes(globalcartlist[i][6])) {
+            vendorlist.push(globalcartlist[i][6])
+        }
+    }
+    console.log(vendorlist)
+}
 
 $('#likebtn').click(function () {
     if (token && token.kinds == 'buyer') {
@@ -900,6 +913,12 @@ $('#buynow').click(function () {
             alert('Please log in first')
         }
     }
+})
+
+$('#backtopurchase').click(function () {
+    window.location.hash = ''
+    $('#mainpage').css('display', 'block')
+    $('#loginpage').css('display', 'none')
 })
 
 poncon.start()

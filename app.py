@@ -373,6 +373,7 @@ def getcart():
     for i in range(0, len(dataresult)):
         for j in productresult:
             if dataresult[i][3] == j[0]:
+                dataresult[i].append(j[2])
                 for x in vendorresult:
                     if j[10] == x[0]:
                         dataresult[i].append(x[0])
