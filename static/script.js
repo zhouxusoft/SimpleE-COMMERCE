@@ -815,6 +815,8 @@ $('#cartalipay').click(function () {
 })
 
 $('#cartipayed').click(function () {
+    $('#cartipayed').addClass('disabled')
+    $('.paycode1').html(`Choose payment path`)
     let buynum = $('#buynum').val()
     let allprice = 0
     let Vendors_id = 1
