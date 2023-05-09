@@ -8,7 +8,7 @@ let currentproductid
 
 const poncon = new Poncon()
 
-poncon.setPageList(['home', 'login', 'registration'])
+poncon.setPageList(['home', 'login', 'registration', 'cart'])
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -63,6 +63,12 @@ $('#loginenterbutton').click(function () {
             console.log(error)
         }
     })
+})
+
+$('.toplogo').click(function () {
+    window.location.hash = ''
+    $('#mainpage').css('display', 'block')
+    $('#loginpage').css('display', 'none')
 })
 
 function resetLoginBtn() {
@@ -464,7 +470,7 @@ $('#allshopdatas').click(function (e) {
                         $('#buynum').val(0)
                     } else {
                         $('#buynum').val(1)
-                    }   
+                    }
                     break
                 }
             }
@@ -475,7 +481,23 @@ $('#allshopdatas').click(function (e) {
 
 $('#cartbtn').click(function () {
     if (token && token.kinds == 'buyer') {
-        alert('4959')
+        window.location.hash = '#/cart'
+        let toSend = {
+            Buyer_id: token.id
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/getcart',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                alert(response.message)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
     } else {
         if (token) {
             alert('Vendor is unable to operate this option')

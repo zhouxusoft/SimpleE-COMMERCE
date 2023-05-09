@@ -351,5 +351,15 @@ def cart():
 
     return jsonify({'success': True})
 
+@app.route('/getcart', methods=['POST'])
+def getcart():
+    data = request.get_json()
+    sql = "SELECT * FROM `cart` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+    val = (data['Product_id'], data['Buyer_id'])
+    dbcursor.execute(sql, val)
+    cartresult = dbcursor.fetchall()
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
