@@ -493,7 +493,7 @@ $('#cartbtn').click(function () {
             data: JSON.stringify(toSend),
             contentType: 'application/json',
             success: function (response) {
-                console.log(response.data)
+                // console.log(response.data)
                 globalcartlist = response.data
                 resetCartList()
             },
@@ -510,8 +510,15 @@ $('#cartbtn').click(function () {
     }
 })
 
+function resetCartResult(pnum, pallprice) {
+    $('.numberselect').empty()
+    $('.numberselect').text(pnum)
+    $('.totalprice').text('$' + pallprice)
+}
+
 function resetCartList() {
     let checkeddatas = []
+    resetCartResult(0, 0)
     if (globalcartlist.length > 0) {
         let vendorlist = []
         let vendorname = []
@@ -545,9 +552,9 @@ function resetCartList() {
                                 <div class="cartdataname">${globalcartlist[j][5]}</div>
                                 <div class="cartdataprice">$${globalcartlist[j][9]}</div>
                                 <div class="buynumborder cartdatanum">
-                                    <span class="input-group-text changebuynum delcartnum" id="${globalcartlist[j][3]}">-</span>
+                                    <span class="input-group-text changebuynum delcartnum" id="${globalcartlist[j][3]}" data-vid="check${globalcartlist[j][0]}">-</span>
                                     <input type="number" class="form-control cartnum" id="cartnum${globalcartlist[j][3]}" value="${globalcartlist[j][2]}" readonly>
-                                    <span class="input-group-text changebuynum addcartnum" id="${globalcartlist[j][3]}">+</span>
+                                    <span class="input-group-text changebuynum addcartnum" id="${globalcartlist[j][3]}" data-vid="check${globalcartlist[j][0]}">+</span>
                                 </div>  
                                 <div class="carttatleprice" id="totalprice${globalcartlist[j][3]}">$${allprice}</div>
                             </div>
@@ -566,10 +573,10 @@ function resetCartList() {
             let cartnum = $(`#${sid}`).val()
             cartnum = parseInt(cartnum)
             if (!isNaN(cartnum)) {
-                if (cartnum > 1) {
+                if (cartnum > 0) {
                     $(`#${sid}`).val(cartnum - 1)
                 } else {
-                    $(`#${sid}`).val(1)
+                    $(`#${sid}`).val(0)
                 }
             } else {
                 $(`#${sid}`).val(1)
@@ -580,6 +587,58 @@ function resetCartList() {
                     $(`#totalprice${productid}`).text(`$${newprice}`)
                 }
             }
+            let pnum = 0
+            let pallprice = 0
+            for (let i = 0; i < checkeddatas.length; i++) {
+                for (let j = 0; j < globalcartlist.length; j++) {
+                    if (globalcartlist[j][3] == productid) {
+                        globalcartlist[j][2] = $(`#${sid}`).val()
+                    }
+                    if (checkeddatas[i] == globalcartlist[j][0]) {
+                        pnum = pnum + parseInt(globalcartlist[j][2])
+                        pallprice = pallprice + globalcartlist[j][2] * globalcartlist[j][9]
+                    }
+                }
+            }
+            resetCartResult(pnum, pallprice)
+            let toSend = {
+                Product_id: productid,
+                Quantity: $(`#${sid}`).val(),
+                Buyer_id: token.id
+            }
+            $.ajax({
+                url: '/setcart',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.success) {
+                        $(`#allcheck`).prop('checked', false)
+                        checkeddatas = []
+                        let toSend = {
+                            Buyer_id: token.id
+                        }
+                        // console.log(toSend)
+                        $.ajax({
+                            url: '/getcart',
+                            type: 'POST',
+                            data: JSON.stringify(toSend),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log(response.data)
+                                globalcartlist = response.data
+                                resetCartList()
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         })
         $('.addcartnum').click(function (e) {
             let productid = e.target.id
@@ -601,6 +660,56 @@ function resetCartList() {
                     $(`#totalprice${productid}`).text(`$${newprice}`)
                 }
             }
+            let pnum = 0
+            let pallprice = 0
+            for (let i = 0; i < checkeddatas.length; i++) {
+                for (let j = 0; j < globalcartlist.length; j++) {
+                    if (globalcartlist[j][3] == productid) {
+                        globalcartlist[j][2] = $(`#${sid}`).val()
+                    }
+                    if (checkeddatas[i] == globalcartlist[j][0]) {
+                        pnum = pnum + parseInt(globalcartlist[j][2])
+                        pallprice = pallprice + globalcartlist[j][2] * globalcartlist[j][9]
+                    }
+                }
+            }
+            resetCartResult(pnum, pallprice)
+            let toSend = {
+                Product_id: productid,
+                Quantity: $(`#${sid}`).val(),
+                Buyer_id: token.id
+            }
+            $.ajax({
+                url: '/setcart',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.success) {
+                        let toSend = {
+                            Buyer_id: token.id
+                        }
+                        // console.log(toSend)
+                        $.ajax({
+                            url: '/getcart',
+                            type: 'POST',
+                            data: JSON.stringify(toSend),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log(response.data)
+                                globalcartlist = response.data
+                                resetCartList()
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         })
         $('#allcheck').click(function () {
             if ($('#allcheck').prop('checked')) {
@@ -664,7 +773,17 @@ function resetCartList() {
             } else {
                 $(`#allcheck`).prop('checked', false)
             }
-            
+            let pnum = 0
+            let pallprice = 0
+            for (let i = 0; i < checkeddatas.length; i++) {
+                for (let j = 0; j < globalcartlist.length; j++) {
+                    if (checkeddatas[i] == globalcartlist[j][0]) {
+                        pnum = pnum + globalcartlist[j][2]
+                        pallprice = pallprice + globalcartlist[j][2] * globalcartlist[j][9]
+                    }
+                }
+            }
+            resetCartResult(pnum, pallprice)
             // console.log(checkeddatas)
         })
 

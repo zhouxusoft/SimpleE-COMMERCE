@@ -106,9 +106,11 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `cart`  (\
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -191,7 +193,7 @@ def registration():
 
 
 @app.route('/getinfo', methods=['POST'])
-def getinfo ():
+def getinfo():
     sql = "SELECT * FROM `products`"
     dbcursor.execute(sql)
     productresult = dbcursor.fetchall()
@@ -216,12 +218,14 @@ def getinfo ():
     }
     return jsonify(allresult)
 
+
 @app.route('/comment', methods=['POST'])
 def comment():
     data = request.get_json()
     # print(data)
     sql = "INSERT INTO comment (Conent, Buyer_id, Buyer_name, Product_id) VALUES (%s, %s, %s, %s)"
-    val = (data['Conent'], data['Buyer_id'], data['Buyer_name'], data['Product_id'])
+    val = (data['Conent'], data['Buyer_id'],
+           data['Buyer_name'], data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
 
@@ -230,17 +234,18 @@ def comment():
     commentresult = dbcursor.fetchall()
 
     commentnum = 0
-    
+
     for i in commentresult:
         if int(i[5]) == int(data['Product_id']):
             commentnum = commentnum + 1
-    
+
     sql = "UPDATE products SET Comment_Sum = %s WHERE Product_id = %s"
     val = (commentnum, data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
 
     return jsonify({'success': True, 'message': 'Comment posted successfully'})
+
 
 @app.route('/like', methods=['POST'])
 def like():
@@ -273,8 +278,9 @@ def like():
     val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
-    
+
     return jsonify({'success': True})
+
 
 @app.route('/dislike', methods=['POST'])
 def dislike():
@@ -307,8 +313,9 @@ def dislike():
     val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
-    
+
     return jsonify({'success': True})
+
 
 @app.route('/buy', methods=['POST'])
 def buy():
@@ -324,12 +331,14 @@ def buy():
         dbcursor.execute(sql, val)
         db.commit()
         sql = "INSERT INTO `order` (`Quantity`, `Sum_price`, `Vendor_id`, `Product_id`, `Buyer_id`) VALUES (%s, %s, %s, %s, %s)"
-        val = (data['Quantity'], data['Sum_price'], data['Vendor_id'], data['Product_id'], data['Buyer_id'])
+        val = (data['Quantity'], data['Sum_price'],
+               data['Vendor_id'], data['Product_id'], data['Buyer_id'])
         dbcursor.execute(sql, val)
         db.commit()
     else:
         return jsonify({'success': False, 'message': 'Purchase failed!\nQuantity exceeds stock limit.'})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
+
 
 @app.route('/cart', methods=['POST'])
 def cart():
@@ -350,6 +359,29 @@ def cart():
         db.commit()
 
     return jsonify({'success': True})
+
+
+@app.route('/setcart', methods=['POST'])
+def setcart():
+    data = request.get_json()
+    sql = "SELECT * FROM `cart` WHERE `Product_id` = %s AND `Buyer_id` = %s"
+    val = (data['Product_id'], data['Buyer_id'])
+    dbcursor.execute(sql, val)
+    cartresult = dbcursor.fetchall()
+    if len(cartresult) > 0:
+        sql = "UPDATE cart SET Product_amount = %s WHERE Cart_id = %s"
+        val = (int(data['Quantity']), cartresult[0][0])
+        dbcursor.execute(sql, val)
+        db.commit()
+
+    sql = "DELETE FROM cart WHERE Product_amount = 0"
+    dbcursor.execute(sql)
+    db.commit()
+    if int(data['Quantity']) == 0:
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
 
 @app.route('/getcart', methods=['POST'])
 def getcart():
