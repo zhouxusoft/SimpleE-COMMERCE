@@ -8,6 +8,7 @@ let currentproductid
 let globalcartlist
 let selectedcart
 let checkeddatas = []
+let currentpage = 'likelist'
 
 const poncon = new Poncon()
 
@@ -864,6 +865,7 @@ $('#likebtn').click(function () {
 $('#centerbtn').click(function () {
     if (token && token.kinds == 'buyer') {
         window.location.hash = '#/center'
+        $('#looklikelist').addClass('centerselected')
         let toSend = {
             Buyer_id: token.id
         }
@@ -875,6 +877,8 @@ $('#centerbtn').click(function () {
             contentType: 'application/json',
             success: function (response) {
                 console.log(response.data)
+                console.log(globallike)
+                console.log(globalcomment)
             },
             error: function (error) {
                 console.log(error)
@@ -889,9 +893,45 @@ $('#centerbtn').click(function () {
     }
 })
 
-function  resetCenter() {
-    
+function resetCenter () {
+    if (currentpage == 'likelist') {
+        console.log(currentpage)
+        $('.centerinfoborder').empty()
+        for (let i = 0; i < globallike.length; i++) {
+            if (globallike[i][] ==)
+            $('.centerinfoborder').html($('.centerinfoborder').html() + `
+            `)
+        }
+    } else if (currentpage == 'buyerhistory') {
+        console.log(currentpage)
+    } else {
+        console.log(currentpage)
+    }
 }
+
+$('#lookbuyerhistory').click(function () {
+    $('#lookbuyerhistory').addClass('centerselected')
+    $('#looklikelist').removeClass('centerselected')
+    $('#lookcomment').removeClass('centerselected')
+    currentpage = 'buyerhistory'
+    resetCenter()
+})
+
+$('#looklikelist').click(function () {
+    $('#looklikelist').addClass('centerselected')
+    $('#lookbuyerhistory').removeClass('centerselected')
+    $('#lookcomment').removeClass('centerselected')
+    currentpage = 'likelist'
+    resetCenter()
+})
+
+$('#lookcomment').click(function () {
+    $('#lookcomment').addClass('centerselected')
+    $('#lookbuyerhistory').removeClass('centerselected')
+    $('#looklikelist').removeClass('centerselected')
+    currentpage = 'comment'
+    resetCenter()
+})
 
 $('#delbuynum').click(function () {
     let buynum = $('#buynum').val()
