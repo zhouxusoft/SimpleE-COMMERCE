@@ -459,9 +459,8 @@ def buycart():
 @app.route('/order', methods=['POST'])
 def order():
     data = request.get_json()
-    sql = "SELECT * FROM `order` WHERE `Buyer_id` = %s"
-    val = (data['Buyer_id'],)
-    dbcursor.execute(sql, val)
+    sql = "SELECT * FROM `order`"
+    dbcursor.execute(sql)
     orderresult = dbcursor.fetchall()
 
     return jsonify({'success': True, 'data': orderresult})

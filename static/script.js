@@ -6,7 +6,7 @@ let globallike = []
 let globaldislike = []
 let currentproductid
 let globalcartlist
-let globalorder
+let globalallorder
 let selectedcart
 let checkeddatas = []
 let currentpage = 'likelist'
@@ -872,7 +872,15 @@ $('#centerbtn').click(function () {
         $('#looklikelist').addClass('centerselected')
         $('#lookbuyerhistory').removeClass('centerselected')
         $('#lookcomment').removeClass('centerselected')
-        currentpage = 'likelist'
+        if (token.kinds == 'buyer') {
+            currentpage = 'likelist'
+            $('#lookbuyerhistory').text('Buyer history')
+            $('#looklikelist').text('Like list')
+        } else {
+            currentpage = 'orderlist'
+            $('#lookbuyerhistory').text('Product list')
+            $('#looklikelist').text('Order list')
+        }
         resetCenter()
         resetChangeInput() 
         let toSend = {
@@ -885,10 +893,10 @@ $('#centerbtn').click(function () {
             data: JSON.stringify(toSend),
             contentType: 'application/json',
             success: function (response) {
-                globalorder = response.data
-                // console.log(response.data)
-                // console.log(globallike)
-                // console.log(globalcomment)
+                globalallorder = response.data
+                console.log(response.data)
+                console.log(globallike)
+                console.log(globalcomment)
             },
             error: function (error) {
                 console.log(error)
@@ -946,7 +954,13 @@ function resetCenter() {
         }
     } else if (currentpage == 'buyerhistory') {
         // console.log(currentpage)
+        let globalorder = []
         $('.centerinfoborder').empty()
+        for (let i = 0; i < globalallorder.length; i++) {
+            if (globalallorder[i][8] == token.id) {
+                globalorder.push(globalallorder[i])
+            }
+        }
         for (let i = globalorder.length - 1; i > -1; i--) {
             let pimg = ''
             let pname = ''
@@ -989,7 +1003,7 @@ function resetCenter() {
                 $('.orderlistdatatrackarrivedate').text('Please wait')
             }
         }
-    } else {
+    } else if (currentpage == 'comment') {
         // console.log(currentpage)
         $('.centerinfoborder').empty()
         for (let i = globalcomment.length - 1; i > -1; i--) {
@@ -1014,7 +1028,44 @@ function resetCenter() {
                 `)
             }
         }
-    }
+    } else if (currentpage == 'productlist') {
+        
+    } else if (currentpage == 'orderlist') {
+
+    } else if (currentpage == 'vcomment') {
+        $('.centerinfoborder').empty()
+        let pdlist = []
+        for (let i = 0; i < globalproduct.length; i++) {
+            if (globalproduct[i][10] == token.id) {
+                pdlist.push(globalproduct[i][0])
+            }
+        }
+        for (let i = globalcomment.length - 1; i > -1; i--) {
+            for (let x = 0; x < pdlist.length; x++) {
+                if (pdlist[x] == globalcomment[i][5]) {
+                    let pimg = ''
+                    let pname = ''
+                    for (let j = 0; j < globalproduct.length; j++) {
+                        if (globalproduct[j][0] == globalcomment[i][5]) {
+                            pimg = getImgList(globalproduct[j][2])
+                            pname = globalproduct[j][1]
+                        }
+                    }
+                    $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                        <div class="centercomment">
+                            <div class="centercommentimg">
+                                <img src="../static/productimg/${pimg[0]}" alt="" width="50px">
+                            </div>
+                            <div class="centercommentname">${pname}</div>
+                            <div class="centercommenttext">${globalcomment[i][1]}</div>
+                            <div class="centercommenttime">${getTime(globalcomment[i][2])}</div>
+                        </div>
+                    `)
+                }
+                
+            }
+        }
+    } 
 }
 
 $('#phonechangebtn').click(function () {
@@ -1133,7 +1184,11 @@ $('#lookbuyerhistory').click(function () {
     $('#lookbuyerhistory').addClass('centerselected')
     $('#looklikelist').removeClass('centerselected')
     $('#lookcomment').removeClass('centerselected')
-    currentpage = 'buyerhistory'
+    if (token.kinds == 'buyer') {
+        currentpage = 'buyerhistory'
+    } else {
+        currentpage = 'productlist'
+    }
     resetCenter()
 })
 
@@ -1141,7 +1196,11 @@ $('#looklikelist').click(function () {
     $('#looklikelist').addClass('centerselected')
     $('#lookbuyerhistory').removeClass('centerselected')
     $('#lookcomment').removeClass('centerselected')
-    currentpage = 'likelist'
+    if (token.kinds == 'buyer') {
+        currentpage = 'likelist'
+    } else {
+        currentpage = 'orderlist'
+    }
     resetCenter()
 })
 
@@ -1149,7 +1208,11 @@ $('#lookcomment').click(function () {
     $('#lookcomment').addClass('centerselected')
     $('#lookbuyerhistory').removeClass('centerselected')
     $('#looklikelist').removeClass('centerselected')
-    currentpage = 'comment'
+    if (token.kinds == 'buyer') {
+        currentpage = 'comment'
+    } else {
+        currentpage = 'vcomment'
+    }
     resetCenter()
 })
 
