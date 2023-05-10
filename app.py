@@ -416,6 +416,7 @@ def getcart():
 
     return jsonify({'success': True, 'data': dataresult})
 
+
 @app.route('/buycart', methods=["POST"])
 def buycart():
     data = request.get_json()
@@ -449,9 +450,11 @@ def buycart():
             dbcursor.execute(sql, val)
             db.commit()
         else:
-            message = 'Purchase failed!\nThe quantity of ' + productresult[0][1] + ' purchased exceeds the inventory limit.'
+            message = 'Purchase failed!\nThe quantity of ' + \
+                productresult[0][1] + ' purchased exceeds the inventory limit.'
             return jsonify({'success': False, 'message': message})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
+
 
 @app.route('/order', methods=['POST'])
 def order():
@@ -461,8 +464,57 @@ def order():
     dbcursor.execute(sql, val)
     orderresult = dbcursor.fetchall()
 
-
     return jsonify({'success': True, 'data': orderresult})
+
+
+@app.route('/change', methods=['POST'])
+def change():
+    data = request.get_json()
+    if data['kind'] == 'buyer':
+        changedata = 'Buyers_' + data['changedata']
+        sql = "UPDATE buyers SET {} = %s WHERE Buyers_id = %s".format(changedata)
+        val = (data['changed'], data['bv_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
+        sql = "SELECT * FROM buyers WHERE `Buyers_id` = %s"
+        val = (data['bv_id'],)
+        dbcursor.execute(sql, val)
+        result = dbcursor.fetchall()
+        if len(result) > 0:
+            userinfo = []
+            userinfo = {
+                'id': result[0][0],
+                'name': result[0][1],
+                'address': result[0][3],
+                'email': result[0][4],
+                'phone': result[0][5],
+                'kinds': 'buyer'
+            }
+            return jsonify({'success': True, 'message': 'Successfully updated', 'userinfo': userinfo})
+    else:
+        changedata = 'Vendors_' + data['changedata']
+        sql = "UPDATE vendors SET {} = %s WHERE Vendors_id = %s".format(changedata)
+        val = (data['changed'], data['bv_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
+        sql = "SELECT * FROM vendors WHERE `Vendors_id` = %s"
+        val = (data['bv_id'],)
+        dbcursor.execute(sql, val)
+        result = dbcursor.fetchall()
+        if len(result) > 0:
+            userinfo = []
+            userinfo = {
+                'id': result[0][0],
+                'name': result[0][1],
+                'address': result[0][3],
+                'email': result[0][4],
+                'phone': result[0][5],
+                'kinds': 'ventor'
+            }
+            return jsonify({'success': True, 'message': 'Successfully updated', 'userinfo': userinfo})
+
+    return jsonify({'success': False, 'message': 'Update unsuccessful'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

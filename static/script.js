@@ -94,6 +94,7 @@ $('#gotologin').click(function () {
             localStorage.clear()
             token = JSON.parse(localStorage.getItem("token"))
             resetLoginBtn()
+            window.location.hash = ''
         }
     } else {
         window.location.hash = '#/login'
@@ -866,13 +867,14 @@ $('#likebtn').click(function () {
 })
 
 $('#centerbtn').click(function () {
-    if (token && token.kinds == 'buyer') {
+    if (token) {
         window.location.hash = '#/center'
         $('#looklikelist').addClass('centerselected')
         $('#lookbuyerhistory').removeClass('centerselected')
         $('#lookcomment').removeClass('centerselected')
         currentpage = 'likelist'
         resetCenter()
+        resetChangeInput() 
         let toSend = {
             Buyer_id: token.id
         }
@@ -884,9 +886,9 @@ $('#centerbtn').click(function () {
             contentType: 'application/json',
             success: function (response) {
                 globalorder = response.data
-                console.log(response.data)
-                console.log(globallike)
-                console.log(globalcomment)
+                // console.log(response.data)
+                // console.log(globallike)
+                // console.log(globalcomment)
             },
             error: function (error) {
                 console.log(error)
@@ -901,9 +903,20 @@ $('#centerbtn').click(function () {
     }
 })
 
+function resetChangeInput () {
+    $('.centerusername').text(token.name)
+    $("#phonechangeinput").attr("placeholder", token.phone)
+    $("#emailchangeinput").attr("placeholder", token.email)
+    $("#addresschangeinput").attr("placeholder", token.address)
+    $("#phonechangeinput").val('')
+    $("#emailchangeinput").val('')
+    $("#addresschangeinput").val('')
+    $("#passwordchangeinput").val('')
+}
+
 function resetCenter() {
     if (currentpage == 'likelist') {
-        console.log(currentpage)
+        // console.log(currentpage)
         $('.centerinfoborder').empty()
         for (let i = globallike.length - 1; i > -1; i--) {
             let img = ''
@@ -932,7 +945,7 @@ function resetCenter() {
             `)
         }
     } else if (currentpage == 'buyerhistory') {
-        console.log(currentpage)
+        // console.log(currentpage)
         $('.centerinfoborder').empty()
         for (let i = globalorder.length - 1; i > -1; i--) {
             let pimg = ''
@@ -977,7 +990,7 @@ function resetCenter() {
             }
         }
     } else {
-        console.log(currentpage)
+        // console.log(currentpage)
         $('.centerinfoborder').empty()
         for (let i = globalcomment.length - 1; i > -1; i--) {
             if (globalcomment[i][3] == token.id) {
@@ -1000,9 +1013,121 @@ function resetCenter() {
                     </div>
                 `)
             }
-        }   
+        }
     }
 }
+
+$('#phonechangebtn').click(function () {
+    if ($('#phonechangeinput').val() != '') {
+        let toSend = {
+            kind: token.kinds,
+            bv_id: token.id,
+            changedata: 'phone',
+            changed: $('#phonechangeinput').val()
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/change',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                localStorage.clear()
+                localStorage.setItem("token", JSON.stringify(response.userinfo))
+                token = JSON.parse(localStorage.getItem("token"))
+                resetChangeInput() 
+                alert(response.message)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
+
+$('#emailchangebtn').click(function () {
+    if ($('#emailchangeinput').val() != '') {
+        let toSend = {
+            kind: token.kinds,
+            bv_id: token.id,
+            changedata: 'email',
+            changed: $('#emailchangeinput').val()
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/change',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                localStorage.clear()
+                localStorage.setItem("token", JSON.stringify(response.userinfo))
+                token = JSON.parse(localStorage.getItem("token"))
+                resetChangeInput() 
+                alert(response.message)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
+
+$('#addresschangebtn').click(function () {
+    if ($('#addresschangeinput').val() != '') {
+        let toSend = {
+            kind: token.kinds,
+            bv_id: token.id,
+            changedata: 'address',
+            changed: $('#addresschangeinput').val()
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/change',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                localStorage.clear()
+                localStorage.setItem("token", JSON.stringify(response.userinfo))
+                token = JSON.parse(localStorage.getItem("token"))
+                resetChangeInput() 
+                alert(response.message)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
+
+$('#passwordchangebtn').click(function () {
+    if ($('#passwordchangeinput').val() != '') {
+        let toSend = {
+            kind: token.kinds,
+            bv_id: token.id,
+            changedata: 'password',
+            changed: $('#passwordchangeinput').val()
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/change',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                localStorage.clear()
+                localStorage.setItem("token", JSON.stringify(response.userinfo))
+                token = JSON.parse(localStorage.getItem("token"))
+                resetChangeInput() 
+                alert(response.message)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
 
 $('#lookbuyerhistory').click(function () {
     $('#lookbuyerhistory').addClass('centerselected')
