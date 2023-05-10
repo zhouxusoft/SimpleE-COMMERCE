@@ -1118,7 +1118,42 @@ function resetCenter() {
                     console.log(error)
                 }
             })
-        }) 
+        })
+        $('.addimg').click(function () {
+            var fileInput = document.createElement('input')
+
+            let imgwidth = 0
+            let imgheight = 0
+
+            fileInput.type = 'file';
+            fileInput.name = 'img';
+            fileInput.accept = 'image/bmp,image/heic,image/heif,image/jpeg,image/png,image/webp,image/x-icon'
+
+            fileInput.onchange = function () {
+                let file = this.files[0]
+                console.log(file.name)
+                let toSend = {
+                    filename: file.name,
+                    file: file
+                }
+                const formData = new FormData();
+                formData.append('file', file);
+                $.ajax({
+                    url: '/img',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                              
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+            fileInput.click();
+        })
         
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()

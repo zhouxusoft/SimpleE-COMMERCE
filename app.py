@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request, jsonify
 import mysql.connector
+import os
 
 db = mysql.connector.connect(
     host="127.0.0.1",
@@ -572,6 +573,20 @@ def editproduct():
         db.commit()
 
     return jsonify({'success': True, 'message': 'Successfully changed'})
+
+@app.route('/img', methods=['POST'])
+def img():
+    for key in request.files:
+        file = request.files[key]
+    #print(file)
+    filename = file.filename
+    directory = os.path.join(os.getcwd(), './static/productimg')
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    filepath = os.path.join(directory, filename)
+    file.save(filepath)
+
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
