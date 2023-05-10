@@ -717,13 +717,23 @@ input[type=number]::-webkit-outer-spin-button {
     border: 1px solid #6c757d;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+}
+
+.likelistdataname {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.likelistdataprice {
+    width: 150px;
 }
 
 .likelistdatalikenum {
     font-family: "Font Awesome 6 Free";
     font-weight: 300;
+    width: 70px;
 }
 
 .likelistdataimg {
@@ -733,20 +743,84 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: hidden;
 }
 
-.orderlistdata {
+.orderlistdataborder {
     padding: 10px;
     margin: 10px 10px 0;
     border: 1px solid #6c757d;
     border-radius: 5px;
+}
+
+.orderlistdata {
     display: flex;
+    flex-wrap: nowrap; 
     align-items: center;
+    color: #385b7c;
+}
+
+.orderlistdataimg {
+    width: 50px;
+    height: 50px;
+    border: 1px solid orangered;
+    overflow: hidden;
+}
+
+.orderlistdataimg1 {
+    width: 50px;
+}
+
+.orderlistdatanum {
+    width: 100px;
+}
+
+.orderlistdataprice {
+    width: 150px;
+}
+
+.orderlistdatatime {
+    width: 150px;
 }
 
 .orderlistdataname {
-    padding: 10px;
-    min-width: 200px;
-    max-width: 200px;
+    padding: 10px 20px;
+    flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: left;
+}
+
+.orderlistdatatrack {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-top: 5px;
+}
+
+.orderlistdatatracking {
+    display: inline-block;
+}
+
+.orderlistdatatrackarrive {
+    display: inline-block;
+    color: #385b7c;
+}
+
+.orderlistdatatracking {
+    margin-right: 20px;
+    color: #385b7c;
+}
+
+.orderlistdatatrackingnum {
+    color: #0d6efd;
+    font-size: 1rem;
+    user-select: text;
+}
+
+.orderlistdatatrackarrivedate {
+    color: #0d6efd;
+    font-size: 1rem;
+}
+
+.orderhr {
+    margin-top: 0;
 }

@@ -15,7 +15,7 @@ const poncon = new Poncon()
 
 poncon.setPageList(['home', 'login', 'registration', 'cart', 'center'])
 
-// window.location.hash = ''
+window.location.hash = ''
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -855,7 +855,7 @@ $('#cartipayed').click(function () {
 
 $('#likebtn').click(function () {
     if (token && token.kinds == 'buyer') {
-        alert('4959')
+        $('#centerbtn').click()
     } else {
         if (token) {
             alert('Vendor is unable to operate this option')
@@ -903,7 +903,7 @@ function resetCenter () {
     if (currentpage == 'likelist') {
         console.log(currentpage)
         $('.centerinfoborder').empty()
-        for (let i = 0; i < globallike.length; i++) {
+        for (let i = globallike.length - 1; i > -1 ; i--) {
             let img = ''
             let likepname = ''
             let likepprice = 0
@@ -932,11 +932,9 @@ function resetCenter () {
     } else if (currentpage == 'buyerhistory') {
         console.log(currentpage)
         $('.centerinfoborder').empty()
-        for (let i = 0; i < globalorder.length; i++) {
+        for (let i = globalorder.length - 1; i > -1; i--) {
             let pimg = ''
             let pname = ''
-            let pprice = 0
-            let pnum = 0
             for (let j = 0; j < globalproduct.length; j++) {
                 if (globalproduct[j][0] == globalorder[i][7]) {
                     pimg = getImgList(globalproduct[j][2])
@@ -945,17 +943,36 @@ function resetCenter () {
                 }
             }
             $('.centerinfoborder').html($('.centerinfoborder').html() + `
-                <div class="likelistdata">
-                    <div class="likelistdataimg">
-                        <img src="../static/productimg/${img[0]}" alt="" width="50px">
+                <div class="orderlistdataborder">
+                    <div class="orderlistdata">
+                        <div class="orderlistdataimg1"></div>
+                        <div class="orderlistdataname">Productname</div>
+                        <div class="orderlistdatanum">Quantity</div>
+                        <div class="orderlistdataprice">Total price</div>
+                        <div class="orderlistdatatime">Order time</div>
                     </div>
-                    <div class="likelistdataname">${likepname}</div>
-                    <div class="likelistdataprice">$${likepprice}</div>
-                    <div class="likelistdatalikenum">
-                        &#xf164 <span class="likelistdatanum">${likenum}</span>
+                    <hr class="orderhr">
+                    <div class="orderlistdata">
+                        <div class="orderlistdataimg">
+                            <img src="../static/productimg/${pimg[0]}" alt="" width="50px">
+                        </div>
+                        <div class="orderlistdataname">${pname}</div>
+                        <div class="orderlistdatanum">${globalorder[i][4]}</div>
+                        <div class="orderlistdataprice">$${globalorder[i][5]}</div>
+                        <div class="orderlistdatatime">${getTime(globalorder[i][3])}</div>
+                    </div>
+                    <div class="orderlistdatatrack">
+                        <div class="orderlistdatatracking">Tracking: <span class="orderlistdatatrackingnum">${globalorder[i][1]}</span></div>
+                        <div class="orderlistdatatrackarrive">Arrivial date: <span class="orderlistdatatrackarrivedate">${globalorder[i][2]}</span></div>
                     </div>
                 </div>
             `)
+            if (globalorder[i][1] == null) {
+                $('.orderlistdatatrackingnum').text('Not shipped')
+            }
+            if (globalorder[i][2] == null) {
+                $('.orderlistdatatrackarrivedate').text('Please wait')
+            }
         }
     } else {
         console.log(currentpage)
