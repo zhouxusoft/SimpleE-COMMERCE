@@ -1055,7 +1055,7 @@ function resetCenter() {
                             <div class="productlistdataname">${globalproduct[i][1]}</div>
                             <div class="productlistdatainventory">${globalproduct[i][6]}</div>
                             <div class="productlistdataprice">$${globalproduct[i][5]}</div>
-                            <button type="button" class="btn btn-outline-secondary changeproduct" id="changeproduct">Edit</button>
+                            <button type="button" class="btn btn-outline-secondary changeproduct" id="changeproduct${globalproduct[i][0]}">Edit</button>
                         </div>
                     </div>
                 `)
@@ -1066,6 +1066,9 @@ function resetCenter() {
                 <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
             </div>`
         )
+        $('.changeproduct').click(function () {
+            $('#editbtn').click()
+        })
         
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()

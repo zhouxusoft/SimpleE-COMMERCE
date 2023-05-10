@@ -980,3 +980,15 @@ input[type=number]::-webkit-outer-spin-button {
     height: 100px;
     width: 100%;
 }
+
+.addimg {
+    width: 80px;
+    height: 80px;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: orangered;
+    cursor: pointer;
+    margin: auto;
+}

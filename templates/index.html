@@ -460,6 +460,71 @@
             </div>
         </div>
     </div>
+
+    <button style="display: none" id="editbtn" data-bs-toggle="modal" data-bs-target="#editmodal"></button>
+    <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Product edit:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="addimg">
+                        Upload Product Photo
+                    </div>
+                    <div class="shiptrack">
+                        <div class="input-group mt-2 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Product name</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" id="changename">
+                        </div>
+                    </div>
+                    <div class="shiptrack">
+                        <div class="input-group mt-2 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Category</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" id="changecategory">
+                        </div>
+                    </div>
+                    <div class="shiptrack">
+                        <div class="input-group mt-2 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Price</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" id="changeprice">
+
+                        </div>
+                    </div>
+                    <div class="shiptrack">
+                        <div class="input-group mt-2 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Inventory</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" id="changeinventory">
+
+                        </div>
+                    </div>
+                    <div class="shipdate">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Description</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" id="changedescription">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success secondbtn"
+                        id="yesship">Confirm</button>
+                    <button type="button" class="btn btn-danger secondbtn" data-bs-dismiss="modal"
+                        id="canclemodal">&nbsp;Cancle&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../static/poncon.js"></script>
     <script src="../static/script.js"></script>
 </body>
