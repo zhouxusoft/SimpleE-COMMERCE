@@ -793,7 +793,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: block;
     width: fit-content;
     margin-left: auto;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .orderlistdatatracking {
@@ -823,4 +823,45 @@ input[type=number]::-webkit-outer-spin-button {
 
 .orderhr {
     margin-top: 0;
+}
+
+.centercomment {
+    padding: 10px;
+    margin: 10px 10px 0;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: nowrap; 
+    align-items: center;
+    color: #385b7c;
+}
+
+.centercommentimg {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    border: 1px solid orangered;
+    overflow: hidden;
+}
+
+.centercommentname {
+    width: 200px;
+    min-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    margin: 0 20px;
+}
+
+.centercommenttext {
+    flex-grow: 1;
+    text-align: left;
+    max-width: 700px;
+    text-align: justify;
+    word-break: break-all;
+}
+
+.centercommenttime {
+    min-width: 160px;
 }

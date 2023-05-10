@@ -872,7 +872,7 @@ $('#centerbtn').click(function () {
         $('#lookbuyerhistory').removeClass('centerselected')
         $('#lookcomment').removeClass('centerselected')
         currentpage = 'likelist'
-        resetCenter ()
+        resetCenter()
         let toSend = {
             Buyer_id: token.id
         }
@@ -901,11 +901,11 @@ $('#centerbtn').click(function () {
     }
 })
 
-function resetCenter () {
+function resetCenter() {
     if (currentpage == 'likelist') {
         console.log(currentpage)
         $('.centerinfoborder').empty()
-        for (let i = globallike.length - 1; i > -1 ; i--) {
+        for (let i = globallike.length - 1; i > -1; i--) {
             let img = ''
             let likepname = ''
             let likepprice = 0
@@ -978,6 +978,29 @@ function resetCenter () {
         }
     } else {
         console.log(currentpage)
+        $('.centerinfoborder').empty()
+        for (let i = globalcomment.length - 1; i > -1; i--) {
+            if (globalcomment[i][3] == token.id) {
+                let pimg = ''
+                let pname = ''
+                for (let j = 0; j < globalproduct.length; j++) {
+                    if (globalproduct[j][0] == globalcomment[i][5]) {
+                        pimg = getImgList(globalproduct[j][2])
+                        pname = globalproduct[j][1]
+                    }
+                }
+                $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                    <div class="centercomment">
+                        <div class="centercommentimg">
+                            <img src="../static/productimg/${pimg[0]}" alt="" width="50px">
+                        </div>
+                        <div class="centercommentname">${pname}</div>
+                        <div class="centercommenttext">${globalcomment[i][1]}</div>
+                        <div class="centercommenttime">${getTime(globalcomment[i][2])}</div>
+                    </div>
+                `)
+            }
+        }   
     }
 }
 
@@ -1383,4 +1406,3 @@ $('#backtopurchase').click(function () {
 })
 
 poncon.start()
-
