@@ -1067,8 +1067,39 @@ function resetCenter() {
             </div>`
         )
         $('.changeproduct').click(function () {
+            let pid = this.id.slice(13)
             $('#editbtn').click()
+            for (let i = 0; i < globalproduct.length; i++) {
+                if (globalproduct[i][0] == parseInt(pid)) {
+                    $('#changename').val(globalproduct[i][1])
+                    $('#changecategory').val(globalproduct[i][11])
+                    $('#changeprice').val(globalproduct[i][5])
+                    $('#changeinventory').val(globalproduct[i][6])
+                    $('#changedescription').val(globalproduct[i][4])
+                }
+            }
         })
+        $('#yeschange').click(function () {
+            let toSend = {
+                Product_name: $('#changename').val(),
+                Category: $('#changecategory').val(),
+                Price: $('#changeprice').val(),
+                Inventory: $('#changeinventory').val(),
+                Product_describe: $('#changedescription').val()
+            }
+            $.ajax({
+                url: '/editproduct',
+                type: 'POST',
+                data: JSON.stringify(toSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }) 
         
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()

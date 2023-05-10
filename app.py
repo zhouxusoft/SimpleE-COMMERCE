@@ -530,5 +530,11 @@ def ship():
 
     return jsonify({'success': True, 'message': 'Successfully shipped'})
 
+@app.route('/editproduct')
+def editproduct():
+    data = request.get_json()
+    changelist = []
+    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
