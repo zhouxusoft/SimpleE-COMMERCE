@@ -611,3 +611,49 @@ input[type=number]::-webkit-outer-spin-button {
 .cartnum {
     background-color: white !important;
 }
+
+.centerborder {
+    width: 90vw;
+    max-width: 1200px;
+    height: 100%;
+    border: 1px solid #4a5c6d;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .carttop {
+    flex: 1;
+    max-height: 50px;
+}
+
+.cartcenter {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.cartbottom {
+    flex: 1;
+    max-height: 64px;
+} */
+
+.usernameinfoborder {
+    flex: 1;
+    border: 1px solid #4a5c6d;
+    height: 100px;
+    max-height: 100px;
+}
+
+.selectcenterpageborder {
+    flex: 1;
+    border: 1px solid #4a5c6d;
+    height: 100px;
+    max-height: 100px;
+    margin: 20px 0;
+}
+
+.centerinfoborder {
+    flex-grow: 1;
+    overflow: auto;
+    border: 1px solid #4a5c6d;
+}

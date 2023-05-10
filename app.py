@@ -453,6 +453,15 @@ def buycart():
             return jsonify({'success': False, 'message': message})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
 
+@app.route('/order', methods=['POST'])
+def order():
+    data = request.get_json()
+    sql = "SELECT * FROM `order` WHERE `Buyer_id` = %s"
+    val = (data['Buyer_id'],)
+    dbcursor.execute(sql, val)
+    orderresult = dbcursor.fetchall()
+
+    return jsonify({'success': True, 'data': orderresult})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

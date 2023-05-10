@@ -11,7 +11,7 @@ let checkeddatas = []
 
 const poncon = new Poncon()
 
-poncon.setPageList(['home', 'login', 'registration', 'cart'])
+poncon.setPageList(['home', 'login', 'registration', 'cart', 'center'])
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -863,7 +863,23 @@ $('#likebtn').click(function () {
 
 $('#centerbtn').click(function () {
     if (token && token.kinds == 'buyer') {
-        alert('4959')
+        window.location.hash = '#/center'
+        let toSend = {
+            Buyer_id: token.id
+        }
+        // console.log(toSend)
+        $.ajax({
+            url: '/order',
+            type: 'POST',
+            data: JSON.stringify(toSend),
+            contentType: 'application/json',
+            success: function (response) {
+                console.log(response.data)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
     } else {
         if (token) {
             alert('Vendor is unable to operate this option')
@@ -872,6 +888,10 @@ $('#centerbtn').click(function () {
         }
     }
 })
+
+function  resetCenter() {
+    
+}
 
 $('#delbuynum').click(function () {
     let buynum = $('#buynum').val()
