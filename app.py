@@ -473,7 +473,8 @@ def change():
     data = request.get_json()
     if data['kind'] == 'buyer':
         changedata = 'Buyers_' + data['changedata']
-        sql = "UPDATE buyers SET {} = %s WHERE Buyers_id = %s".format(changedata)
+        sql = "UPDATE buyers SET {} = %s WHERE Buyers_id = %s".format(
+            changedata)
         val = (data['changed'], data['bv_id'])
         dbcursor.execute(sql, val)
         db.commit()
@@ -494,7 +495,8 @@ def change():
             return jsonify({'success': True, 'message': 'Successfully updated', 'userinfo': userinfo})
     else:
         changedata = 'Vendors_' + data['changedata']
-        sql = "UPDATE vendors SET {} = %s WHERE Vendors_id = %s".format(changedata)
+        sql = "UPDATE vendors SET {} = %s WHERE Vendors_id = %s".format(
+            changedata)
         val = (data['changed'], data['bv_id'])
         dbcursor.execute(sql, val)
         db.commit()
@@ -516,6 +518,17 @@ def change():
 
     return jsonify({'success': False, 'message': 'Update unsuccessful'})
 
+
+@app.route('/ship', methods=['POST'])
+def ship():
+    data = request.get_json()
+    print(data)
+    sql = "UPDATE `order` SET `Arrive_date` = %s, `Tracking` = %s WHERE `Order_id` = %s"
+    val = (data['Arrive_date'], data['Tracking'], data['Order_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
+
+    return jsonify({'success': True, 'message': 'Successfully shipped'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

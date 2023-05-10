@@ -919,6 +919,13 @@ function resetChangeInput () {
     $("#passwordchangeinput").val('')
 }
 
+function getDate(time) {
+    let date = new Date(Date.parse(time))
+    date = date.toLocaleDateString()
+    // console.log(date)
+    return date
+}
+
 function resetCenter() {
     if (currentpage == 'likelist') {
         // console.log(currentpage)
@@ -988,16 +995,17 @@ function resetCenter() {
                         <div class="orderlistdatatime">${getTime(globalorder[i][3])}</div>
                     </div>
                     <div class="orderlistdatatrack">
-                        <div class="orderlistdatatracking">Tracking: <span class="orderlistdatatrackingnum">${globalorder[i][1]}</span></div>
-                        <div class="orderlistdatatrackarrive">Arrivial date: <span class="orderlistdatatrackarrivedate">${globalorder[i][2]}</span></div>
+                        <div class="orderlistdatatracking">Tracking: <span class="orderlistdatatrackingnum" id="orderlistdatatrackingnum${globalorder[i][0]}">${globalorder[i][2]}</span></div>
+                        <div class="orderlistdatatrackarrive">Arrivial date: <span class="orderlistdatatrackarrivedate" id="orderlistdatatrackarrivedate${globalorder[i][0]}">${getDate(globalorder[i][1])}</span></div>
                     </div>
                 </div>
             `)
+            
             if (globalorder[i][1] == null) {
-                $('.orderlistdatatrackingnum').text('Not shipped')
+                $(`#orderlistdatatrackingnum${globalorder[i][0]}`).text('Not shipped')
             }
             if (globalorder[i][2] == null) {
-                $('.orderlistdatatrackarrivedate').text('Please wait')
+                $(`#orderlistdatatrackarrivedate${globalorder[i][0]}`).text('Please wait')
             }
         }
     } else if (currentpage == 'comment') {
@@ -1029,7 +1037,7 @@ function resetCenter() {
         $('.centerinfoborder').empty()
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
-        for (let i = 0; i < globalallorder.length; i++) {
+        for (let i = globalallorder.length - 1; i > -1; i--) {
             if (globalallorder[i][6] == token.id) {
                 let pname = ''
                 let pimg = ''
@@ -1068,10 +1076,41 @@ function resetCenter() {
                 `)
                 if (globalallorder[i][1] != null) {
                     $(`#ship${globalallorder[i][0]}`).text('Shipped')
+                    $(`#ship${globalallorder[i][0]}`).addClass('disabled')
                 }
-            }
-            
+            } 
         }
+        let currentorderid = 0
+        $('.shipbtn').click(function () {
+            console.log(this.id.slice(4))
+            $('#goshipbtn').click()
+            currentorderid = parseInt(this.id.slice(4))
+        })
+        $('#yesship').click(function () {
+            if ($('#shiptrackinput').val() != '' && $('#shipdateinput').val() != '') {
+                console.log($('#shipdateinput').val())
+                let toSend = {
+                    Order_id: currentorderid,
+                    Arrive_date: $('#shipdateinput').val(),
+                    Tracking: $('#shiptrackinput').val()
+                }
+                $.ajax({
+                    url: '/ship',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert(response.message)
+                        $('#canclemodal').click()
+                        $(`#ship${currentorderid}`).text('Shipped')
+                        $(`#ship${currentorderid}`).addClass('disabled')
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+        })
     } else if (currentpage == 'vcomment') {
         $('.centerinfoborder').empty()
         let pdlist = []
