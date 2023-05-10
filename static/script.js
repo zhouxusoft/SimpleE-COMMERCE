@@ -1088,7 +1088,7 @@ function resetCenter() {
         })
         $('#yesship').click(function () {
             if ($('#shiptrackinput').val() != '' && $('#shipdateinput').val() != '') {
-                console.log($('#shipdateinput').val())
+                // console.log($('#shipdateinput').val())
                 let toSend = {
                     Order_id: currentorderid,
                     Arrive_date: $('#shipdateinput').val(),
@@ -1104,6 +1104,8 @@ function resetCenter() {
                         $('#canclemodal').click()
                         $(`#ship${currentorderid}`).text('Shipped')
                         $(`#ship${currentorderid}`).addClass('disabled')
+                        $('#shipdateinput').val(null)
+                        $('#shiptrackinput').val(null)
                     },
                     error: function (error) {
                         console.log(error)

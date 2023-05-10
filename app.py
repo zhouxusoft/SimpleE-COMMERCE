@@ -522,7 +522,7 @@ def change():
 @app.route('/ship', methods=['POST'])
 def ship():
     data = request.get_json()
-    print(data)
+    #print(data)
     sql = "UPDATE `order` SET `Arrive_date` = %s, `Tracking` = %s WHERE `Order_id` = %s"
     val = (data['Arrive_date'], data['Tracking'], data['Order_id'])
     dbcursor.execute(sql, val)
