@@ -1061,6 +1061,12 @@ function resetCenter() {
                 `)
             }
         }
+        $('.centerinfoborder').html($('.centerinfoborder').html() + `
+            <div class="addpd">
+                <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
+            </div>`
+        )
+        
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
         for (let i = globalallorder.length - 1; i > -1; i--) {
