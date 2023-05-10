@@ -622,21 +622,6 @@ input[type=number]::-webkit-outer-spin-button {
     flex-direction: column;
 }
 
-/* .carttop {
-    flex: 1;
-    max-height: 50px;
-}
-
-.cartcenter {
-    flex-grow: 1;
-    overflow: auto;
-}
-
-.cartbottom {
-    flex: 1;
-    max-height: 64px;
-} */
-
 .usernameinfoborder {
     flex: 1;
     border: 1px solid #4a5c6d;
@@ -671,6 +656,7 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: center;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
     color: orangered;
 }
 
@@ -723,4 +709,44 @@ input[type=number]::-webkit-outer-spin-button {
 .centerselected {
     background-color: #0d6efd !important;
     color: #fff !important;
+}
+
+.likelistdata {
+    padding: 10px;
+    margin: 10px 10px 0;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.likelistdatalikenum {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 300;
+}
+
+.likelistdataimg {
+    width: 50px;
+    height: 50px;
+    border: 1px solid orangered;
+    overflow: hidden;
+}
+
+.orderlistdata {
+    padding: 10px;
+    margin: 10px 10px 0;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.orderlistdataname {
+    padding: 10px;
+    min-width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

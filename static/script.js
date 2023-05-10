@@ -6,6 +6,7 @@ let globallike = []
 let globaldislike = []
 let currentproductid
 let globalcartlist
+let globalorder
 let selectedcart
 let checkeddatas = []
 let currentpage = 'likelist'
@@ -13,6 +14,8 @@ let currentpage = 'likelist'
 const poncon = new Poncon()
 
 poncon.setPageList(['home', 'login', 'registration', 'cart', 'center'])
+
+// window.location.hash = ''
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -866,6 +869,8 @@ $('#centerbtn').click(function () {
     if (token && token.kinds == 'buyer') {
         window.location.hash = '#/center'
         $('#looklikelist').addClass('centerselected')
+        currentpage = 'likelist'
+        resetCenter ()
         let toSend = {
             Buyer_id: token.id
         }
@@ -876,6 +881,7 @@ $('#centerbtn').click(function () {
             data: JSON.stringify(toSend),
             contentType: 'application/json',
             success: function (response) {
+                globalorder = response.data
                 console.log(response.data)
                 console.log(globallike)
                 console.log(globalcomment)
@@ -898,12 +904,59 @@ function resetCenter () {
         console.log(currentpage)
         $('.centerinfoborder').empty()
         for (let i = 0; i < globallike.length; i++) {
-            if (globallike[i][] ==)
+            let img = ''
+            let likepname = ''
+            let likepprice = 0
+            let likenum = 0
+            for (let j = 0; j < globalproduct.length; j++) {
+                if (globalproduct[j][0] == globallike[i][2]) {
+                    img = getImgList(globalproduct[j][2])
+                    likepname = globalproduct[j][1]
+                    likepprice = globalproduct[j][5]
+                    likenum = globalproduct[j][7]
+                }
+            }
             $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                <div class="likelistdata">
+                    <div class="likelistdataimg">
+                        <img src="../static/productimg/${img[0]}" alt="" width="50px">
+                    </div>
+                    <div class="likelistdataname">${likepname}</div>
+                    <div class="likelistdataprice">$${likepprice}</div>
+                    <div class="likelistdatalikenum">
+                        &#xf164 <span class="likelistdatanum">${likenum}</span>
+                    </div>
+                </div>
             `)
         }
     } else if (currentpage == 'buyerhistory') {
         console.log(currentpage)
+        $('.centerinfoborder').empty()
+        for (let i = 0; i < globalorder.length; i++) {
+            let pimg = ''
+            let pname = ''
+            let pprice = 0
+            let pnum = 0
+            for (let j = 0; j < globalproduct.length; j++) {
+                if (globalproduct[j][0] == globalorder[i][7]) {
+                    pimg = getImgList(globalproduct[j][2])
+                    pname = globalproduct[j][1]
+                    pprice = globalproduct[j][5]
+                }
+            }
+            $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                <div class="likelistdata">
+                    <div class="likelistdataimg">
+                        <img src="../static/productimg/${img[0]}" alt="" width="50px">
+                    </div>
+                    <div class="likelistdataname">${likepname}</div>
+                    <div class="likelistdataprice">$${likepprice}</div>
+                    <div class="likelistdatalikenum">
+                        &#xf164 <span class="likelistdatanum">${likenum}</span>
+                    </div>
+                </div>
+            `)
+        }
     } else {
         console.log(currentpage)
     }
