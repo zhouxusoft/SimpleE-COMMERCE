@@ -891,7 +891,7 @@ $('#centerbtn').click(function () {
                 globalallorder = response.data
                 globalbuyers = response.buyers
                 resetCenter()
-                resetChangeInput() 
+                resetChangeInput()
                 console.log(response.data)
                 console.log(response.buyers)
             },
@@ -908,7 +908,7 @@ $('#centerbtn').click(function () {
     }
 })
 
-function resetChangeInput () {
+function resetChangeInput() {
     $('.centerusername').text(token.name)
     $("#phonechangeinput").attr("placeholder", token.phone)
     $("#emailchangeinput").attr("placeholder", token.email)
@@ -1000,7 +1000,7 @@ function resetCenter() {
                     </div>
                 </div>
             `)
-            
+
             if (globalorder[i][1] == null) {
                 $(`#orderlistdatatrackingnum${globalorder[i][0]}`).text('Not shipped')
             }
@@ -1035,6 +1035,32 @@ function resetCenter() {
         }
     } else if (currentpage == 'productlist') {
         $('.centerinfoborder').empty()
+        for (let i = globalproduct.length - 1; i > -1; i--) {
+            if (globalproduct[i][10] == token.id) {
+                let img = getImgList(globalproduct[i][2])
+                $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                    <div class="productlistdataborder">
+                        <div class="productlistdata">
+                            <div class="productlistdataimg1"></div>
+                            <div class="productlistdataname">Product name</div>
+                            <div class="productlistdatainventory">Inventory</div>
+                            <div class="productlistdataprice">Price</div>
+                            <div class="changebox"></div>
+                        </div>
+                        <hr class="orderhr">
+                        <div class="productlistdata">
+                            <div class="productlistdataimg">
+                                <img src="../static/productimg/${img[0]}" alt="" width="50px">
+                            </div>
+                            <div class="productlistdataname">${globalproduct[i][1]}</div>
+                            <div class="productlistdatainventory">${globalproduct[i][6]}</div>
+                            <div class="productlistdataprice">$${globalproduct[i][5]}</div>
+                            <button type="button" class="btn btn-outline-secondary changeproduct" id="changeproduct">Edit</button>
+                        </div>
+                    </div>
+                `)
+            }
+        }
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
         for (let i = globalallorder.length - 1; i > -1; i--) {
@@ -1078,7 +1104,7 @@ function resetCenter() {
                     $(`#ship${globalallorder[i][0]}`).text('Shipped')
                     $(`#ship${globalallorder[i][0]}`).addClass('disabled')
                 }
-            } 
+            }
         }
         let currentorderid = 0
         $('.shipbtn').click(function () {
@@ -1143,10 +1169,10 @@ function resetCenter() {
                         </div>
                     `)
                 }
-                
+
             }
         }
-    } 
+    }
 }
 
 $('#phonechangebtn').click(function () {
@@ -1167,7 +1193,7 @@ $('#phonechangebtn').click(function () {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
-                resetChangeInput() 
+                resetChangeInput()
                 alert(response.message)
             },
             error: function (error) {
@@ -1195,7 +1221,7 @@ $('#emailchangebtn').click(function () {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
-                resetChangeInput() 
+                resetChangeInput()
                 alert(response.message)
             },
             error: function (error) {
@@ -1223,7 +1249,7 @@ $('#addresschangebtn').click(function () {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
-                resetChangeInput() 
+                resetChangeInput()
                 alert(response.message)
             },
             error: function (error) {
@@ -1251,7 +1277,7 @@ $('#passwordchangebtn').click(function () {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(response.userinfo))
                 token = JSON.parse(localStorage.getItem("token"))
-                resetChangeInput() 
+                resetChangeInput()
                 alert(response.message)
             },
             error: function (error) {
