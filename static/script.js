@@ -1066,13 +1066,14 @@ function resetCenter() {
                 <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
             </div>`
         )
+        let pid = 0
         $('.changeproduct').click(function () {
-            let pid = this.id.slice(13)
+            pid = this.id.slice(13)
             $('#editbtn').click()
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == parseInt(pid)) {
                     $('#changename').val(globalproduct[i][1])
-                    $('#changecategory').val(globalproduct[i][11])
+                    $('#changecategory').val('')
                     $('#changeprice').val(globalproduct[i][5])
                     $('#changeinventory').val(globalproduct[i][6])
                     $('#changedescription').val(globalproduct[i][4])
@@ -1081,6 +1082,7 @@ function resetCenter() {
         })
         $('#yeschange').click(function () {
             let toSend = {
+                Product_id: pid,
                 Product_name: $('#changename').val(),
                 Category: $('#changecategory').val(),
                 Price: $('#changeprice').val(),
@@ -1093,7 +1095,24 @@ function resetCenter() {
                 data: JSON.stringify(toSend),
                 contentType: 'application/json',
                 success: function (response) {
-                    
+                    if ($('#changeinventory').val() != '') {
+                        for (let i = 0; i < globalproduct.length; i++) {
+                            if (globalproduct[i][0] == pid) {
+                                globalproduct[i][6] = $('#changeinventory').val()
+                            }
+                        }
+                    }
+                    if ($('#changeprice').val() != '') {
+                        for (let i = 0; i < globalproduct.length; i++) {
+                            if (globalproduct[i][0] == pid) {
+                                globalproduct[i][5] = $('#changeprice').val()
+                            }
+                        }
+                    }
+                    alert(response.message)
+                    getNewInfo()
+                    $('#canclecmodal').click()
+                    $('#lookbuyerhistory').click()
                 },
                 error: function (error) {
                     console.log(error)

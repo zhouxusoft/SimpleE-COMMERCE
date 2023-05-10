@@ -530,11 +530,48 @@ def ship():
 
     return jsonify({'success': True, 'message': 'Successfully shipped'})
 
-@app.route('/editproduct')
+@app.route('/editproduct', methods=['POST'])
 def editproduct():
     data = request.get_json()
+    sql = "SELECT * FROM catagories WHERE `Catagory_name` = %s"
+    val = (data['Category'],)
+    dbcursor.execute(sql, val)
+    catagoriesresult = dbcursor.fetchall()
+    if len(catagoriesresult) > 0:
+        Category_id = catagoriesresult[0][0]
+    else:
+        sql = "INSERT INTO `catagories` (`Catagory_name`) VALUES (%s)"
+        val = (data['Category'],)
+        dbcursor.execute(sql, val)
+        db.commit()
+        sql = "SELECT * FROM catagories WHERE `Catagory_name` = %s"
+        val = (data['Category'],)
+        dbcursor.execute(sql, val)
+        catagoriesresult = dbcursor.fetchall()
+        Category_id = catagoriesresult[0][0]
+
     changelist = []
-    
+    if data['Product_name'] != '':
+        changelist.append('Product_name')
+    if data['Category'] != '':
+        changelist.append('Category_id')
+    if data['Price'] != '':
+        changelist.append('Price')
+    if data['Inventory'] != '':
+        changelist.append('Inventory')
+    if data['Product_describe'] != '':
+        changelist.append('Product_describe')
+
+    for i in changelist:
+        sql = "UPDATE `products` SET {} = %s WHERE `Product_id` = %s".format(i)
+        if i == 'Category_id':
+            val = (Category_id, data['Product_id'])
+        else:
+            val = (data[i], data['Product_id'])
+        dbcursor.execute(sql, val)
+        db.commit()
+
+    return jsonify({'success': True, 'message': 'Successfully changed'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
