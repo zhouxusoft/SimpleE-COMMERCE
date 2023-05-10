@@ -865,3 +865,55 @@ input[type=number]::-webkit-outer-spin-button {
 .centercommenttime {
     min-width: 160px;
 }
+
+.orderlistdataborder {
+    padding: 10px;
+    margin: 10px 10px 0;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+}
+
+.orderlistdata {
+    display: flex;
+    flex-wrap: nowrap; 
+    align-items: center;
+    color: #385b7c;
+}
+
+.vorderlistdataname {
+    padding: 10px 20px;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.vorderlistdataimg {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    border: 1px solid orangered;
+    overflow: hidden;
+}
+
+.vorderlistdataimg1 {
+    width: 50px;
+    min-width: 50px;
+}
+
+.orderlistdataquantity {
+    width: 100px;
+}
+
+.orderlistdatabname {
+    width: 200px;
+}
+
+#ship {
+    width: 100px;
+}
+
+.shipbox {
+    width: 100px;
+}

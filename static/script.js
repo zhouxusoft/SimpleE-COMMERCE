@@ -10,12 +10,13 @@ let globalallorder
 let selectedcart
 let checkeddatas = []
 let currentpage = 'likelist'
+let globalbuyers
 
 const poncon = new Poncon()
 
 poncon.setPageList(['home', 'login', 'registration', 'cart', 'center'])
 
-window.location.hash = ''
+// window.location.hash = ''
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -881,22 +882,18 @@ $('#centerbtn').click(function () {
             $('#lookbuyerhistory').text('Product list')
             $('#looklikelist').text('Order list')
         }
-        resetCenter()
-        resetChangeInput() 
-        let toSend = {
-            Buyer_id: token.id
-        }
         // console.log(toSend)
         $.ajax({
             url: '/order',
             type: 'POST',
-            data: JSON.stringify(toSend),
             contentType: 'application/json',
             success: function (response) {
                 globalallorder = response.data
+                globalbuyers = response.buyers
+                resetCenter()
+                resetChangeInput() 
                 console.log(response.data)
-                console.log(globallike)
-                console.log(globalcomment)
+                console.log(response.buyers)
             },
             error: function (error) {
                 console.log(error)
@@ -1029,9 +1026,52 @@ function resetCenter() {
             }
         }
     } else if (currentpage == 'productlist') {
-        
+        $('.centerinfoborder').empty()
     } else if (currentpage == 'orderlist') {
-
+        $('.centerinfoborder').empty()
+        for (let i = 0; i < globalallorder.length; i++) {
+            if (globalallorder[i][6] == token.id) {
+                let pname = ''
+                let pimg = ''
+                let bname = ''
+                for (let j = 0; j < globalproduct.length; j++) {
+                    if (globalproduct[j][0] == globalallorder[i][7]) {
+                        pname = globalproduct[j][1]
+                        pimg = getImgList(globalproduct[j][2])
+                    }
+                }
+                for (let x = 0; x < globalbuyers.length; x++) {
+                    if (globalbuyers[x][0] == globalallorder[i][8]) {
+                        bname = globalbuyers[x][1]
+                    }
+                }
+                $('.centerinfoborder').html($('.centerinfoborder').html() + `
+                    <div class="orderlistdataborder">
+                        <div class="orderlistdata">
+                            <div class="vorderlistdataimg1"></div>
+                            <div class="orderlistdataname">Product name</div>
+                            <div class="orderlistdataquantity">Quantity</div>
+                            <div class="orderlistdatabname">Buyer name</div>
+                            <div class="shipbox"></div>
+                        </div>
+                        <hr class="orderhr">
+                        <div class="orderlistdata">
+                            <div class="vorderlistdataimg">
+                                <img src="../static/productimg/${pimg[0]}" alt="" width="50px">
+                            </div>
+                            <div class="vorderlistdataname">${pname}</div>
+                            <div class="orderlistdataquantity">${globalallorder[i][4]}</div>
+                            <div class="orderlistdatabname">${bname}</div>
+                            <button type="button" class="btn btn-outline-secondary shipbtn" id="ship${globalallorder[i][0]}">Ship</button>
+                        </div>
+                    </div>
+                `)
+                if (globalallorder[i][1] != null) {
+                    $(`#ship${globalallorder[i][0]}`).text('Shipped')
+                }
+            }
+            
+        }
     } else if (currentpage == 'vcomment') {
         $('.centerinfoborder').empty()
         let pdlist = []
