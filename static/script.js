@@ -869,6 +869,8 @@ $('#centerbtn').click(function () {
     if (token && token.kinds == 'buyer') {
         window.location.hash = '#/center'
         $('#looklikelist').addClass('centerselected')
+        $('#lookbuyerhistory').removeClass('centerselected')
+        $('#lookcomment').removeClass('centerselected')
         currentpage = 'likelist'
         resetCenter ()
         let toSend = {
