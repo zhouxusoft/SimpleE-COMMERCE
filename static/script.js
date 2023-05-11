@@ -1029,7 +1029,7 @@ function resetCenter() {
                 let pimg = ''
                 let pname = ''
                 for (let j = 0; j < globalproduct.length; j++) {
-                    if (globalproduct[j][0] == globalcomment[i][5]) {
+                    if (globalproduct[j][0] == globalcomment[i][6]) {
                         pimg = getImgList(globalproduct[j][2])
                         pname = globalproduct[j][1]
                     }
@@ -1411,11 +1411,11 @@ function resetCenter() {
         }
         for (let i = globalcomment.length - 1; i > -1; i--) {
             for (let x = 0; x < pdlist.length; x++) {
-                if (pdlist[x] == globalcomment[i][5]) {
+                if (pdlist[x] == globalcomment[i][6]) {
                     let pimg = ''
                     let pname = ''
                     for (let j = 0; j < globalproduct.length; j++) {
-                        if (globalproduct[j][0] == globalcomment[i][5]) {
+                        if (globalproduct[j][0] == globalcomment[i][6]) {
                             pimg = getImgList(globalproduct[j][2])
                             pname = globalproduct[j][1]
                         }
