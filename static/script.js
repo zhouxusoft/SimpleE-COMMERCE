@@ -1192,7 +1192,9 @@ function resetCenter() {
                 }
             })
         })
-
+        $('#addproductbtn').click(function () {
+            
+        })
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
         for (let i = globalallorder.length - 1; i > -1; i--) {
