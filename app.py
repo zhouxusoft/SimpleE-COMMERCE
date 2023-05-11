@@ -272,7 +272,7 @@ def like():
     dbcursor.execute(sql, val)
     dislikeresult = dbcursor.fetchall()
     sql = "UPDATE products SET Like_Sum = %s, Dislike_Sum = %s, Post_time = %s WHERE Product_id = %s"
-    val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'], time)
+    val = (str(len(likeresult)), str(len(dislikeresult)), time ,data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
 
