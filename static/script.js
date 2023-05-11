@@ -16,7 +16,7 @@ const poncon = new Poncon()
 
 poncon.setPageList(['home', 'login', 'registration', 'cart', 'center'])
 
-// window.location.hash = ''
+window.location.hash = ''
 
 let currentkind = 'buyer'
 let currentcatagroy = 0
@@ -190,7 +190,9 @@ getNewInfo()
 function resetCatagories() {
     $('#addcatagroiesdatas').empty()
     for (let i = 0; i < globalcatagroies.length; i++) {
-        $('#addcatagroiesdatas').html($('#addcatagroiesdatas').html() + `<tr><td class="allcatagroies" id="catagroies${globalcatagroies[i][0]}">${globalcatagroies[i][1]}</td></tr>`);
+        if (globalcatagroies[i][1] != '') {
+            $('#addcatagroiesdatas').html($('#addcatagroiesdatas').html() + `<tr><td class="allcatagroies" id="catagroies${globalcatagroies[i][0]}">${globalcatagroies[i][1]}</td></tr>`)
+        }
     }
 }
 
@@ -287,6 +289,13 @@ function getImgList(imgs) {
     }
     return imglist
 }
+
+$('.searchbtn').click(function () {
+    let searchkey = new RegExp($('.searchinput').val())
+    let result = globalproduct.filter(item => searchkey.test(item[1]))
+    console.log(result)
+    resetProduct(result)
+})
 
 $('#addcatagroiesdatas').click(function (e) {
     catagroyid = $(e.target).attr('id')
@@ -1037,7 +1046,7 @@ function resetCenter() {
         $('.centerinfoborder').empty()
         $('.centerinfoborder').html($('.centerinfoborder').html() + `
             <div class="addpd">
-                <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
+                <button type="button" class="btn btn-outline-success" id="addproductbtn">Add product</button>
             </div>`
         )
         for (let i = globalproduct.length - 1; i > -1; i--) {
