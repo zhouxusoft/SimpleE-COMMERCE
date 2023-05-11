@@ -107,11 +107,9 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `cart`  (\
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -159,7 +157,6 @@ def login():
         else:
             return jsonify({'success': False, 'message': 'Username or password incorrect'})
 
-
 @app.route('/registration', methods=['POST'])
 def registration():
     data = request.get_json()
@@ -192,7 +189,6 @@ def registration():
             db.commit()
             return jsonify({'success': True, 'message': 'Registration successful'})
 
-
 @app.route('/getinfo', methods=['POST'])
 def getinfo():
     sql = "SELECT * FROM `products`"
@@ -218,7 +214,6 @@ def getinfo():
         'comment': commentresult
     }
     return jsonify(allresult)
-
 
 @app.route('/comment', methods=['POST'])
 def comment():
@@ -246,7 +241,6 @@ def comment():
     db.commit()
 
     return jsonify({'success': True, 'message': 'Comment posted successfully'})
-
 
 @app.route('/like', methods=['POST'])
 def like():
@@ -282,7 +276,6 @@ def like():
 
     return jsonify({'success': True})
 
-
 @app.route('/dislike', methods=['POST'])
 def dislike():
     data = request.get_json()
@@ -317,7 +310,6 @@ def dislike():
 
     return jsonify({'success': True})
 
-
 @app.route('/buy', methods=['POST'])
 def buy():
     data = request.get_json()
@@ -340,7 +332,6 @@ def buy():
         return jsonify({'success': False, 'message': 'Purchase failed!\nQuantity exceeds stock limit.'})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
 
-
 @app.route('/cart', methods=['POST'])
 def cart():
     data = request.get_json()
@@ -360,7 +351,6 @@ def cart():
         db.commit()
 
     return jsonify({'success': True})
-
 
 @app.route('/setcart', methods=['POST'])
 def setcart():
@@ -382,7 +372,6 @@ def setcart():
         return jsonify({'success': True})
     else:
         return jsonify({'success': False})
-
 
 @app.route('/getcart', methods=['POST'])
 def getcart():
@@ -416,7 +405,6 @@ def getcart():
     # print(dataresult)
 
     return jsonify({'success': True, 'data': dataresult})
-
 
 @app.route('/buycart', methods=["POST"])
 def buycart():
@@ -456,7 +444,6 @@ def buycart():
             return jsonify({'success': False, 'message': message})
     return jsonify({'success': True, 'message': 'Purchase successful!\nPlease wait for the seller to ship.'})
 
-
 @app.route('/order', methods=['POST'])
 def order():
     sql = "SELECT * FROM `order`"
@@ -467,7 +454,6 @@ def order():
     buyersresult = dbcursor.fetchall()
 
     return jsonify({'success': True, 'data': orderresult, 'buyers': buyersresult})
-
 
 @app.route('/change', methods=['POST'])
 def change():
@@ -518,7 +504,6 @@ def change():
             return jsonify({'success': True, 'message': 'Successfully updated', 'userinfo': userinfo})
 
     return jsonify({'success': False, 'message': 'Update unsuccessful'})
-
 
 @app.route('/ship', methods=['POST'])
 def ship():
