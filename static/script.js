@@ -1035,6 +1035,11 @@ function resetCenter() {
         }
     } else if (currentpage == 'productlist') {
         $('.centerinfoborder').empty()
+        $('.centerinfoborder').html($('.centerinfoborder').html() + `
+            <div class="addpd">
+                <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
+            </div>`
+        )
         for (let i = globalproduct.length - 1; i > -1; i--) {
             if (globalproduct[i][10] == token.id) {
                 let img = getImgList(globalproduct[i][2])
@@ -1061,11 +1066,6 @@ function resetCenter() {
                 `)
             }
         }
-        $('.centerinfoborder').html($('.centerinfoborder').html() + `
-            <div class="addpd">
-                <button type="button" class="btn btn-outline-primary" id="addproductbtn">Add product</button>
-            </div>`
-        )
         let pid = 0
         $('.changeproduct').click(function () {
             pid = this.id.slice(13)
@@ -1073,6 +1073,7 @@ function resetCenter() {
             $('.addimgborder').empty()
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == parseInt(pid)) {
+                    $('#addroducttitle').text('Product edit')
                     let img = getImgList(globalproduct[i][2])
                     $('#changename').val(globalproduct[i][1])
                     $('#changecategory').val('')
@@ -1097,11 +1098,8 @@ function resetCenter() {
                         } else {
                             var fileInput = document.createElement('input')
 
-                            let imgwidth = 0
-                            let imgheight = 0
-
-                            fileInput.type = 'file';
-                            fileInput.name = 'img';
+                            fileInput.type = 'file'
+                            fileInput.name = 'img'
                             fileInput.accept = 'image/bmp,image/heic,image/heif,image/jpeg,image/png,image/webp,image/x-icon'
 
                             fileInput.onchange = function () {
@@ -1153,47 +1151,112 @@ function resetCenter() {
                 }
             }
         })
+        $('#yeschange').off()
         $('#yeschange').click(function () {
-            let toSend = {
-                Product_id: pid,
-                Product_name: $('#changename').val(),
-                Category: $('#changecategory').val(),
-                Price: $('#changeprice').val(),
-                Inventory: $('#changeinventory').val(),
-                Product_describe: $('#changedescription').val()
-            }
-            $.ajax({
-                url: '/editproduct',
-                type: 'POST',
-                data: JSON.stringify(toSend),
-                contentType: 'application/json',
-                success: function (response) {
-                    if ($('#changeinventory').val() != '') {
-                        for (let i = 0; i < globalproduct.length; i++) {
-                            if (globalproduct[i][0] == pid) {
-                                globalproduct[i][6] = $('#changeinventory').val()
-                            }
-                        }
-                    }
-                    if ($('#changeprice').val() != '') {
-                        for (let i = 0; i < globalproduct.length; i++) {
-                            if (globalproduct[i][0] == pid) {
-                                globalproduct[i][5] = $('#changeprice').val()
-                            }
-                        }
-                    }
-                    alert(response.message)
-                    getNewInfo()
-                    $('#canclecmodal').click()
-                    $('#lookbuyerhistory').click()
-                },
-                error: function (error) {
-                    console.log(error)
+            console.log(pid)
+            if (pid == 0) {
+
+            } else {
+                let toSend = {
+                    Product_id: pid,
+                    Product_name: $('#changename').val(),
+                    Category: $('#changecategory').val(),
+                    Price: $('#changeprice').val(),
+                    Inventory: $('#changeinventory').val(),
+                    Product_describe: $('#changedescription').val()
                 }
-            })
+                $.ajax({
+                    url: '/editproduct',
+                    type: 'POST',
+                    data: JSON.stringify(toSend),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if ($('#changeinventory').val() != '') {
+                            for (let i = 0; i < globalproduct.length; i++) {
+                                if (globalproduct[i][0] == pid) {
+                                    globalproduct[i][6] = $('#changeinventory').val()
+                                }
+                            }
+                        }
+                        if ($('#changeprice').val() != '') {
+                            for (let i = 0; i < globalproduct.length; i++) {
+                                if (globalproduct[i][0] == pid) {
+                                    globalproduct[i][5] = $('#changeprice').val()
+                                }
+                            }
+                        }
+                        alert(response.message)
+                        getNewInfo()
+                        $('#canclecmodal').click()
+                        $('#lookbuyerhistory').click()
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
         })
         $('#addproductbtn').click(function () {
-            
+            pid = 0
+            console.log(pid)
+            $('#addroducttitle').text('Add product')
+            $('#editbtn').click()
+            $('.addimgborder').empty()
+            $('#changename').val('')
+            $('#changecategory').val('')
+            $('#changeprice').val('')
+            $('#changeinventory').val('')
+            $('#changedescription').val('')
+            $('.addimgborder').html($('.addimgborder').html() + `
+                <div class="addimgbtn">
+                    Upload product photo
+                </div>
+            `)
+            let imglist = ''
+            let imglen = 0
+            $('.addimgbtn').click(function () {
+
+                if (imglen > 4) {
+                    alert('Maximum of five images can be uploaded')
+                } else {
+                    var fileInput = document.createElement('input')
+
+                    fileInput.type = 'file'
+                    fileInput.name = 'img'
+                    fileInput.accept = 'image/bmp,image/heic,image/heif,image/jpeg,image/png,image/webp,image/x-icon'
+
+                    fileInput.onchange = function () {
+                        let file = this.files[0]
+                        console.log(file.name)
+                        let filename = file.name
+                        const formData = new FormData()
+                        formData.append('file', file)
+                        $.ajax({
+                            url: '/uploadimg',
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                if (response.success) {
+                                    imglist = imglist + filename + '&'
+                                    imglen = imglen + 1
+                                    console.log(imglist)
+                                    $('.addimgbtn').before(`
+                                    <div class="addimg">
+                                        <img src="../static/productimg/${filename}" alt="" width="70px">
+                                    </div>
+                                `)
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    }
+                    fileInput.click();
+                }
+            })
         })
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
