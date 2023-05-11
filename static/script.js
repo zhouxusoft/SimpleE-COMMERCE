@@ -1070,13 +1070,86 @@ function resetCenter() {
         $('.changeproduct').click(function () {
             pid = this.id.slice(13)
             $('#editbtn').click()
+            $('.addimgborder').empty()
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == parseInt(pid)) {
+                    let img = getImgList(globalproduct[i][2])
                     $('#changename').val(globalproduct[i][1])
                     $('#changecategory').val('')
                     $('#changeprice').val(globalproduct[i][5])
                     $('#changeinventory').val(globalproduct[i][6])
                     $('#changedescription').val(globalproduct[i][4])
+                    for (let j = 0; j < img.length; j++) {
+                        $('.addimgborder').html($('.addimgborder').html() + `
+                            <div class="addimg">
+                                <img src="../static/productimg/${img[j]}" alt="" width="70px">
+                            </div>
+                        `)
+                    }
+                    $('.addimgborder').html($('.addimgborder').html() + `
+                        <div class="addimgbtn">
+                            Upload product photo
+                        </div>
+                    `)
+                    $('.addimgbtn').click(function () {
+                        if (img.length >= 5) {
+                            alert('Maximum of five images can be uploaded')
+                        } else {
+                            var fileInput = document.createElement('input')
+
+                            let imgwidth = 0
+                            let imgheight = 0
+
+                            fileInput.type = 'file';
+                            fileInput.name = 'img';
+                            fileInput.accept = 'image/bmp,image/heic,image/heif,image/jpeg,image/png,image/webp,image/x-icon'
+
+                            fileInput.onchange = function () {
+                                let file = this.files[0]
+                                console.log(file.name)
+                                let toSend = {
+                                    Product_id: pid,
+                                    filename: file.name,
+                                }
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                $.ajax({
+                                    url: '/uploadimg',
+                                    type: 'POST',
+                                    data: formData,
+                                    contentType: false,
+                                    processData: false,
+                                    success: function (response) {
+                                        if (response.success) {
+                                            $.ajax({
+                                                url: '/img',
+                                                type: 'POST',
+                                                data: JSON.stringify(toSend),
+                                                contentType: 'application/json',
+                                                success: function (response) {
+                                                    if (response.success) {
+                                                        $('.addimgbtn').before(`
+                                                            <div class="addimg">
+                                                                <img src="../static/productimg/${toSend.filename}" alt="" width="70px">
+                                                            </div>
+                                                        `)
+                                                    }
+                                                },
+                                                error: function (error) {
+                                                    console.log(error)
+                                                }
+                                            })
+                                        }
+                                    },
+                                    error: function (error) {
+                                        console.log(error)
+                                    }
+                                })
+                            }
+                            fileInput.click();
+                        }
+                    })
+                    break
                 }
             }
         })
@@ -1119,42 +1192,7 @@ function resetCenter() {
                 }
             })
         })
-        $('.addimg').click(function () {
-            var fileInput = document.createElement('input')
 
-            let imgwidth = 0
-            let imgheight = 0
-
-            fileInput.type = 'file';
-            fileInput.name = 'img';
-            fileInput.accept = 'image/bmp,image/heic,image/heif,image/jpeg,image/png,image/webp,image/x-icon'
-
-            fileInput.onchange = function () {
-                let file = this.files[0]
-                console.log(file.name)
-                let toSend = {
-                    filename: file.name,
-                    file: file
-                }
-                const formData = new FormData();
-                formData.append('file', file);
-                $.ajax({
-                    url: '/img',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                              
-                    },
-                    error: function (error) {
-                        console.log(error)
-                    }
-                })
-            }
-            fileInput.click();
-        })
-        
     } else if (currentpage == 'orderlist') {
         $('.centerinfoborder').empty()
         for (let i = globalallorder.length - 1; i > -1; i--) {

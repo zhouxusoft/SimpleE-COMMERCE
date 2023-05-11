@@ -574,8 +574,8 @@ def editproduct():
 
     return jsonify({'success': True, 'message': 'Successfully changed'})
 
-@app.route('/img', methods=['POST'])
-def img():
+@app.route('/uploadimg', methods=['POST'])
+def uploadimg():
     for key in request.files:
         file = request.files[key]
     #print(file)
@@ -585,6 +585,24 @@ def img():
         os.makedirs(directory)
     filepath = os.path.join(directory, filename)
     file.save(filepath)
+
+    return jsonify({'success': True})
+
+@app.route('/img', methods=['POST'])
+def img():
+    data = request.get_json()
+    print(data)
+    sql = "SELECT * FROM `products` WHERE `Product_id` = %s"
+    val = (data['Product_id'],)
+    dbcursor.execute(sql, val)
+    productsresult = dbcursor.fetchall()
+
+    newimglist = productsresult[0][2] + data['filename'] + '&'
+
+    sql = "UPDATE `products` SET `Photo` = %s WHERE `Product_id` = %s"
+    val = (newimglist, data['Product_id'])
+    dbcursor.execute(sql, val)
+    db.commit()
 
     return jsonify({'success': True})
 
