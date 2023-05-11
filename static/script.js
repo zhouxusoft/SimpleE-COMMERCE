@@ -208,6 +208,7 @@ function resetProductList() {
 }
 
 function resetProduct(productlist) {
+    productlist.reverse()
     $('#allshopdatas').empty()
     if (productlist.length > 0) {
         for (let i = 0; i < productlist.length; i++) {
@@ -502,6 +503,7 @@ $('#allshopdatas').click(function (e) {
 $('#cartbtn').click(function () {
     if (token && token.kinds == 'buyer') {
         window.location.hash = '#/cart'
+        $('.allcheck').prop('checked', false)
         let toSend = {
             Buyer_id: token.id
         }
