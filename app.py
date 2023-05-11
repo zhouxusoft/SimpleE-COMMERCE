@@ -626,7 +626,7 @@ def addproduct():
         catagoriesresult = dbcursor.fetchall()
         Category_id = catagoriesresult[0][0]
 
-    sql = "INSERT INTO `products` (`Product_name`, `Photo`, `Product_describe`, `Price`, `Inventory, `Vendors_id`, `Category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO `products` (`Product_name`, `Photo`, `Product_describe`, `Price`, `Inventory`, `Vendors_id`, `Category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
     val = (data['Product_name'], data['Photo'], data['Product_describe'], data['Price'], data['Inventory'], data['Vendors_id'], Category_id)
     dbcursor.execute(sql, val)
     db.commit()
