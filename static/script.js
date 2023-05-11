@@ -91,7 +91,7 @@ resetLoginBtn()
 
 $('#gotologin').click(function () {
     if ($('#gotologin').text() == 'Logout') {
-        if (confirm("确定退出当前账号")) {
+        if (confirm("Log out of the current account")) {
             localStorage.clear()
             token = JSON.parse(localStorage.getItem("token"))
             resetLoginBtn()
