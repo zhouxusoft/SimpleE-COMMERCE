@@ -208,7 +208,11 @@ function resetProductList() {
 }
 
 function resetProduct(productlist) {
-    productlist.reverse()
+    productlist.sort((a, b) => {
+        let time1 = new Date(a[3]).getTime()
+        let time2 = new Date(b[3]).getTime()
+        return time2 - time1
+    })
     $('#allshopdatas').empty()
     if (productlist.length > 0) {
         for (let i = 0; i < productlist.length; i++) {
@@ -1401,39 +1405,6 @@ function resetCenter() {
                 })
             }
         })
-    } else if (currentpage == 'vcomment') {
-        $('.centerinfoborder').empty()
-        let pdlist = []
-        for (let i = 0; i < globalproduct.length; i++) {
-            if (globalproduct[i][10] == token.id) {
-                pdlist.push(globalproduct[i][0])
-            }
-        }
-        for (let i = globalcomment.length - 1; i > -1; i--) {
-            for (let x = 0; x < pdlist.length; x++) {
-                if (pdlist[x] == globalcomment[i][6]) {
-                    let pimg = ''
-                    let pname = ''
-                    for (let j = 0; j < globalproduct.length; j++) {
-                        if (globalproduct[j][0] == globalcomment[i][6]) {
-                            pimg = getImgList(globalproduct[j][2])
-                            pname = globalproduct[j][1]
-                        }
-                    }
-                    $('.centerinfoborder').html($('.centerinfoborder').html() + `
-                        <div class="centercomment">
-                            <div class="centercommentimg">
-                                <img src="../static/productimg/${pimg[0]}" alt="" width="50px">
-                            </div>
-                            <div class="centercommentname">${pname}</div>
-                            <div class="centercommenttext">${globalcomment[i][1]}</div>
-                            <div class="centercommenttime">${getTime(globalcomment[i][2])}</div>
-                        </div>
-                    `)
-                }
-
-            }
-        }
     }
 }
 
@@ -1580,7 +1551,7 @@ $('#lookcomment').click(function () {
     if (token.kinds == 'buyer') {
         currentpage = 'comment'
     } else {
-        currentpage = 'vcomment'
+        currentpage = 'comment'
     }
     resetCenter()
 })
@@ -1616,7 +1587,7 @@ $('#addbuynum').click(function () {
 })
 
 $('#gocommentbtn').click(function () {
-    if (token && token.kinds == 'buyer') {
+    if (token) {
         $('.commentborder').html(`
             <div class="mb-2">
                 <textarea id="usercommentinput" class="form-control" placeholder="What do you want to say"></textarea>
@@ -1661,11 +1632,7 @@ $('#gocommentbtn').click(function () {
             }
         })
     } else {
-        if (token) {
-            alert('Vendor is unable to operate this option')
-        } else {
             alert('Please log in first')
-        }
     }
 })
 

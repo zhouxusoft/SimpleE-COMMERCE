@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, jsonify
 import pymysql
 import os
+import datetime
 
 db = pymysql.connect(
     host="127.0.0.1",
@@ -31,7 +32,7 @@ dbcursor.execute("CREATE TABLE IF NOT EXISTS `vendors` (\
                     `Vendors_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     `Vendors_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,\
                     PRIMARY KEY(`Vendors_id`) USING BTREE)\
-                    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic")
+                    ENGINE = InnoDB AUTO_INCREMENT = 20000  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic")
 
 dbcursor.execute("CREATE TABLE IF NOT EXISTS `catagories`  (\
                     `Catagories_id` int NOT NULL AUTO_INCREMENT,\
@@ -258,6 +259,8 @@ def like():
         val = (data['Product_id'], data['userid'])
         dbcursor.execute(sql, val)
         db.commit()
+    
+    time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     sql = "SELECT * FROM `like` WHERE `Product_id` = %s"
     val = (data['Product_id'],)
@@ -267,8 +270,8 @@ def like():
     val = (data['Product_id'],)
     dbcursor.execute(sql, val)
     dislikeresult = dbcursor.fetchall()
-    sql = "UPDATE products SET Like_Sum = %s, Dislike_Sum = %s WHERE Product_id = %s"
-    val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'])
+    sql = "UPDATE products SET Like_Sum = %s, Dislike_Sum = %s, Post_time = %s WHERE Product_id = %s"
+    val = (str(len(likeresult)), str(len(dislikeresult)), data['Product_id'], time)
     dbcursor.execute(sql, val)
     db.commit()
 
