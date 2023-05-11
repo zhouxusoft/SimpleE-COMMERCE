@@ -503,7 +503,7 @@ $('#allshopdatas').click(function (e) {
 $('#cartbtn').click(function () {
     if (token && token.kinds == 'buyer') {
         window.location.hash = '#/cart'
-        $('.allcheck').prop('checked', false)
+        $('#allcheck').prop('checked', false)
         let toSend = {
             Buyer_id: token.id
         }
@@ -849,7 +849,7 @@ $('#cartipayed').click(function () {
     let toSend = {
         cartlist: checkeddatas,
     }
-    // console.log(toSend)
+     console.log(toSend)
     $.ajax({
         url: '/buycart',
         type: 'POST',
@@ -1958,6 +1958,7 @@ $('#buynow').click(function () {
 
 $('#backtopurchase').click(function () {
     window.location.hash = ''
+    checkeddatas = []
     $('#mainpage').css('display', 'block')
     $('#loginpage').css('display', 'none')
 })
