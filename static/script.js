@@ -632,7 +632,7 @@ function resetCartList() {
                             data: JSON.stringify(toSend),
                             contentType: 'application/json',
                             success: function (response) {
-                                console.log(response.data)
+                                // console.log(response.data)
                                 globalcartlist = response.data
                                 resetCartList()
                             },
@@ -703,7 +703,7 @@ function resetCartList() {
                             data: JSON.stringify(toSend),
                             contentType: 'application/json',
                             success: function (response) {
-                                console.log(response.data)
+                                // console.log(response.data)
                                 globalcartlist = response.data
                                 resetCartList()
                             },
@@ -892,8 +892,8 @@ $('#centerbtn').click(function () {
                 globalbuyers = response.buyers
                 resetCenter()
                 resetChangeInput()
-                console.log(response.data)
-                console.log(response.buyers)
+                // console.log(response.data)
+                // console.log(response.buyers)
             },
             error: function (error) {
                 console.log(error)
@@ -1104,7 +1104,7 @@ function resetCenter() {
 
                             fileInput.onchange = function () {
                                 let file = this.files[0]
-                                console.log(file.name)
+                                // console.log(file.name)
                                 let toSend = {
                                     Product_id: pid,
                                     filename: file.name,
@@ -1153,7 +1153,7 @@ function resetCenter() {
         })
         $('#yeschange').off()
         $('#yeschange').click(function () {
-            console.log(pid)
+            // console.log(pid)
             if (pid == 0) {
                 if (imglen > 0 && $('#changename').val() != '' && $('#changecategory').val() != '' && $('#changeprice').val() != '' && $('#changeinventory').val() != '' && $('#changedescription').val() != '') {
                     let toSend = {
@@ -1165,7 +1165,7 @@ function resetCenter() {
                         Inventory: $('#changeinventory').val(),
                         Vendors_id: token.id
                     }
-                    console.log(toSend)
+                    // console.log(toSend)
                     $.ajax({
                         url: '/addproduct',
                         type: 'POST',
@@ -1173,7 +1173,7 @@ function resetCenter() {
                         contentType: 'application/json',
                         success: function (response) {
                             alert(response.message)
-                            console.log(response.data)
+                            // console.log(response.data)
                             $('#canclecmodal').click()
                             $('#lookbuyerhistory').trigger('click')           
                             $('.addpd').after(`
@@ -1250,7 +1250,7 @@ function resetCenter() {
         let imglen
         $('#addproductbtn').click(function () {
             pid = 0
-            console.log(pid)
+            // console.log(pid)
             $('#addroducttitle').text('Add product')
             $('#editbtn').click()
             $('.addimgborder').empty()
@@ -1279,7 +1279,7 @@ function resetCenter() {
 
                     fileInput.onchange = function () {
                         let file = this.files[0]
-                        console.log(file.name)
+                        // console.log(file.name)
                         let filename = file.name
                         const formData = new FormData()
                         formData.append('file', file)
@@ -1293,7 +1293,7 @@ function resetCenter() {
                                 if (response.success) {
                                     imglist = imglist + filename + '&'
                                     imglen = imglen + 1
-                                    console.log(imglist)
+                                    // console.log(imglist)
                                     $('.addimgbtn').before(`
                                     <div class="addimg">
                                         <img src="../static/productimg/${filename}" alt="" width="70px">
@@ -1357,7 +1357,7 @@ function resetCenter() {
         }
         let currentorderid = 0
         $('.shipbtn').click(function () {
-            console.log(this.id.slice(4))
+            // console.log(this.id.slice(4))
             $('#goshipbtn').click()
             currentorderid = parseInt(this.id.slice(4))
         })
