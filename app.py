@@ -227,12 +227,11 @@ def getinfo():
 def comment():
     data = request.get_json()
     # print(data)
-    sql = "INSERT INTO comment (Conent, Buyer_id, Buyer_name, Product_id) VALUES (%s, %s, %s, %s)"
+    sql = "INSERT INTO comment (Conent, Buyer_id, Buyer_name, Vendor_id, Product_id) VALUES (%s, %s, %s, %s, %s)"
     val = (data['Conent'], data['Buyer_id'],
-           data['Buyer_name'], data['Product_id'])
+           data['Buyer_name'], data['Vendor_id'],data['Product_id'])
     dbcursor.execute(sql, val)
     db.commit()
-
     sql = "SELECT * FROM `comment`"
     dbcursor.execute(sql)
     commentresult = dbcursor.fetchall()
@@ -240,7 +239,7 @@ def comment():
     commentnum = 0
 
     for i in commentresult:
-        if int(i[5]) == int(data['Product_id']):
+        if int(i[6]) == int(data['Product_id']):
             commentnum = commentnum + 1
 
     sql = "UPDATE products SET Comment_Sum = %s WHERE Product_id = %s"

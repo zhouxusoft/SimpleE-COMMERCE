@@ -1630,12 +1630,21 @@ $('#gocommentbtn').click(function () {
             if ($('#usercommentinput').val() != '') {
                 let usercomment = $('#usercommentinput').val()
                 $('#usercommentinput').val('')
+                let vendor_id = 0
+                for (let i = 0; i < globalproduct.length; i++) {
+                    if (globalproduct[i][0] == currentproductid) {
+                        vendor_id = globalproduct[i][10]
+                        break
+                    } 
+                }
                 let toSend = {
                     Conent: usercomment,
                     Buyer_id: token.id,
                     Buyer_name: token.name,
-                    Product_id: currentproductid
+                    Product_id: currentproductid,
+                    Vendor_id: vendor_id
                 }
+                console.log(toSend)
                 $.ajax({
                     url: '/comment',
                     type: 'POST',
