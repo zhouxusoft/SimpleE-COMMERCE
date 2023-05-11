@@ -1172,7 +1172,32 @@ function resetCenter() {
                         data: JSON.stringify(toSend),
                         contentType: 'application/json',
                         success: function (response) {
-                            
+                            alert(response.message)
+                            console.log(response.data)
+                            $('#canclecmodal').click()
+                            $('#lookbuyerhistory').trigger('click')           
+                            $('.addpd').after(`
+                                <div class="productlistdataborder">
+                                    <div class="productlistdata">
+                                        <div class="productlistdataimg1"></div>
+                                        <div class="productlistdataname">Product name</div>
+                                        <div class="productlistdatainventory">Inventory</div>
+                                        <div class="productlistdataprice">Price</div>
+                                        <div class="changebox"></div>
+                                    </div>
+                                    <hr class="orderhr">
+                                    <div class="productlistdata">
+                                        <div class="productlistdataimg">
+                                            <img src="../static/productimg/${getImgList(imglist)[0]}" alt="" width="50px">
+                                        </div>
+                                        <div class="productlistdataname">${toSend.Product_name}</div>
+                                        <div class="productlistdatainventory">${toSend.Inventory}</div>
+                                        <div class="productlistdataprice">$${toSend.Price}</div>
+                                        <button type="button" class="btn btn-outline-secondary changeproduct" id="changeproduct${response.data[0]}" disabled>Edit</button>
+                                    </div>
+                                </div>
+                            `)
+                            getNewInfo()  
                         },
                         error: function (error) {
                             console.log(error)

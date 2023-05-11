@@ -631,7 +631,11 @@ def addproduct():
     dbcursor.execute(sql, val)
     db.commit()
 
-    return jsonify({'success': True, 'message': 'Successfully changed'})
+    sql = "SELECT * FROM `products`"
+    dbcursor.execute(sql)
+    presult = dbcursor.fetchall()
+
+    return jsonify({'success': True, 'message': 'Addition successful', 'data': presult[-1]})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
