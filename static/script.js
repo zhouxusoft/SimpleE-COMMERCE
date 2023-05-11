@@ -291,10 +291,12 @@ function getImgList(imgs) {
 }
 
 $('.searchbtn').click(function () {
-    let searchkey = new RegExp($('.searchinput').val())
-    let result = globalproduct.filter(item => searchkey.test(item[1]))
-    console.log(result)
-    resetProduct(result)
+    if (window.location.hash == '') {
+        let searchkey = new RegExp($('.searchinput').val())
+        let result = globalproduct.filter(item => searchkey.test(item[1]))
+        // console.log(result)
+        resetProduct(result)
+    }
 })
 
 $('#addcatagroiesdatas').click(function (e) {
