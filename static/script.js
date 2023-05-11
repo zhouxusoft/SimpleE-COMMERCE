@@ -266,6 +266,11 @@ function resetProduct(productlist) {
                     </div>
                 </div>`)
             }
+
+            if (productlist[i][12] == 1) {
+                $(`#product${productlist[i][0]}`).css('background-color', '#fdffeb')
+            }
+
             for (let j = 0; j < globallike.length; j++) {
                 if (globallike[j][2] == productlist[i][0]) {
                     $(`#product${productlist[i][0]} .shoplikes .shoplike`).html(`<span class="shopfont likefont"><i class="likefont fa-solid fa-thumbs-up" style="color: #ff0000;"></i></span>${productlist[i][7]}`)
@@ -1090,6 +1095,15 @@ function resetCenter() {
             $('.addimgborder').empty()
             for (let i = 0; i < globalproduct.length; i++) {
                 if (globalproduct[i][0] == parseInt(pid)) {
+                    $('#salesbtn').prop('checked', false)
+                    for (let x = 0; x < globalproduct.length; x++) {
+                        if (globalproduct[x][0] == pid) {
+                            if (globalproduct[x][12] == 1) {
+                                $('#salesbtn').prop('checked', true)
+                                break
+                            }
+                        }
+                    }
                     $('#addroducttitle').text('Product edit')
                     let img = getImgList(globalproduct[i][2])
                     $('#changename').val(globalproduct[i][1])
@@ -1192,7 +1206,7 @@ function resetCenter() {
                             alert(response.message)
                             // console.log(response.data)
                             $('#canclecmodal').click()
-                            $('#lookbuyerhistory').trigger('click')           
+                            $('#lookbuyerhistory').trigger('click')
                             $('.addpd').after(`
                                 <div class="productlistdataborder">
                                     <div class="productlistdata">
@@ -1214,7 +1228,7 @@ function resetCenter() {
                                     </div>
                                 </div>
                             `)
-                            getNewInfo()  
+                            getNewInfo()
                         },
                         error: function (error) {
                             console.log(error)
@@ -1224,13 +1238,18 @@ function resetCenter() {
                     alert('Please complete the product information.')
                 }
             } else {
+                let Sales = 0
+                if ($('#salesbtn').prop('checked')) {
+                    Sales = 1
+                }
                 let toSend = {
                     Product_id: pid,
                     Product_name: $('#changename').val(),
                     Category: $('#changecategory').val(),
                     Price: $('#changeprice').val(),
                     Inventory: $('#changeinventory').val(),
-                    Product_describe: $('#changedescription').val()
+                    Product_describe: $('#changedescription').val(),
+                    Sales: Sales
                 }
                 $.ajax({
                     url: '/editproduct',
@@ -1269,6 +1288,7 @@ function resetCenter() {
             pid = 0
             // console.log(pid)
             $('#addroducttitle').text('Add product')
+            $('#salesbtn').prop('checked', false)
             $('#editbtn').click()
             $('.addimgborder').empty()
             $('#changename').val('')
@@ -1606,7 +1626,7 @@ $('#gocommentbtn').click(function () {
                     if (globalproduct[i][0] == currentproductid) {
                         vendor_id = globalproduct[i][10]
                         break
-                    } 
+                    }
                 }
                 let toSend = {
                     Conent: usercomment,
@@ -1632,7 +1652,7 @@ $('#gocommentbtn').click(function () {
             }
         })
     } else {
-            alert('Please log in first')
+        alert('Please log in first')
     }
 })
 
