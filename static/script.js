@@ -1706,7 +1706,7 @@ function getTime(timestramp) {
 function getProductComment(productid) {
     let productcommentlist = []
     for (let i = 0; i < globalcomment.length; i++) {
-        if (globalcomment[i][5] == productid) {
+        if (globalcomment[i][6] == productid) {
             productcommentlist.push(globalcomment[i])
         }
     }
