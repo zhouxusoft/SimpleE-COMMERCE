@@ -849,7 +849,7 @@ $('#cartipayed').click(function () {
     let toSend = {
         cartlist: checkeddatas,
     }
-     console.log(toSend)
+    // console.log(toSend)
     $.ajax({
         url: '/buycart',
         type: 'POST',
@@ -1644,7 +1644,7 @@ $('#gocommentbtn').click(function () {
                     Product_id: currentproductid,
                     Vendor_id: vendor_id
                 }
-                console.log(toSend)
+                // console.log(toSend)
                 $.ajax({
                     url: '/comment',
                     type: 'POST',
