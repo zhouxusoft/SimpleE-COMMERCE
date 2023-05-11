@@ -1155,7 +1155,32 @@ function resetCenter() {
         $('#yeschange').click(function () {
             console.log(pid)
             if (pid == 0) {
-
+                if (imglen > 0 && $('#changename').val() != '' && $('#changecategory').val() != '' && $('#changeprice').val() != '' && $('#changeinventory').val() != '' && $('#changedescription').val() != '') {
+                    let toSend = {
+                        Product_name: $('#changename').val(),
+                        Photo: imglist,
+                        Category: $('#changecategory').val(),
+                        Product_describe: $('#changedescription').val(),
+                        Price: $('#changeprice').val(),
+                        Inventory: $('#changeinventory').val(),
+                        Vendors_id: token.id
+                    }
+                    console.log(toSend)
+                    $.ajax({
+                        url: '/addproduct',
+                        type: 'POST',
+                        data: JSON.stringify(toSend),
+                        contentType: 'application/json',
+                        success: function (response) {
+                            
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                } else {
+                    alert('Please complete the product information.')
+                }
             } else {
                 let toSend = {
                     Product_id: pid,
@@ -1196,6 +1221,8 @@ function resetCenter() {
                 })
             }
         })
+        let imglist
+        let imglen
         $('#addproductbtn').click(function () {
             pid = 0
             console.log(pid)
@@ -1212,8 +1239,8 @@ function resetCenter() {
                     Upload product photo
                 </div>
             `)
-            let imglist = ''
-            let imglen = 0
+            imglist = ''
+            imglen = 0
             $('.addimgbtn').click(function () {
 
                 if (imglen > 4) {

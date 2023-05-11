@@ -606,5 +606,32 @@ def img():
 
     return jsonify({'success': True})
 
+@app.route('/addproduct', methods=['POST'])
+def addproduct():
+    data = request.get_json()
+    sql = "SELECT * FROM catagories WHERE `Catagory_name` = %s"
+    val = (data['Category'],)
+    dbcursor.execute(sql, val)
+    catagoriesresult = dbcursor.fetchall()
+    if len(catagoriesresult) > 0:
+        Category_id = catagoriesresult[0][0]
+    else:
+        sql = "INSERT INTO `catagories` (`Catagory_name`) VALUES (%s)"
+        val = (data['Category'],)
+        dbcursor.execute(sql, val)
+        db.commit()
+        sql = "SELECT * FROM catagories WHERE `Catagory_name` = %s"
+        val = (data['Category'],)
+        dbcursor.execute(sql, val)
+        catagoriesresult = dbcursor.fetchall()
+        Category_id = catagoriesresult[0][0]
+
+    sql = "INSERT INTO `products` (`Product_name`, `Photo`, `Product_describe`, `Price`, `Inventory, `Vendors_id`, `Category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    val = (data['Product_name'], data['Photo'], data['Product_describe'], data['Price'], data['Inventory'], data['Vendors_id'], Category_id)
+    dbcursor.execute(sql, val)
+    db.commit()
+
+    return jsonify({'success': True, 'message': 'Successfully changed'})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
