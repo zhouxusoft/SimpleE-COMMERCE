@@ -2227,15 +2227,6 @@ poncon.start();
     };
 
     const noop = () => { };
-    /**
-     * Trick to restart an element's animation
-     *
-     * @param {HTMLElement} element
-     * @return void
-     *
-     * @see https://www.charistheo.io/blog/2021/02/restart-a-css-animation-with-javascript/#restarting-a-css-animation
-     */
-
 
     const reflow = element => {
         element.offsetHeight; // eslint-disable-line no-unused-expressions
@@ -2324,15 +2315,6 @@ poncon.start();
             }
         }, emulatedDuration);
     };
-    /**
-     * Return the previous/next element of a list.
-     *
-     * @param {array} list    The list of elements
-     * @param activeElement   The active element
-     * @param shouldGetNext   Choose to get next or previous element
-     * @param isCycleAllowed
-     * @return {Element|elem} The proper element
-     */
 
 
     const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {
@@ -2353,15 +2335,6 @@ poncon.start();
         return list[Math.max(0, Math.min(index, listLength - 1))];
     };
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): dom/event-handler.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
     const stripNameRegex = /\..*/;
@@ -2622,16 +2595,6 @@ poncon.start();
         return obj;
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): dom/data.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-
-    /**
-     * Constants
-     */
     const elementMap = new Map();
     const Data = {
         set(element, key, instance) {
@@ -2674,12 +2637,6 @@ poncon.start();
 
     };
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): dom/manipulator.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
     function normalizeData(value) {
         if (value === 'true') {
             return true;
@@ -2744,16 +2701,6 @@ poncon.start();
 
     };
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/config.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Class definition
-     */
-
     class Config {
         // Getters
         static get Default() {
@@ -2805,16 +2752,6 @@ poncon.start();
         }
 
     }
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): base-component.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const VERSION = '5.2.3';
     /**
@@ -2885,13 +2822,6 @@ poncon.start();
 
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/component-functions.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-
     const enableDismissTrigger = (component, method = 'hide') => {
         const clickEvent = `click.dismiss${component.EVENT_KEY}`;
         const name = component.NAME;
@@ -2911,15 +2841,6 @@ poncon.start();
         });
     };
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): alert.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$f = 'alert';
     const DATA_KEY$a = 'bs.alert';
@@ -2928,9 +2849,6 @@ poncon.start();
     const EVENT_CLOSED = `closed${EVENT_KEY$b}`;
     const CLASS_NAME_FADE$5 = 'fade';
     const CLASS_NAME_SHOW$8 = 'show';
-    /**
-     * Class definition
-     */
 
     class Alert extends BaseComponent {
         // Getters
@@ -2979,27 +2897,11 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
 
     enableDismissTrigger(Alert, 'close');
-    /**
-     * jQuery
-     */
 
     defineJQueryPlugin(Alert);
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): button.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$e = 'button';
     const DATA_KEY$9 = 'bs.button';
@@ -3008,9 +2910,7 @@ poncon.start();
     const CLASS_NAME_ACTIVE$3 = 'active';
     const SELECTOR_DATA_TOGGLE$5 = '[data-bs-toggle="button"]';
     const EVENT_CLICK_DATA_API$6 = `click${EVENT_KEY$a}${DATA_API_KEY$6}`;
-    /**
-     * Class definition
-     */
+
 
     class Button extends BaseComponent {
         // Getters
@@ -3036,9 +2936,7 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
+
 
 
     EventHandler.on(document, EVENT_CLICK_DATA_API$6, SELECTOR_DATA_TOGGLE$5, event => {
@@ -3047,21 +2945,8 @@ poncon.start();
         const data = Button.getOrCreateInstance(button);
         data.toggle();
     });
-    /**
-     * jQuery
-     */
 
     defineJQueryPlugin(Button);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): dom/selector-engine.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const SelectorEngine = {
         find(selector, element = document.documentElement) {
@@ -3124,16 +3009,6 @@ poncon.start();
 
     };
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/swipe.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
-
     const NAME$d = 'swipe';
     const EVENT_KEY$9 = '.bs.swipe';
     const EVENT_TOUCHSTART = `touchstart${EVENT_KEY$9}`;
@@ -3155,9 +3030,6 @@ poncon.start();
         leftCallback: '(function|null)',
         rightCallback: '(function|null)'
     };
-    /**
-     * Class definition
-     */
 
     class Swipe extends Config {
         constructor(element, config) {
@@ -3260,16 +3132,6 @@ poncon.start();
 
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): carousel.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
-
     const NAME$c = 'carousel';
     const DATA_KEY$8 = 'bs.carousel';
     const EVENT_KEY$8 = `.${DATA_KEY$8}`;
@@ -3325,9 +3187,6 @@ poncon.start();
         touch: 'boolean',
         wrap: 'boolean'
     };
-    /**
-     * Class definition
-     */
 
     class Carousel extends BaseComponent {
         constructor(element, config) {
@@ -3365,9 +3224,7 @@ poncon.start();
         }
 
         nextWhenVisible() {
-            // FIXME TODO use `document.visibilityState`
-            // Don't call next when the page isn't visible
-            // or the carousel or its parent isn't visible
+            
             if (!document.hidden && isVisible(this._element)) {
                 this.next();
             }
@@ -3466,13 +3323,7 @@ poncon.start();
             const endCallBack = () => {
                 if (this._config.pause !== 'hover') {
                     return;
-                } // If it's a touch-enabled device, mouseenter/leave are fired as
-                // part of the mouse compatibility events on first tap - the carousel
-                // would stop cycling until user tapped out of it;
-                // here, we listen for touchend, explicitly pause the carousel
-                // (as if it's the second time we tap on it, mouseenter compat event
-                // is NOT fired) and after a timeout (to allow for mouse compatibility
-                // events to fire) we explicitly restart cycling
+                } 
 
 
                 this.pause();
@@ -3569,8 +3420,7 @@ poncon.start();
             }
 
             if (!activeElement || !nextElement) {
-                // Some weirdness is happening, so we bail
-                // todo: change tests that use empty divs to avoid this check
+                
                 return;
             }
 
@@ -3659,10 +3509,6 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
 
     EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, function (event) {
         const target = getElementFromSelector(this);
@@ -3702,21 +3548,8 @@ poncon.start();
             Carousel.getOrCreateInstance(carousel);
         }
     });
-    /**
-     * jQuery
-     */
 
     defineJQueryPlugin(Carousel);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): collapse.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$b = 'collapse';
     const DATA_KEY$7 = 'bs.collapse';
@@ -4216,7 +4049,7 @@ poncon.start();
 
     function getLayoutRect(element) {
         var clientRect = getBoundingClientRect(element); // Use the clientRect sizes if it's not been transformed.
-        // Fixes https://github.com/popperjs/popper-core/issues/1223
+        
 
         var width = element.offsetWidth;
         var height = element.offsetHeight;
@@ -4279,9 +4112,7 @@ poncon.start();
             return element;
         }
 
-        return (// this is a quicker (but less type safe) way to save quite some bytes from the bundle
-            // $FlowFixMe[incompatible-return]
-            // $FlowFixMe[prop-missing]
+        return (
             element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
             element.parentNode || ( // DOM Element detected
                 isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
@@ -4322,9 +4153,7 @@ poncon.start();
         }
 
         while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
-            var css = getComputedStyle$1(currentNode); // This is non-exhaustive but covers the most common CSS properties that
-            // create a containing block.
-            // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+            var css = getComputedStyle$1(currentNode); 
 
             if (css.transform !== 'none' || css.perspective !== 'none' || css.contain === 'paint' || ['transform', 'perspective'].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === 'filter' || isFirefox && css.filter && css.filter !== 'none') {
                 return currentNode;
@@ -4476,9 +4305,7 @@ poncon.start();
         right: 'auto',
         bottom: 'auto',
         left: 'auto'
-    }; // Round the offsets to the nearest suitable subpixel based on the DPR.
-    // Zooming can change the DPR, but it seems to report a value that will
-    // cleanly divide the values into the appropriate subpixels.
+    }; 
 
     function roundOffsetsByDPR(_ref) {
         var x = _ref.x,
@@ -4537,7 +4364,7 @@ poncon.start();
                     heightProp = 'scrollHeight';
                     widthProp = 'scrollWidth';
                 }
-            } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
+            } 
 
 
             offsetParent = offsetParent;
@@ -4623,7 +4450,7 @@ poncon.start();
         state.attributes.popper = Object.assign({}, state.attributes.popper, {
             'data-popper-placement': state.placement
         });
-    } // eslint-disable-next-line import/no-unused-modules
+    }
 
 
     const computeStyles$1 = {
@@ -4670,7 +4497,7 @@ poncon.start();
                 window.removeEventListener('resize', instance.update, passive);
             }
         };
-    } // eslint-disable-next-line import/no-unused-modules
+    }
 
 
     const eventListeners = {
@@ -4715,13 +4542,7 @@ poncon.start();
     }
 
     function getWindowScrollBarX(element) {
-        // If <html> has a CSS width greater than the viewport, then this will be
-        // incorrect for RTL.
-        // Popper 1 is broken in this case and never had a bug report so let's assume
-        // it's not an issue. I don't think anyone ever specifies width on <html>
-        // anyway.
-        // Browsers where the left scrollbar doesn't cause an issue report `0` for
-        // this (e.g. Edge 2019, IE11, Safari)
+        
         return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
     }
 
@@ -4801,13 +4622,6 @@ poncon.start();
         return getScrollParent(getParentNode(node));
     }
 
-    /*
-    given a DOM element, return the list of all scroll parents, up the list of ancesors
-    until we get to the top window object. This list is what we attach scroll listeners
-    to, because if any of these parent elements scroll, we'll need to re-calculate the
-    reference element's position.
-    */
-
     function listScrollParents(element, list) {
         var _element$ownerDocumen;
 
@@ -4820,7 +4634,7 @@ poncon.start();
         var win = getWindow(scrollParent);
         var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
         var updatedList = list.concat(target);
-        return isBody ? updatedList : // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+        return isBody ? updatedList : 
             updatedList.concat(listScrollParents(getParentNode(target)));
     }
 
@@ -4848,9 +4662,7 @@ poncon.start();
 
     function getClientRectFromMixedType(element, clippingParent, strategy) {
         return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
-    } // A "clipping parent" is an overflowable container with the characteristic of
-    // clipping (or hiding) overflowing elements with a position different from
-    // `initial`
+    } 
 
 
     function getClippingParents(element) {
@@ -4860,14 +4672,13 @@ poncon.start();
 
         if (!isElement(clipperElement)) {
             return [];
-        } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
+        } 
 
 
         return clippingParents.filter(function (clippingParent) {
             return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
         });
-    } // Gets the maximum area that the element is visible in due to any number of
-    // clipping parents
+    } 
 
 
     function getClippingRect(element, boundary, rootBoundary, strategy) {
@@ -5033,7 +4844,7 @@ poncon.start();
 
         if (allowedPlacements.length === 0) {
             allowedPlacements = placements$1;
-        } // $FlowFixMe[incompatible-type]: Flow seems to have problems with two array unions...
+        }
 
 
         var overflows = allowedPlacements.reduce(function (acc, placement) {
@@ -5144,7 +4955,6 @@ poncon.start();
         }
 
         if (makeFallbackChecks) {
-            // `2` may be desired in some cases – research later
             var numberOfChecks = flipVariations ? 3 : 1;
 
             var _loop = function _loop(_i) {
@@ -5176,7 +4986,7 @@ poncon.start();
             state.placement = firstFittingPlacement;
             state.reset = true;
         }
-    } // eslint-disable-next-line import/no-unused-modules
+    }
 
 
     const flip$1 = {
@@ -5238,7 +5048,7 @@ poncon.start();
             'data-popper-reference-hidden': isReferenceHidden,
             'data-popper-escaped': hasPopperEscaped
         });
-    } // eslint-disable-next-line import/no-unused-modules
+    }
 
 
     const hide$1 = {
@@ -5290,7 +5100,7 @@ poncon.start();
         }
 
         state.modifiersData[name] = data;
-    } // eslint-disable-next-line import/no-unused-modules
+    }
 
 
     const offset$1 = {
@@ -5304,17 +5114,14 @@ poncon.start();
     function popperOffsets(_ref) {
         var state = _ref.state,
             name = _ref.name;
-        // Offsets are the actual position the popper needs to have to be
-        // properly positioned near its reference element
-        // This is the most basic placement, and will be adjusted by
-        // the modifiers in the next step
+        
         state.modifiersData[name] = computeOffsets({
             reference: state.rects.reference,
             element: state.rects.popper,
             strategy: 'absolute',
             placement: state.placement
         });
-    } // eslint-disable-next-line import/no-unused-modules
+    } 
 
 
     const popperOffsets$1 = {
@@ -5400,11 +5207,7 @@ poncon.start();
             };
             var arrowPaddingObject = state.modifiersData['arrow#persistent'] ? state.modifiersData['arrow#persistent'].padding : getFreshSideObject();
             var arrowPaddingMin = arrowPaddingObject[mainSide];
-            var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
-            // to include its full size in the calculation. If the reference is small
-            // and near the edge of a boundary, the popper can overflow even if the
-            // reference is not overflowing as well (e.g. virtual elements with no
-            // width or height)
+            var arrowPaddingMax = arrowPaddingObject[altSide]; 
 
             var arrowLen = within(0, referenceRect[len], arrowRect[len]);
             var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
@@ -5665,11 +5468,7 @@ poncon.start();
                     runModifierEffects();
                     return instance.update();
                 },
-                // Sync update – it will always be executed, even if not necessary. This
-                // is useful for low frequency updates where sync behavior simplifies the
-                // logic.
-                // For high frequency updates (e.g. `resize` and `scroll` events), always
-                // prefer the async Popper#update method
+                
                 forceUpdate: function forceUpdate() {
                     if (isDestroyed) {
                         return;
@@ -5677,29 +5476,21 @@ poncon.start();
 
                     var _state$elements = state.elements,
                         reference = _state$elements.reference,
-                        popper = _state$elements.popper; // Don't proceed if `reference` or `popper` are not valid elements
-                    // anymore
+                        popper = _state$elements.popper; 
 
                     if (!areValidElements(reference, popper)) {
 
                         return;
-                    } // Store the reference and popper rects to be read by modifiers
+                    } 
 
 
                     state.rects = {
                         reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
                         popper: getLayoutRect(popper)
-                    }; // Modifiers have the ability to reset the current update cycle. The
-                    // most common use case for this is the `flip` modifier changing the
-                    // placement, which then needs to re-run all the modifiers, because the
-                    // logic was previously ran for the previous placement and is therefore
-                    // stale/incorrect
+                    }; 
 
                     state.reset = false;
-                    state.placement = state.options.placement; // On each update cycle, the `modifiersData` property for each modifier
-                    // is filled with the initial data specified by the modifier. This means
-                    // it doesn't persist and is fresh on each update.
-                    // To ensure persistent data, use `${name}#persistent`
+                    state.placement = state.options.placement; 
 
                     state.orderedModifiers.forEach(function (modifier) {
                         return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
@@ -5729,8 +5520,7 @@ poncon.start();
                         }
                     }
                 },
-                // Async and optimistically optimized update – it will not be executed if
-                // not necessary (debounced to run at most once-per-tick)
+                
                 update: debounce(function () {
                     return new Promise(function (resolve) {
                         instance.forceUpdate();
@@ -5752,11 +5542,7 @@ poncon.start();
                 if (!isDestroyed && options.onFirstUpdate) {
                     options.onFirstUpdate(state);
                 }
-            }); // Modifiers have the ability to execute arbitrary code before the first
-            // update cycle runs. They will be executed in the same order as the update
-            // cycle. This is useful when a modifier adds some persistent data that
-            // other modifiers need to use, but the modifier is run after the dependent
-            // one.
+            }); 
 
             function runModifierEffects() {
                 state.orderedModifiers.forEach(function (_ref3) {
@@ -5790,17 +5576,17 @@ poncon.start();
             return instance;
         };
     }
-    var createPopper$2 = /*#__PURE__*/popperGenerator(); // eslint-disable-next-line import/no-unused-modules
+    var createPopper$2 = /*#__PURE__*/popperGenerator(); 
 
     var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
     var createPopper$1 = /*#__PURE__*/popperGenerator({
         defaultModifiers: defaultModifiers$1
-    }); // eslint-disable-next-line import/no-unused-modules
+    });
 
     var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
     var createPopper = /*#__PURE__*/popperGenerator({
         defaultModifiers: defaultModifiers
-    }); // eslint-disable-next-line import/no-unused-modules
+    });
 
     const Popper = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
         __proto__: null,
@@ -5843,16 +5629,6 @@ poncon.start();
         popperOffsets: popperOffsets$1,
         preventOverflow: preventOverflow$1
     }, Symbol.toStringTag, { value: 'Module' }));
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): dropdown.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$a = 'dropdown';
     const DATA_KEY$6 = 'bs.dropdown';
@@ -5915,8 +5691,7 @@ poncon.start();
         constructor(element, config) {
             super(element, config);
             this._popper = null;
-            this._parent = this._element.parentNode; // dropdown wrapper
-            // todo: v6 revert #37011 & change markup https://getbootstrap.com/docs/5.2/forms/input-group/
+            this._parent = this._element.parentNode; 
 
             this._menu = SelectorEngine.next(this._element, SELECTOR_MENU)[0] || SelectorEngine.prev(this._element, SELECTOR_MENU)[0] || SelectorEngine.findOne(SELECTOR_MENU, this._parent);
             this._inNavbar = this._detectNavbar();
@@ -5954,10 +5729,7 @@ poncon.start();
                 return;
             }
 
-            this._createPopper(); // If this is a touch-enabled device we add extra
-            // empty mouseover listeners to the body's immediate children;
-            // only needed because of broken event delegation on iOS
-            // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+            this._createPopper();
 
 
             if ('ontouchstart' in document.documentElement && !this._parent.closest(SELECTOR_NAVBAR_NAV)) {
@@ -6277,16 +6049,6 @@ poncon.start();
 
     defineJQueryPlugin(Dropdown);
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/scrollBar.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
-
     const SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top';
     const SELECTOR_STICKY_CONTENT = '.sticky-top';
     const PROPERTY_PADDING = 'padding-right';
@@ -6396,15 +6158,6 @@ poncon.start();
 
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/backdrop.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$9 = 'backdrop';
     const CLASS_NAME_FADE$4 = 'fade';
@@ -6542,15 +6295,6 @@ poncon.start();
 
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/focustrap.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$8 = 'focustrap';
     const DATA_KEY$5 = 'bs.focustrap';
@@ -6651,15 +6395,6 @@ poncon.start();
 
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): modal.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$7 = 'modal';
     const DATA_KEY$4 = 'bs.modal';
@@ -6940,11 +6675,7 @@ poncon.start();
 
             this._element.focus();
         }
-        /**
-         * The following methods are used to handle overflowing modals
-         */
-
-
+        
         _adjustDialog() {
             const isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
 
@@ -6966,7 +6697,7 @@ poncon.start();
         _resetAdjustments() {
             this._element.style.paddingLeft = '';
             this._element.style.paddingRight = '';
-        } // Static
+        }
 
 
         static jQueryInterface(config, relatedTarget) {
@@ -6986,11 +6717,7 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
-
+    
     EventHandler.on(document, EVENT_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, function (event) {
         const target = getElementFromSelector(this);
 
@@ -7000,7 +6727,6 @@ poncon.start();
 
         EventHandler.one(target, EVENT_SHOW$4, showEvent => {
             if (showEvent.defaultPrevented) {
-                // only register focus restorer if modal will actually get shown
                 return;
             }
 
@@ -7009,7 +6735,7 @@ poncon.start();
                     this.focus();
                 }
             });
-        }); // avoid conflict when clicking modal toggler while another one is open
+        }); 
 
         const alreadyOpen = SelectorEngine.findOne(OPEN_SELECTOR$1);
 
@@ -7021,21 +6747,8 @@ poncon.start();
         data.toggle(this);
     });
     enableDismissTrigger(Modal);
-    /**
-     * jQuery
-     */
-
+    
     defineJQueryPlugin(Modal);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): offcanvas.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$6 = 'offcanvas';
     const DATA_KEY$3 = 'bs.offcanvas';
@@ -7067,9 +6780,6 @@ poncon.start();
         keyboard: 'boolean',
         scroll: 'boolean'
     };
-    /**
-     * Class definition
-     */
 
     class Offcanvas extends BaseComponent {
         constructor(element, config) {
@@ -7079,7 +6789,7 @@ poncon.start();
             this._focustrap = this._initializeFocusTrap();
 
             this._addEventListeners();
-        } // Getters
+        }
 
 
         static get Default() {
@@ -7092,7 +6802,7 @@ poncon.start();
 
         static get NAME() {
             return NAME$6;
-        } // Public
+        }
 
 
         toggle(relatedTarget) {
@@ -7187,7 +6897,7 @@ poncon.start();
             this._focustrap.deactivate();
 
             super.dispose();
-        } // Private
+        }
 
 
         _initializeBackDrop() {
@@ -7198,7 +6908,7 @@ poncon.start();
                 }
 
                 this.hide();
-            }; // 'static' option will be translated to true, and booleans will keep their value
+            }; 
 
 
             const isVisible = Boolean(this._config.backdrop);
@@ -7230,7 +6940,7 @@ poncon.start();
 
                 this.hide();
             });
-        } // Static
+        }
 
 
         static jQueryInterface(config) {
@@ -7250,10 +6960,6 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
 
     EventHandler.on(document, EVENT_CLICK_DATA_API$1, SELECTOR_DATA_TOGGLE$1, function (event) {
         const target = getElementFromSelector(this);
@@ -7267,12 +6973,10 @@ poncon.start();
         }
 
         EventHandler.one(target, EVENT_HIDDEN$3, () => {
-            // focus on trigger when it is closed
             if (isVisible(this)) {
                 this.focus();
             }
-        }); // avoid conflict when clicking a toggler of an offcanvas, while another is open
-
+        });
         const alreadyOpen = SelectorEngine.findOne(OPEN_SELECTOR);
 
         if (alreadyOpen && alreadyOpen !== target) {
@@ -7295,33 +6999,14 @@ poncon.start();
         }
     });
     enableDismissTrigger(Offcanvas);
-    /**
-     * jQuery
-     */
 
     defineJQueryPlugin(Offcanvas);
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/sanitizer.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
     const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
     const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
-    /**
-     * A pattern that recognizes a commonly useful subset of URLs that are safe.
-     *
-     * Shout-out to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
-     */
 
     const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i;
-    /**
-     * A pattern that matches safe data URLs. Only matches image, video and audio types.
-     *
-     * Shout-out to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
-     */
-
+    
     const DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i;
 
     const allowedAttribute = (attribute, allowedAttributeList) => {
@@ -7333,14 +7018,13 @@ poncon.start();
             }
 
             return true;
-        } // Check if a regular expression validates the attribute.
+        }
 
 
         return allowedAttributeList.filter(attributeRegex => attributeRegex instanceof RegExp).some(regex => regex.test(attributeName));
     };
 
     const DefaultAllowlist = {
-        // Global attributes allowed on any supplied element below.
         '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
         a: ['target', 'href', 'title', 'rel'],
         area: [],
@@ -7406,21 +7090,10 @@ poncon.start();
         return createdDocument.body.innerHTML;
     }
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): util/template-factory.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
-
     const NAME$5 = 'TemplateFactory';
     const Default$4 = {
         allowList: DefaultAllowlist,
         content: {},
-        // { selector : text ,  selector2 : text2 , }
         extraClass: '',
         html: false,
         sanitize: true,
@@ -7440,15 +7113,12 @@ poncon.start();
         entry: '(string|element|function|null)',
         selector: '(string|element)'
     };
-    /**
-     * Class definition
-     */
-
+    
     class TemplateFactory extends Config {
         constructor(config) {
             super();
             this._config = this._getConfig(config);
-        } // Getters
+        } 
 
 
         static get Default() {
@@ -7461,7 +7131,7 @@ poncon.start();
 
         static get NAME() {
             return NAME$5;
-        } // Public
+        }
 
 
         getContent() {
@@ -7499,7 +7169,7 @@ poncon.start();
             }
 
             return template;
-        } // Private
+        }
 
 
         _typeCheckConfig(config) {
@@ -7564,16 +7234,6 @@ poncon.start();
         }
 
     }
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): tooltip.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$4 = 'tooltip';
     const DISALLOWED_ATTRIBUTES = new Set(['sanitize', 'allowList', 'sanitizeFn']);
@@ -7642,9 +7302,6 @@ poncon.start();
         title: '(string|element|function)',
         trigger: 'string'
     };
-    /**
-     * Class definition
-     */
 
     class Tooltip extends BaseComponent {
         constructor(element, config) {
@@ -7652,7 +7309,7 @@ poncon.start();
                 throw new TypeError('Bootstrap\'s tooltips require Popper (https://popper.js.org)');
             }
 
-            super(element, config); // Private
+            super(element, config);
 
             this._isEnabled = true;
             this._timeout = 0;
@@ -7660,7 +7317,7 @@ poncon.start();
             this._activeTrigger = {};
             this._popper = null;
             this._templateFactory = null;
-            this._newContent = null; // Protected
+            this._newContent = null;
 
             this.tip = null;
 
@@ -7669,7 +7326,7 @@ poncon.start();
             if (!this._config.selector) {
                 this._fixTitle();
             }
-        } // Getters
+        }
 
 
         static get Default() {
@@ -7682,7 +7339,7 @@ poncon.start();
 
         static get NAME() {
             return NAME$4;
-        } // Public
+        }
 
 
         enable() {
@@ -7742,7 +7399,7 @@ poncon.start();
 
             if (showEvent.defaultPrevented || !isInTheDom) {
                 return;
-            } // todo v6 remove this OR make it optional
+            }
 
 
             this._disposePopper();
@@ -7761,11 +7418,7 @@ poncon.start();
             }
 
             this._popper = this._createPopper(tip);
-            tip.classList.add(CLASS_NAME_SHOW$2); // If this is a touch-enabled device we add extra
-            // empty mouseover listeners to the body's immediate children;
-            // only needed because of broken event delegation on iOS
-            // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
-
+            tip.classList.add(CLASS_NAME_SHOW$2);
             if ('ontouchstart' in document.documentElement) {
                 for (const element of [].concat(...document.body.children)) {
                     EventHandler.on(element, 'mouseover', noop);
@@ -7798,8 +7451,7 @@ poncon.start();
 
             const tip = this._getTipElement();
 
-            tip.classList.remove(CLASS_NAME_SHOW$2); // If this is a touch-enabled device we remove the extra
-            // empty mouseover listeners we added for iOS support
+            tip.classList.remove(CLASS_NAME_SHOW$2); 
 
             if ('ontouchstart' in document.documentElement) {
                 for (const element of [].concat(...document.body.children)) {
@@ -7810,7 +7462,7 @@ poncon.start();
             this._activeTrigger[TRIGGER_CLICK] = false;
             this._activeTrigger[TRIGGER_FOCUS] = false;
             this._activeTrigger[TRIGGER_HOVER] = false;
-            this._isHovered = null; // it is a trick to support manual triggering
+            this._isHovered = null; 
 
             const complete = () => {
                 if (this._isWithActiveTrigger()) {
@@ -7849,14 +7501,14 @@ poncon.start();
         }
 
         _createTipElement(content) {
-            const tip = this._getTemplateFactory(content).toHtml(); // todo: remove this check on v6
+            const tip = this._getTemplateFactory(content).toHtml(); 
 
 
             if (!tip) {
                 return null;
             }
 
-            tip.classList.remove(CLASS_NAME_FADE$2, CLASS_NAME_SHOW$2); // todo: on v6 the following can be achieved with CSS only
+            tip.classList.remove(CLASS_NAME_FADE$2, CLASS_NAME_SHOW$2); 
 
             tip.classList.add(`bs-${this.constructor.NAME}-auto`);
             const tipId = getUID(this.constructor.NAME).toString();
@@ -7885,8 +7537,7 @@ poncon.start();
             } else {
                 this._templateFactory = new TemplateFactory({
                     ...this._config,
-                    // the `content` var has to be after `this._config`
-                    // to override config.content in case of popover
+                    
                     content,
                     extraClass: this._resolvePossibleFunction(this._config.customClass)
                 });
@@ -7903,7 +7554,7 @@ poncon.start();
 
         _getTitle() {
             return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title');
-        } // Private
+        }
 
 
         _initializeOnDelegatedTarget(event) {
@@ -7972,8 +7623,7 @@ poncon.start();
                     enabled: true,
                     phase: 'beforeMain',
                     fn: data => {
-                        // Pre-set Popper's placement attribute in order to read the arrow sizes properly.
-                        // Otherwise, Popper mixes up the width and height dimensions since the initial arrow style is for top placement
+                        
                         this._getTipElement().setAttribute('data-popper-placement', data.state.placement);
                     }
                 }]
@@ -8034,7 +7684,7 @@ poncon.start();
                 this._element.setAttribute('aria-label', title);
             }
 
-            this._element.setAttribute('data-bs-original-title', title); // DO NOT USE IT. Is only for backwards compatibility
+            this._element.setAttribute('data-bs-original-title', title); 
 
 
             this._element.removeAttribute('title');
@@ -8130,9 +7780,8 @@ poncon.start();
             }
 
             config.selector = false;
-            config.trigger = 'manual'; // In the future can be replaced with:
-            // const keysWithDifferentValues = Object.entries(this._config).filter(entry => this.constructor.Default[entry[0]] !== this._config[entry[0]])
-            // `Object.fromEntries(keysWithDifferentValues)`
+            config.trigger = 'manual';
+            
 
             return config;
         }
@@ -8168,22 +7817,8 @@ poncon.start();
         }
 
     }
-    /**
-     * jQuery
-     */
-
 
     defineJQueryPlugin(Tooltip);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): popover.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$3 = 'popover';
     const SELECTOR_TITLE = '.popover-header';
@@ -8200,12 +7835,8 @@ poncon.start();
         ...Tooltip.DefaultType,
         content: '(null|string|element|function)'
     };
-    /**
-     * Class definition
-     */
-
+    
     class Popover extends Tooltip {
-        // Getters
         static get Default() {
             return Default$2;
         }
@@ -8216,12 +7847,12 @@ poncon.start();
 
         static get NAME() {
             return NAME$3;
-        } // Overrides
+        }
 
 
         _isWithContent() {
             return this._getTitle() || this._getContent();
-        } // Private
+        }
 
 
         _getContentForTemplate() {
@@ -8233,7 +7864,7 @@ poncon.start();
 
         _getContent() {
             return this._resolvePossibleFunction(this._config.content);
-        } // Static
+        }
 
 
         static jQueryInterface(config) {
@@ -8253,22 +7884,7 @@ poncon.start();
         }
 
     }
-    /**
-     * jQuery
-     */
-
-
     defineJQueryPlugin(Popover);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): scrollspy.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$2 = 'scrollspy';
     const DATA_KEY$2 = 'bs.scrollspy';
@@ -8290,7 +7906,6 @@ poncon.start();
     const SELECTOR_DROPDOWN_TOGGLE$1 = '.dropdown-toggle';
     const Default$1 = {
         offset: null,
-        // TODO: v6 @deprecated, keep it for backwards compatibility reasons
         rootMargin: '0px 0px -25%',
         smoothScroll: false,
         target: null,
@@ -8298,19 +7913,16 @@ poncon.start();
     };
     const DefaultType$1 = {
         offset: '(number|null)',
-        // TODO v6 @deprecated, keep it for backwards compatibility reasons
         rootMargin: 'string',
         smoothScroll: 'boolean',
         target: 'element',
         threshold: 'array'
     };
-    /**
-     * Class definition
-     */
+    
 
     class ScrollSpy extends BaseComponent {
         constructor(element, config) {
-            super(element, config); // this._element is the observablesContainer and config.target the menu links wrapper
+            super(element, config); 
 
             this._targetLinks = new Map();
             this._observableSections = new Map();
@@ -8321,8 +7933,8 @@ poncon.start();
                 visibleEntryTop: 0,
                 parentScrollTop: 0
             };
-            this.refresh(); // initialize
-        } // Getters
+            this.refresh(); 
+        } 
 
 
         static get Default() {
@@ -8335,7 +7947,7 @@ poncon.start();
 
         static get NAME() {
             return NAME$2;
-        } // Public
+        }
 
 
         refresh() {
@@ -8358,12 +7970,12 @@ poncon.start();
             this._observer.disconnect();
 
             super.dispose();
-        } // Private
+        }
 
 
         _configAfterMerge(config) {
-            // TODO: on v6 target should be given explicitly & remove the {target: 'ss-target'} case
-            config.target = getElement(config.target) || document.body; // TODO: v6 Only for backwards compatibility reasons. Use rootMargin only
+            
+            config.target = getElement(config.target) || document.body;
 
             config.rootMargin = config.offset ? `${config.offset}px 0px -30%` : config.rootMargin;
 
@@ -8377,7 +7989,7 @@ poncon.start();
         _maybeEnableSmoothScroll() {
             if (!this._config.smoothScroll) {
                 return;
-            } // unregister any previous listeners
+            } 
 
 
             EventHandler.off(this._config.target, EVENT_CLICK);
@@ -8395,7 +8007,7 @@ poncon.start();
                             behavior: 'smooth'
                         });
                         return;
-                    } // Chrome 60 doesn't support `scrollTo`
+                    } 
 
 
                     root.scrollTop = height;
@@ -8410,7 +8022,7 @@ poncon.start();
                 rootMargin: this._config.rootMargin
             };
             return new IntersectionObserver(entries => this._observerCallback(entries), options);
-        } // The logic of selection
+        } 
 
 
         _observerCallback(entries) {
@@ -8435,17 +8047,17 @@ poncon.start();
                     continue;
                 }
 
-                const entryIsLowerThanPrevious = entry.target.offsetTop >= this._previousScrollData.visibleEntryTop; // if we are scrolling down, pick the bigger offsetTop
+                const entryIsLowerThanPrevious = entry.target.offsetTop >= this._previousScrollData.visibleEntryTop; 
 
                 if (userScrollsDown && entryIsLowerThanPrevious) {
-                    activate(entry); // if parent isn't scrolled, let's keep the first visible item, breaking the iteration
+                    activate(entry);
 
                     if (!parentScrollTop) {
                         return;
                     }
 
                     continue;
-                } // if we are scrolling up, pick the smallest offsetTop
+                }
 
 
                 if (!userScrollsDown && !entryIsLowerThanPrevious) {
@@ -8460,7 +8072,6 @@ poncon.start();
             const targetLinks = SelectorEngine.find(SELECTOR_TARGET_LINKS, this._config.target);
 
             for (const anchor of targetLinks) {
-                // ensure that the anchor has an id and is not disabled
                 if (!anchor.hash || isDisabled(anchor)) {
                     continue;
                 }
@@ -8493,15 +8104,14 @@ poncon.start();
         }
 
         _activateParents(target) {
-            // Activate dropdown parents
+        
             if (target.classList.contains(CLASS_NAME_DROPDOWN_ITEM)) {
                 SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(CLASS_NAME_ACTIVE$1);
                 return;
             }
 
             for (const listGroup of SelectorEngine.parents(target, SELECTOR_NAV_LIST_GROUP)) {
-                // Set triggered links parents as active
-                // With both <ul> and <nav> markup a parent is the previous sibling of any nav ancestor
+                
                 for (const item of SelectorEngine.prev(listGroup, SELECTOR_LINK_ITEMS)) {
                     item.classList.add(CLASS_NAME_ACTIVE$1);
                 }
@@ -8515,7 +8125,7 @@ poncon.start();
             for (const node of activeNodes) {
                 node.classList.remove(CLASS_NAME_ACTIVE$1);
             }
-        } // Static
+        } 
 
 
         static jQueryInterface(config) {
@@ -8535,31 +8145,16 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
 
     EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
         for (const spy of SelectorEngine.find(SELECTOR_DATA_SPY)) {
             ScrollSpy.getOrCreateInstance(spy);
         }
     });
-    /**
-     * jQuery
-     */
+
 
     defineJQueryPlugin(ScrollSpy);
 
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): tab.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
 
     const NAME$1 = 'tab';
     const DATA_KEY$1 = 'bs.tab';
@@ -8585,13 +8180,10 @@ poncon.start();
     const SELECTOR_TAB_PANEL = '.list-group, .nav, [role="tablist"]';
     const SELECTOR_OUTER = '.nav-item, .list-group-item';
     const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-item${NOT_SELECTOR_DROPDOWN_TOGGLE}, [role="tab"]${NOT_SELECTOR_DROPDOWN_TOGGLE}`;
-    const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]'; // todo:v6: could be only `tab`
+    const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]'; 
 
     const SELECTOR_INNER_ELEM = `${SELECTOR_INNER}, ${SELECTOR_DATA_TOGGLE}`;
     const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"]`;
-    /**
-     * Class definition
-     */
 
     class Tab extends BaseComponent {
         constructor(element) {
@@ -8599,29 +8191,27 @@ poncon.start();
             this._parent = this._element.closest(SELECTOR_TAB_PANEL);
 
             if (!this._parent) {
-                return; // todo: should Throw exception on v6
-                // throw new TypeError(`${element.outerHTML} has not a valid parent ${SELECTOR_INNER_ELEM}`)
-            } // Set up initial aria attributes
+                return;
+            } 
 
 
             this._setInitialAttributes(this._parent, this._getChildren());
 
             EventHandler.on(this._element, EVENT_KEYDOWN, event => this._keydown(event));
-        } // Getters
+        }
 
 
         static get NAME() {
             return NAME$1;
-        } // Public
+        }
 
 
         show() {
-            // Shows this elem and deactivate the active sibling if exists
             const innerElem = this._element;
 
             if (this._elemIsActive(innerElem)) {
                 return;
-            } // Search for active tab on same parent to deactivate it
+            }
 
 
             const active = this._getActiveElem();
@@ -8640,7 +8230,7 @@ poncon.start();
             this._deactivate(active, innerElem);
 
             this._activate(innerElem, active);
-        } // Private
+        }
 
 
         _activate(element, relatedElem) {
@@ -8650,7 +8240,7 @@ poncon.start();
 
             element.classList.add(CLASS_NAME_ACTIVE);
 
-            this._activate(getElementFromSelector(element)); // Search and activate/show the proper section
+            this._activate(getElementFromSelector(element));
 
 
             const complete = () => {
@@ -8680,7 +8270,7 @@ poncon.start();
             element.classList.remove(CLASS_NAME_ACTIVE);
             element.blur();
 
-            this._deactivate(getElementFromSelector(element)); // Search and deactivate the shown section too
+            this._deactivate(getElementFromSelector(element));
 
 
             const complete = () => {
@@ -8707,7 +8297,7 @@ poncon.start();
                 return;
             }
 
-            event.stopPropagation(); // stopPropagation/preventDefault both added to support up/down keys without scrolling the page
+            event.stopPropagation();
 
             event.preventDefault();
             const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key);
@@ -8722,7 +8312,6 @@ poncon.start();
         }
 
         _getChildren() {
-            // collection of inner elements
             return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent);
         }
 
@@ -8755,7 +8344,7 @@ poncon.start();
                 child.setAttribute('tabindex', '-1');
             }
 
-            this._setAttributeIfNotExists(child, 'role', 'tab'); // set attributes to the related panel too
+            this._setAttributeIfNotExists(child, 'role', 'tab');
 
 
             this._setInitialAttributesOnTargetPanel(child);
@@ -8803,17 +8392,17 @@ poncon.start();
 
         _elemIsActive(elem) {
             return elem.classList.contains(CLASS_NAME_ACTIVE);
-        } // Try to get the inner element (usually the .nav-link)
+        }
 
 
         _getInnerElement(elem) {
             return elem.matches(SELECTOR_INNER_ELEM) ? elem : SelectorEngine.findOne(SELECTOR_INNER_ELEM, elem);
-        } // Try to get the outer element (usually the .nav-item)
+        }
 
 
         _getOuterElement(elem) {
             return elem.closest(SELECTOR_OUTER) || elem;
-        } // Static
+        } 
 
 
         static jQueryInterface(config) {
@@ -8833,10 +8422,6 @@ poncon.start();
         }
 
     }
-    /**
-     * Data API implementation
-     */
-
 
     EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
         if (['A', 'AREA'].includes(this.tagName)) {
@@ -8849,31 +8434,14 @@ poncon.start();
 
         Tab.getOrCreateInstance(this).show();
     });
-    /**
-     * Initialize on focus
-     */
 
     EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
         for (const element of SelectorEngine.find(SELECTOR_DATA_TOGGLE_ACTIVE)) {
             Tab.getOrCreateInstance(element);
         }
     });
-    /**
-     * jQuery
-     */
 
     defineJQueryPlugin(Tab);
-
-    /**
-     * --------------------------------------------------------------------------
-     * Bootstrap (v5.2.3): toast.js
-     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-     * --------------------------------------------------------------------------
-     */
-    /**
-     * Constants
-     */
-
     const NAME = 'toast';
     const DATA_KEY = 'bs.toast';
     const EVENT_KEY = `.${DATA_KEY}`;
@@ -8886,7 +8454,7 @@ poncon.start();
     const EVENT_SHOW = `show${EVENT_KEY}`;
     const EVENT_SHOWN = `shown${EVENT_KEY}`;
     const CLASS_NAME_FADE = 'fade';
-    const CLASS_NAME_HIDE = 'hide'; // @deprecated - kept here only for backwards compatibility
+    const CLASS_NAME_HIDE = 'hide';
 
     const CLASS_NAME_SHOW = 'show';
     const CLASS_NAME_SHOWING = 'showing';
@@ -8900,9 +8468,6 @@ poncon.start();
         autohide: true,
         delay: 5000
     };
-    /**
-     * Class definition
-     */
 
     class Toast extends BaseComponent {
         constructor(element, config) {
@@ -8912,7 +8477,7 @@ poncon.start();
             this._hasKeyboardInteraction = false;
 
             this._setListeners();
-        } // Getters
+        }
 
 
         static get Default() {
