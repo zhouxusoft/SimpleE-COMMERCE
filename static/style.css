@@ -626,6 +626,7 @@ input[type=number]::-webkit-outer-spin-button {
     flex: 1;
     border: 1px solid #4a5c6d;
     height: 100px;
+    min-height: 100px;
     max-height: 100px;
     display: flex;
 }
@@ -633,6 +634,7 @@ input[type=number]::-webkit-outer-spin-button {
 .selectcenterpageborder {
     flex: 1;
     border: 1px solid #4a5c6d;
+    min-height: 60px;
     max-height: 60px;
     margin: 10px 0;
     padding: 10px;
